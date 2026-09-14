@@ -119,8 +119,11 @@ void StageData::Draw()
 void StageData::CheckAllCollision()
 {
 	// 登録された当たり判定データを走査
-	for (auto& colliders : CollisionManager::GetInstance()->GetColliders())
+	auto& colliders_ = CollisionManager::GetInstance()->GetColliders();
+	for (size_t i = 0; i < colliders_.size(); ++i)
 	{
+		auto& colliders = colliders_[i];
+
 		// デスフラグが立っていたらスキップ
 		if (colliders.parent->IsDead())
 		{
@@ -133,8 +136,10 @@ void StageData::CheckAllCollision()
 		AABB colliderAABB = CollisionManager::GetInstance()->MakeAABB(translate, colliders.size);
 
 
-		for (auto& collidersHit : CollisionManager::GetInstance()->GetColliders())
+		for (size_t j = i + 1; j < colliders_.size(); ++j)
 		{
+			auto& collidersHit = colliders_[j];
+
 			// 同一オブジェクトもしくは同一タイプの場合はスキップ
 			if (colliders.objectType == collidersHit.objectType)
 			{
@@ -553,13 +558,6 @@ StageData::EnemySpawnData StageData::LoadEnemy(nlohmann::json& enemy)
 void StageData::CreateEnemy(const EnemySpawnData& enemyData)
 {
 	std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>();
-	Logger::Log(std::format(
-		"[CreateEnemy] enemy = {}, pos = ({}, {}, {})",
-		static_cast<void*>(enemy.get()),
-		enemyData.transform.translate.x,
-		enemyData.transform.translate.y,
-		enemyData.transform.translate.z
-	));
 	enemy->Initialize(enemyData.transform, enemyData.filePath);
 
 	// コライダーがあれば生成、配置

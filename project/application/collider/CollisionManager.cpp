@@ -17,6 +17,20 @@ void CollisionManager::Finalize()
 	instance.reset();
 }
 
+void CollisionManager::RemoveCollider(BaseCharacter* parent)
+{
+	colliders_.erase(std::remove_if(
+			colliders_.begin(),
+			colliders_.end(),
+			[parent](const StageData::ColliderSpawnData& collider)
+			{
+				return collider.parent == parent;
+			}
+		),
+		colliders_.end()
+	);
+}
+
 bool CollisionManager::IsCollision(const AABB& aabb, const AABB& aabbHit)
 {
 	if (aabb.min.x <= aabbHit.max.x && aabb.max.x >= aabbHit.min.x &&

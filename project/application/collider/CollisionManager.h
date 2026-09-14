@@ -39,12 +39,14 @@ public:
 	bool IsCollision(const AABB& aabb, const AABB& aabbHit);
 	// getter
 	AABB MakeAABB(const Vector3& translate,const Vector3& size);
-	std::vector<StageData::ColliderSpawnData> GetColliders() { return colliders_; }
+	const std::vector<StageData::ColliderSpawnData>& GetColliders() const { return colliders_; }
 	// setter
 	void SetColliders(StageData::ColliderSpawnData collider) { colliders_.push_back(collider); }
 	// インスタンス
 	static CollisionManager* GetInstance();
 	// 終了
 	void Finalize();
+	// 削除処理
+	void RemoveCollider(BaseCharacter* parent);
 };
 

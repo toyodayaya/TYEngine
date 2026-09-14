@@ -1,4 +1,5 @@
 #include "BulletManager.h"
+#include "CollisionManager.h"
 #include <cassert>
 
 std::unique_ptr<BulletManager> BulletManager::instance = nullptr;
@@ -19,7 +20,13 @@ void BulletManager::Update()
 	bullets_.erase(std::remove_if(bullets_.begin(), bullets_.end(), []
 	(const std::unique_ptr<BaseBullet>& bullet)
 		{
-			return bullet->IsDead();
+			if (bullet->IsDead())
+			{
+				CollisionManager::GetInstance()->RemoveCollider(bullet.get());
+				return true;
+			}
+
+			return false;
 		}
 	),
 		bullets_.end()

@@ -1,4 +1,5 @@
 #include "EnemyManager.h"
+#include "CollisionManager.h"
 #include <cassert>
 
 std::unique_ptr<EnemyManager> EnemyManager::instance = nullptr;
@@ -19,7 +20,13 @@ void EnemyManager::Update()
 	enemies_.erase(std::remove_if(enemies_.begin(), enemies_.end(), []
 	(const std::unique_ptr<BaseEnemy>& enemy)
 		{
-			return enemy->IsDead();
+			if (enemy->IsDead())
+			{
+				CollisionManager::GetInstance()->RemoveCollider(enemy.get());
+				return true;
+			}
+
+			return false;
 		}
 	),
 		enemies_.end()
