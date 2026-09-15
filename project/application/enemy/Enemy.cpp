@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Object3dCommon.h"
+#include "DamageManager.h"
 
 void Enemy::Initialize(const QuaternionTransform& transform, const std::string& filePath)
 {
@@ -15,11 +16,22 @@ void Enemy::Initialize(const QuaternionTransform& transform, const std::string& 
 
 void Enemy::Finalize()
 {
-	
+
 }
 
 void Enemy::Update()
 {
+	if (isHit_)
+	{
+		hitTimer_--;
+
+		if (hitTimer_ <= 0)
+		{
+			isHit_ = false;
+		}
+
+	}
+
 	object3d_->Update();
 }
 
@@ -30,5 +42,18 @@ void Enemy::Draw()
 
 void Enemy::OnCollision()
 {
-	isDead_ = true;
+	if (!isHit_ && !isDead_)
+	{
+		hp_ -= 5;
+
+		if (hp_ <= 0)
+		{
+			isDead_ = true;
+		}
+		else
+		{
+			isHit_ = true;
+			DamageManager::GetInstance()->AddScore(10);
+		}
+	}
 }
