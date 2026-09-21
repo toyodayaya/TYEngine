@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "ChangePostEffectEvent.h"
+#include "ChangeSceneEvent.h"
 #include "RailCameraController.h"
 #include <string>
 #include <vector>
@@ -63,6 +64,7 @@ public:
 	struct EventSpawnData
 	{
 		QuaternionTransform transform;
+		std::string eventName;
 		ColliderSpawnData collider;
 	};
 

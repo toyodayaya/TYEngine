@@ -166,6 +166,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\enemy\EnemyManager.cpp" />
     <ClCompile Include="application\collider\CollisionManager.cpp" />
     <ClCompile Include="application\base\BaseCharacter.cpp" />
+    <ClCompile Include="application\event\ChangeSceneEvent.cpp" />
     <ClCompile Include="engine\animation\AnimationCommon.cpp" />
     <ClCompile Include="engine\scene\BaseScene.cpp" />
     <ClCompile Include="engine\audio\Audio.cpp" />
@@ -211,6 +212,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\player\Player.cpp" />
     <ClCompile Include="application\railCamera\RailCameraController.cpp" />
     <ClCompile Include="application\skydome\Skydome.cpp" />
+    <ClCompile Include="engine\scene\ResultScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\particle\ParticleEmitter.CS.hlsl">
@@ -381,6 +383,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\enemy\EnemyManager.h" />
     <ClInclude Include="application\collider\CollisionManager.h" />
     <ClInclude Include="application\base\BaseCharacter.h" />
+    <ClInclude Include="application\event\ChangeSceneEvent.h" />
     <ClInclude Include="engine\animation\AnimationCommon.h" />
     <ClInclude Include="engine\scene\AbstractSceneFactory.h" />
     <ClInclude Include="engine\scene\BaseScene.h" />
@@ -501,6 +504,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\railCamera\RailCameraController.h" />
     <ClInclude Include="application\lockOn\LockOn.h" />
     <ClInclude Include="application\skydome\Skydome.h" />
+    <ClInclude Include="engine\scene\ResultScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

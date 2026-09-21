@@ -116,7 +116,7 @@ void Player::Finalize()
 
 void Player::OnCollision()
 {
-	isDead_ = true;
+	//isDead_ = true;
 }
 
 void Player::CreateBullet()

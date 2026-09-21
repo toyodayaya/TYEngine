@@ -67,7 +67,6 @@ void StageData::Update()
 			return;
 		}
 
-
 		debugBox->UpdateBox();
 	}
 #endif // _DEBUG
@@ -622,6 +621,12 @@ StageData::EventSpawnData StageData::LoadEvent(nlohmann::json& event)
 	// データ格納用の変数を宣言
 	EventSpawnData eventSpawnData;
 
+	if (event.contains("event_name"))
+	{
+		// イベント名を登録
+		eventSpawnData.eventName = event["event_name"].get<std::string>();
+	}
+
 	// トランスフォームのパラメータ読み込み
 	nlohmann::json& transform = event["transform"];
 	// 平行移動データを格納
@@ -655,7 +660,18 @@ StageData::EventSpawnData StageData::LoadEvent(nlohmann::json& event)
 
 void StageData::CreateEvents(const EventSpawnData& eventData)
 {
-	std::unique_ptr<ChangePostEffectEvent> event = std::make_unique<ChangePostEffectEvent>();
+	std::unique_ptr<BaseEvent> event;
+
+	// 登録されたイベント名で分岐
+	if (eventData.eventName == "ChangeScene")
+	{
+		event = std::make_unique<ChangeSceneEvent>();
+	}
+	else
+	{
+		event = std::make_unique<ChangePostEffectEvent>();
+	}
+
 	event->Initialize(eventData.transform);
 
 	// コライダーがあれば生成、配置
