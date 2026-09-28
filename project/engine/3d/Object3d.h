@@ -84,7 +84,7 @@ public:
 	void SetEnvironmentMapTextureFilePath(const std::string& filePath) { environmentMapTextureFilePath = filePath; }
 	void SetParent(Object3d* parent) { this->parent = parent; }
 	void SetIsRailCamera(bool isRailCamera) { this->isRailCamera_ = isRailCamera; }
-	void SetOffset(const Vector3& offset) { this->offset_ = offset; }
+	void SetWorldMatrix(const Matrix4x4& worldMatrix) { this->worldMatrix = worldMatrix; }
 
 	// getter
 	const Vector3& GetScale() const { return transform.scale; }
@@ -102,7 +102,6 @@ public:
 		};
 	}
 	const Matrix4x4& GetViewMatrix() const { return camera->GetViewMatrix(); }
-	const Vector3& GetOffset() const { return offset_; }
 	const bool& IsRailCamera() const { return isRailCamera_; }
 
 private:
@@ -145,9 +144,7 @@ private:
 
 	// レールカメラかどうか判定するフラグ
 	bool isRailCamera_;
-	// レールカメラ時のオフセット
-	Vector3 offset_;
-
+	
 	Matrix4x4 worldViewProjectionMatrix;
 	Matrix4x4 viewProjectionMatrix;
 	Matrix4x4 worldMatrix;

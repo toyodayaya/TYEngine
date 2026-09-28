@@ -37,9 +37,6 @@ void Object3d::Initialize(Object3dCommon* object3dManager)
 	// Transform変数を作る
 	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-
-	// オフセットを初期化
-	offset_ = { 0.0f,0.0f,0.0f };
 }
 
 void Object3d::CreateTransformMatrixData3d()
@@ -122,11 +119,10 @@ void Object3d::SetModel(const std::string& filePath)
 
 void Object3d::Update()
 {
-	if (isRailCamera_)
+	if (!isRailCamera_)
 	{
-		transform.translate = Vector3Add(transform.translate, offset_);
+		worldMatrix = MakeAffineMatrixQuat(transform.scale, transform.rotate, transform.translate);
 	}
-	worldMatrix = MakeAffineMatrixQuat(transform.scale, transform.rotate, transform.translate);
 
 	// モデルを更新
 	model->Update(worldMatrix);
@@ -140,13 +136,6 @@ void Object3d::Update()
 	if (camera)
 	{
 		viewProjectionMatrix = camera->GetViewProjectionMatrix();
-
-		if (isRailCamera_)
-		{
-			Matrix4x4 cameraMatrix = camera->GetWorldMatrix();
-			worldMatrix = Multiply(worldMatrix, cameraMatrix);
-		}
-
 		worldViewProjectionMatrix = Multiply(worldMatrix, viewProjectionMatrix);
 	}
 	else
@@ -154,7 +143,7 @@ void Object3d::Update()
 		worldViewProjectionMatrix = worldMatrix;
 	}
 
-	
+
 	transformationData->WVP = worldViewProjectionMatrix;
 	transformationData->World = worldMatrix;
 
@@ -163,7 +152,7 @@ void Object3d::Update()
 	{
 		cameraData_->worldPosition = camera->GetTranslate();
 	}
-	
+
 #ifdef USE_IMGUI
 	ImGui::Begin("SpotLight");
 	ImGui::DragFloat3("pos", &spotLightData->position.x);

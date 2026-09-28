@@ -5,6 +5,7 @@
 #include "BaseCharacter.h"
 #include "Bullet.h"
 #include "LockOn.h"
+#include "Camera.h"
 
 class Player : public BaseCharacter
 {
@@ -27,9 +28,13 @@ public:
 	// 3Dレティクルの更新処理
 	void UpdateReticle();
 
-	
+	// setter
+	void SetCamera(Camera* camera) { this->camera_ = camera; }
+
+
+
 private:
-	
+
 	// 当たり判定フラグ
 	bool isHit_;
 	// ファイル名
@@ -57,5 +62,8 @@ private:
 
 	// HP
 	int hp_ = 2;
-};
 
+	// カメラ
+	Camera* camera_ = nullptr;
+
+};

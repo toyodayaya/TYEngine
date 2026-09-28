@@ -17,10 +17,11 @@ void Bullet::Initialize(const QuaternionTransform& transform, const std::string&
 	object3d_->SetEnvironmentMapTextureFilePath("resources/human/white.png");
 	object3d_->SetTransform(transform);
 	object3d_->SetIsRailCamera(isRailCamera);
-	object3d_->SetOffset(Vector3(0.0f, 0.0f, 10.0f));
 	velocity_ = velocity;
 	transform_ = transform;
+	transform_.translate.z += 5.0f;
 	// コライダーを生成
+
 #ifdef _DEBUG
 // デバッグ描画用の箱を初期化、生成
 	debugDraw = std::make_unique<DebugDraw>();
@@ -61,6 +62,8 @@ void Bullet::Update()
 	// 座標を更新
 	transform_.translate = Vector3Add(transform_.translate, velocity_);
 	object3d_->SetTranslate(transform_.translate);
+	Matrix4x4 world = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
+	object3d_->SetWorldMatrix(world);
 	object3d_->Update();
 
 #ifdef _DEBUG

@@ -17,9 +17,10 @@ void Player::Initialize(const QuaternionTransform& transform, const std::string&
 	object3d_->SetEnvironmentMapTextureFilePath("resources/human/white.png");
 	object3d_->SetTransform(transform);
 	object3d_->SetIsRailCamera(isRailCamera);
-	object3d_->SetOffset(Vector3{ 0.0f,0.0f,10.0f });
 	transform_ = transform;
+	transform_.translate = Vector3Add(transform_.translate, offset_);
 	isHit_ = false;
+
 
 	// 3Dレティクルオブジェクトの初期化
 	reticle_ = std::make_unique<Object3d>();
@@ -28,7 +29,6 @@ void Player::Initialize(const QuaternionTransform& transform, const std::string&
 	reticle_->SetEnvironmentMapTextureFilePath("resources/human/white.png");
 	reticle_->SetTransform(transform);
 	reticle_->SetIsRailCamera(isRailCamera);
-	reticle_->SetOffset(Vector3{ 0.0f,0.0f,10.0f });
 	reticleTransform_ = transform_;
 
 	// ロックオンマークを初期化
@@ -71,7 +71,15 @@ void Player::Update()
 	transform_.translate.y = std::min(transform_.translate.y, +kMoveLimitY_);
 
 
+	// 座標を更新
 	object3d_->SetTranslate(transform_.translate);
+
+	// プレイヤーのローカル行列を作成
+	Matrix4x4 worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
+	// カメラのワールド行列を乗算
+	worldMatrix = Multiply(worldMatrix, camera_->GetWorldMatrix());
+	// プレイヤーのワールド座標をセット
+	object3d_->SetWorldMatrix(worldMatrix);
 
 	// 3Dオブジェクトを更新
 	object3d_->Update();
@@ -159,9 +167,12 @@ void Player::UpdateReticle()
 	reticle_->SetTransform(reticleTransform_);
 
 	// 3Dオブジェクトの更新
+	Matrix4x4 worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
+	reticle_->SetWorldMatrix(worldMatrix);
 	reticle_->Update();
 
 	// スプライトのレティクルに座標設定
 	lockOn_->LockOnTarget(reticle_);
+
 
 }
