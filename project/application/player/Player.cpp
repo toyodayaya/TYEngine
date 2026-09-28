@@ -159,7 +159,7 @@ void Player::CreateBullet()
 	
 	if (lockOn_->GetTarget())
 	{
-		targetPosition = lockOn_->GetTarget()->GetObject3d()->GetWorldTranslate();
+		targetPosition = lockOn_->GetTarget()->GetWorldTranslate();
 	}
 	else
 	{
@@ -194,9 +194,9 @@ void Player::UpdateReticle()
 	reticle_->SetTransform(reticleTransform_);
 
 	// 3Dオブジェクトの更新
-	Matrix4x4 worldMatrix = MakeAffineMatrixQuat(reticleTransform_.scale, reticleTransform_.rotate, reticleTransform_.translate);
-	worldMatrix = Multiply(worldMatrix, camera_->GetWorldMatrix());
-	reticle_->SetWorldMatrix(worldMatrix);
+	Matrix4x4 reticleWorldMatrix = MakeAffineMatrixQuat(reticleTransform_.scale, reticleTransform_.rotate, reticleTransform_.translate);
+	reticleWorldMatrix = Multiply(reticleWorldMatrix, camera_->GetWorldMatrix());
+	reticle_->SetWorldMatrix(reticleWorldMatrix);
 	reticle_->Update();
 
 	// スプライトのレティクルに座標設定

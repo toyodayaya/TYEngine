@@ -11,14 +11,8 @@ using namespace MathManager;
 
 void ChangeSceneEvent::Initialize(const QuaternionTransform& transform)
 {
-	// 判定用のオブジェクト
-	object3d_ = std::make_unique<Object3d>();
-	object3d_->Initialize(Object3dCommon::GetInstance());
-	object3d_->SetModel("cube.obj");
-	object3d_->SetEnvironmentMapTextureFilePath("resources/human/white.png");
-	object3d_->SetTransform(transform);
 	transform_ = transform;
-	isDead_ = false;
+	worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
 
 #ifdef _DEBUG
 	debugDraw = std::make_unique<DebugDraw>();
@@ -38,8 +32,7 @@ void ChangeSceneEvent::Finalize()
 
 void ChangeSceneEvent::Update()
 {
-	object3d_->Update();
-
+	
 #ifdef _DEBUG
 	// デバッグ描画の更新処理
 	debugDraw->UpdateBox();

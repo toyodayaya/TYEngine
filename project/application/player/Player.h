@@ -72,8 +72,8 @@ private:
 	// カメラ
 	Camera* camera_ = nullptr;
 
-	// ワールド行列
-	Matrix4x4 worldMatrix;
+	// 3dオブジェクト
+	std::unique_ptr<Object3d> object3d_;
 
 #ifdef _DEBUG
 	std::unique_ptr<DebugDraw> debugDraw;

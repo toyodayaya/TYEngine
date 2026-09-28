@@ -21,6 +21,9 @@ protected:
 	// 生存時間
 	float currentTime_ = 0;
 	const float kLifeTime_ = 5;
+
+	// 3dオブジェクト
+	std::unique_ptr<Object3d> object3d_;
 	
 #ifdef _DEBUG
 	std::unique_ptr<DebugDraw> debugDraw;

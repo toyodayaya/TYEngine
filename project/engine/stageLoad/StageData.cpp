@@ -102,7 +102,7 @@ void StageData::CheckAllCollision()
 		}
 
 		// 判定用のAABBを作成
-		Vector3 translate = colliders.parent->GetObject3d()->GetWorldTranslate();
+		Vector3 translate = colliders.parent->GetWorldTranslate();
 		translate = Vector3Add(colliders.center, translate);
 		AABB colliderAABB = CollisionManager::GetInstance()->MakeAABB(translate, colliders.size);
 
@@ -124,7 +124,7 @@ void StageData::CheckAllCollision()
 			}
 
 			// 判定用のAABBを作成
-			Vector3 translateHit = collidersHit.parent->GetObject3d()->GetWorldTranslate();
+			Vector3 translateHit = collidersHit.parent->GetWorldTranslate();
 			translateHit = Vector3Add(collidersHit.center, translateHit);
 			AABB colliderHitAABB = CollisionManager::GetInstance()->MakeAABB(translateHit, collidersHit.size);
 

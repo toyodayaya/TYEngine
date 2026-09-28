@@ -18,6 +18,8 @@ void Enemy::Initialize(const QuaternionTransform& transform, const std::string& 
 	object3d_->SetTransform(transform);
 	transform_ = transform;
 	isDead_ = false;
+	transform_ = transform;
+	worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
 
 #ifdef _DEBUG
 	// デバッグ描画用の箱を初期化、生成

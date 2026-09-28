@@ -11,9 +11,9 @@ public:
 	// getter
 	QuaternionTransform GetTransform() { return transform_; }
 	bool IsDead() { return isDead_; }
-	Object3d* GetObject3d() { return object3d_.get(); }
-
+	Vector3 GetWorldTranslate() { return { worldMatrix.m[3][0], worldMatrix.m[3][1], worldMatrix.m[3][2]}; }
 	
+
 	// 更新
 	virtual void Update() = 0;
 	// 描画
@@ -31,7 +31,8 @@ protected:
 	QuaternionTransform transform_;
 	// デスフラグ
 	bool isDead_ = false;
-	// 3dオブジェクト
-	std::unique_ptr<Object3d> object3d_;
+	// ワールド行列
+	Matrix4x4 worldMatrix;
+
 };
 

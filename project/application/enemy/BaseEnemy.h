@@ -11,7 +11,8 @@ class BaseEnemy : public BaseCharacter
 public:
 	// 初期化
 	virtual void Initialize(const QuaternionTransform& transform, const std::string& filePath) = 0;
-
+	// getter
+	Object3d* GetObject3d() { return object3d_.get(); }
 
 protected:
 	// 当たり判定用のAABB
@@ -22,6 +23,9 @@ protected:
 	int hitTimer_ = 3;
 	// ヒットフラグ
 	bool isHit_ = false;
+
+	// 3dオブジェクト
+	std::unique_ptr<Object3d> object3d_;
 
 
 #ifdef _DEBUG

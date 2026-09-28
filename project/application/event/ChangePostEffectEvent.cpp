@@ -10,6 +10,9 @@ using namespace MathManager;
 
 void ChangePostEffectEvent::Initialize(const QuaternionTransform& transform)
 {
+	transform_ = transform;
+	worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
+
 #ifdef _DEBUG
 	debugDraw = std::make_unique<DebugDraw>();
 	debugDraw->Initialize(DebugDrawCommon::GetInstance(), "resources/human/white.png", DebugDraw::DrawState::kBox);
