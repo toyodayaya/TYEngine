@@ -37,7 +37,8 @@ public:
 	// setter
 	void SetCamera(Camera* camera) { this->camera_ = camera; }
 
-
+	// getter
+	Vector3 GetReticleWorldTranslate() { return { reticleWorldMatrix.m[3][0], reticleWorldMatrix.m[3][1], reticleWorldMatrix.m[3][2] }; }
 
 private:
 
@@ -55,6 +56,7 @@ private:
 	std::unique_ptr<Object3d> reticle_;
 	// 3Dレティクルのワールドトランスフォーム
 	QuaternionTransform reticleTransform_;
+	Matrix4x4 reticleWorldMatrix;
 	// 自機から3Dレティクルまでの距離
 	const float kDistance_ = 5.0f;
 	// 自機から3Dレティクルへのオフセット

@@ -2,6 +2,8 @@
 #include "CollisionManager.h"
 #include "StageData.h"
 #include "Object3dCommon.h"
+#include "ImGuiManager.h"
+
 #ifdef _DEBUG
 #include "DebugDraw.h"
 #include "DebugDrawCommon.h"
@@ -16,10 +18,8 @@ void Bullet::Initialize(const QuaternionTransform& transform, const std::string&
 	object3d_->SetModel(filePath);
 	object3d_->SetEnvironmentMapTextureFilePath("resources/human/white.png");
 	object3d_->SetTransform(transform);
-	object3d_->SetIsRailCamera(isRailCamera);
 	velocity_ = velocity;
 	transform_ = transform;
-	transform_.translate.z += 5.0f;
 	// コライダーを生成
 
 #ifdef _DEBUG
@@ -29,7 +29,6 @@ void Bullet::Initialize(const QuaternionTransform& transform, const std::string&
 	debugDraw->SetBoxScale(transform.scale);
 	debugDraw->SetBoxTranslate(transform.translate);
 	debugDraw->SetRotate(transform.rotate);
-	debugDraw->SetIsRailCamera(isRailCamera);
 
 #endif // _DEBUG
 	StageData::ColliderSpawnData colliders;
@@ -61,14 +60,20 @@ void Bullet::Update()
 	// 座標を更新
 	transform_.translate = Vector3Add(transform_.translate, velocity_);
 	object3d_->SetTranslate(transform_.translate);
-	Matrix4x4 world = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
-	object3d_->SetWorldMatrix(world);
 	object3d_->Update();
 
 #ifdef _DEBUG
-	debugDraw->SetWorldMatrix(world);
+	debugDraw->SetBoxTranslate(transform_.translate);
 	debugDraw->UpdateBox();
 #endif // _DEBUG
+
+#ifdef USE_IMGUI
+	ImGui::Begin("bullet");
+	ImGui::DragFloat3("pos", &transform_.translate.x);
+
+	ImGui::End();
+
+#endif // USE_IMGUI
 
 }
 

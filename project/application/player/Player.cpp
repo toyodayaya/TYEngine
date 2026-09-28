@@ -163,21 +163,21 @@ void Player::CreateBullet()
 	}
 	else
 	{
-		targetPosition = reticleTransform_.translate;
+		targetPosition = GetReticleWorldTranslate();
 	}
 
-	velocity = Vector3Subtract(targetPosition,transform_.translate);
-
-	velocity = Normalize(velocity);
-
-	isRailCamera = true;
+	// 弾の初期座標を設定
+	QuaternionTransform bulletTransform = transform_;
+	bulletTransform.translate = GetWorldTranslate();
 
 	// 速度を算出
+	velocity = Vector3Subtract(targetPosition,bulletTransform.translate);
+	velocity = Normalize(velocity);
 	velocity = FloatMultiply(velocity, kBulletSpeed_);
 
 	// 生成と初期化
 	std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
-	bullet->Initialize(transform_, filePath_, velocity,isRailCamera);
+	bullet->Initialize(bulletTransform, filePath_, velocity,false);
 	BulletManager::GetInstance()->SetBullets(std::move(bullet));
 
 }
@@ -194,7 +194,7 @@ void Player::UpdateReticle()
 	reticle_->SetTransform(reticleTransform_);
 
 	// 3Dオブジェクトの更新
-	Matrix4x4 reticleWorldMatrix = MakeAffineMatrixQuat(reticleTransform_.scale, reticleTransform_.rotate, reticleTransform_.translate);
+	reticleWorldMatrix = MakeAffineMatrixQuat(reticleTransform_.scale, reticleTransform_.rotate, reticleTransform_.translate);
 	reticleWorldMatrix = Multiply(reticleWorldMatrix, camera_->GetWorldMatrix());
 	reticle_->SetWorldMatrix(reticleWorldMatrix);
 	reticle_->Update();
