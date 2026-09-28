@@ -1,6 +1,10 @@
 #pragma once
 #include "Object3d.h"
 #include "BaseCharacter.h"
+#ifdef _DEBUG
+#include "DebugDraw.h"
+#include "DebugDrawCommon.h"
+#endif // _DEBUG
 
 class BaseEnemy : public BaseCharacter
 {
@@ -18,5 +22,10 @@ protected:
 	int hitTimer_ = 3;
 	// ヒットフラグ
 	bool isHit_ = false;
+
+
+#ifdef _DEBUG
+	std::unique_ptr<DebugDraw> debugDraw;
+#endif // _DEBUG
 };
 

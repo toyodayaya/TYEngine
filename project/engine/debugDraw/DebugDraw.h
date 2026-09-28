@@ -103,7 +103,7 @@ public:
 	void SetMatrix(const Matrix4x4& matrix) { transformationData->World = matrix; }
 	void SetParent(BaseCharacter* parent) { this->parent = parent; }
 	void SetIsRailCamera(bool isRailCamera) { this->isRailCamera_ = isRailCamera; }
-	void SetOffset(const Vector3& offset) { this->offset_ = offset; }
+	void SetWorldMatrix(const Matrix4x4& worldMatrix) { this->worldMatrix = worldMatrix; }
 
 	// getter
 	const Vector3& GetScale() const { return transform.scale; }
@@ -186,6 +186,8 @@ private:
 	BaseCharacter* parent;
 	// レールカメラかどうか判定するフラグ
 	bool isRailCamera_;
-	// レールカメラ時のオフセット
-	Vector3 offset_;
+	
+	// ワールド行列
+	Matrix4x4 worldMatrix;
+	Matrix4x4 worldViewProjectionMatrix;
 };

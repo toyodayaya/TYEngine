@@ -55,22 +55,6 @@ void StageData::Update()
 
 	// イベントの更新処理
 	EventManager::GetInstance()->Update();
-
-
-#ifdef _DEBUG
-
-	// デバッグ更新
-	for (const std::unique_ptr<DebugDraw>& debugBox : debugBoxs_)
-	{
-		if (debugBox->GetParent()->IsDead())
-		{
-			return;
-		}
-
-		debugBox->UpdateBox();
-	}
-#endif // _DEBUG
-
 }
 
 void StageData::Draw()
@@ -101,18 +85,6 @@ void StageData::Draw()
 	{
 		railCamera_->Draw();
 	}
-#ifdef _DEBUG
-	// デバッグ描画
-	for (const std::unique_ptr<DebugDraw>& debugBox : debugBoxs_)
-	{
-		if (debugBox->GetParent()->IsDead())
-		{
-			continue;
-		}
-
-		debugBox->DrawBox();
-	}
-#endif // _DEBUG
 }
 
 void StageData::CheckAllCollision()
@@ -170,10 +142,6 @@ void StageData::CheckAllCollision()
 
 void StageData::ClearStage()
 {
-#ifdef _DEBUG
-	debugBoxs_.clear();
-#endif // DEBUG
-
 	object3ds.clear();
 	CollisionManager::GetInstance()->Finalize();
 	players_.clear();
@@ -591,20 +559,6 @@ StageData::ColliderSpawnData StageData::LoadCollider(nlohmann::json& collider)
 
 void StageData::CreateCollider(const ColliderSpawnData& collider, BaseCharacter* parent)
 {
-#ifdef _DEBUG
-	// デバッグ描画用の箱を初期化、生成
-	std::unique_ptr<DebugDraw> debugDraw = std::make_unique<DebugDraw>();
-	debugDraw->Initialize(DebugDrawCommon::GetInstance(), "resources/human/white.png", DebugDraw::DrawState::kBox);
-	debugDraw->SetBoxScale(collider.size);
-	debugDraw->SetBoxTranslate(collider.center);
-	debugDraw->SetIsRailCamera(parent->GetObject3d()->IsRailCamera());
-
-	// 親オブジェクトがあればセット
-	debugDraw->SetParent(parent);
-
-	// 登録
-	debugBoxs_.push_back(std::move(debugDraw));
-#endif // _DEBUG
 	ColliderSpawnData colliders = collider;
 	colliders.parent = parent;
 	CollisionManager::GetInstance()->SetColliders(colliders);

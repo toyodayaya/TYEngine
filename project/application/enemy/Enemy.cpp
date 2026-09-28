@@ -1,6 +1,12 @@
 #include "Enemy.h"
 #include "Object3dCommon.h"
 #include "DamageManager.h"
+#ifdef _DEBUG
+#include "DebugDraw.h"
+#include "DebugDrawCommon.h"
+
+#endif // _DEBUG
+
 
 void Enemy::Initialize(const QuaternionTransform& transform, const std::string& filePath)
 {
@@ -12,6 +18,16 @@ void Enemy::Initialize(const QuaternionTransform& transform, const std::string& 
 	object3d_->SetTransform(transform);
 	transform_ = transform;
 	isDead_ = false;
+
+#ifdef _DEBUG
+	// デバッグ描画用の箱を初期化、生成
+	debugDraw = std::make_unique<DebugDraw>();
+	debugDraw->Initialize(DebugDrawCommon::GetInstance(), "resources/human/white.png", DebugDraw::DrawState::kBox);
+	debugDraw->SetBoxScale(transform.scale);
+	debugDraw->SetBoxTranslate(transform.translate);
+	debugDraw->SetRotate(transform.rotate);
+
+#endif // _DEBUG
 }
 
 void Enemy::Finalize()
@@ -33,11 +49,21 @@ void Enemy::Update()
 	}
 
 	object3d_->Update();
+
+#ifdef _DEBUG
+	debugDraw->UpdateBox();
+#endif // _DEBUG
+
 }
 
 void Enemy::Draw()
 {
 	object3d_->Draw();
+
+#ifdef _DEBUG
+	debugDraw->DrawBox();
+
+#endif // _DEBUG
 }
 
 void Enemy::OnCollision()

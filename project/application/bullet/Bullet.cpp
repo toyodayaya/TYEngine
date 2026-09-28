@@ -30,7 +30,6 @@ void Bullet::Initialize(const QuaternionTransform& transform, const std::string&
 	debugDraw->SetBoxTranslate(transform.translate);
 	debugDraw->SetRotate(transform.rotate);
 	debugDraw->SetIsRailCamera(isRailCamera);
-	debugDraw->SetOffset(Vector3(0.0f, 0.0f, 10.0f));
 
 #endif // _DEBUG
 	StageData::ColliderSpawnData colliders;
@@ -67,7 +66,7 @@ void Bullet::Update()
 	object3d_->Update();
 
 #ifdef _DEBUG
-	debugDraw->SetBoxTranslate(transform_.translate);
+	debugDraw->SetWorldMatrix(world);
 	debugDraw->UpdateBox();
 #endif // _DEBUG
 

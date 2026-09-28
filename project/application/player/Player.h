@@ -7,6 +7,12 @@
 #include "LockOn.h"
 #include "Camera.h"
 
+#ifdef _DEBUG
+#include "DebugDraw.h"
+#include "DebugDrawCommon.h"
+#endif // _DEBUG
+
+
 class Player : public BaseCharacter
 {
 public:
@@ -52,7 +58,7 @@ private:
 	// 自機から3Dレティクルまでの距離
 	const float kDistance_ = 5.0f;
 	// 自機から3Dレティクルへのオフセット
-	Vector3 offset_ = { 0.0f,0.0f,5.0f };
+	Vector3 offset_ = { 0.0f,0.0f,15.0f };
 	// ロックオンのポインタ
 	std::unique_ptr<LockOn> lockOn_;
 
@@ -65,5 +71,10 @@ private:
 
 	// カメラ
 	Camera* camera_ = nullptr;
+
+
+#ifdef _DEBUG
+	std::unique_ptr<DebugDraw> debugDraw;
+#endif // _DEBUG
 
 };

@@ -8,6 +8,12 @@
 #include "BulletManager.h"
 #include "SceneManager.h"
 
+#ifdef _DEBUG
+#include "DebugDraw.h"
+#include "DebugDrawCommon.h"
+
+#endif // _DEBUG
+
 void Player::Initialize(const QuaternionTransform& transform, const std::string& filePath, bool isRailCamera)
 {
 	// オブジェクトの初期化
@@ -36,6 +42,17 @@ void Player::Initialize(const QuaternionTransform& transform, const std::string&
 	lockOn_->Initialize();
 
 	isDead_ = false;
+
+#ifdef _DEBUG
+	// デバッグ描画用の箱を初期化、生成
+	debugDraw = std::make_unique<DebugDraw>();
+	debugDraw->Initialize(DebugDrawCommon::GetInstance(), "resources/human/white.png", DebugDraw::DrawState::kBox);
+	debugDraw->SetBoxScale(transform.scale);
+	debugDraw->SetBoxTranslate(transform.translate);
+	debugDraw->SetRotate(transform.rotate);
+	debugDraw->SetIsRailCamera(isRailCamera);
+
+#endif // _DEBUG
 }
 
 void Player::Update()
@@ -101,6 +118,11 @@ void Player::Update()
 
 #endif // USE_IMGUI
 
+#ifdef _DEBUG
+	debugDraw->SetWorldMatrix(worldMatrix);
+	debugDraw->UpdateBox();
+#endif // _DEBUG
+
 	if (isDead_)
 	{
 		SceneManager::GetInstance()->ChangeScene("TitleScene");
@@ -117,6 +139,11 @@ void Player::Draw()
 
 	object3d_->Draw();
 	lockOn_->Draw();
+
+#ifdef _DEBUG
+	debugDraw->DrawBox();
+
+#endif // _DEBUG
 }
 
 void Player::Finalize()
