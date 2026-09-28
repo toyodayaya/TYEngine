@@ -58,7 +58,7 @@ private:
 	// 自機から3Dレティクルまでの距離
 	const float kDistance_ = 5.0f;
 	// 自機から3Dレティクルへのオフセット
-	Vector3 offset_ = { 0.0f,0.0f,15.0f };
+	Vector3 offset_ = { 0.0f,0.0f,10.0f };
 	// ロックオンのポインタ
 	std::unique_ptr<LockOn> lockOn_;
 
@@ -72,6 +72,8 @@ private:
 	// カメラ
 	Camera* camera_ = nullptr;
 
+	// ワールド行列
+	Matrix4x4 worldMatrix;
 
 #ifdef _DEBUG
 	std::unique_ptr<DebugDraw> debugDraw;

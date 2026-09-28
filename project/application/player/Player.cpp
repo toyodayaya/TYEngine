@@ -33,9 +33,10 @@ void Player::Initialize(const QuaternionTransform& transform, const std::string&
 	reticle_->Initialize(Object3dCommon::GetInstance());
 	reticle_->SetModel(filePath_);
 	reticle_->SetEnvironmentMapTextureFilePath("resources/human/white.png");
-	reticle_->SetTransform(transform);
+	reticle_->SetTransform(transform_);
 	reticle_->SetIsRailCamera(isRailCamera);
 	reticleTransform_ = transform_;
+	reticleTransform_.translate = Vector3Add(reticleTransform_.translate, offset_);
 
 	// ロックオンマークを初期化
 	lockOn_ = std::make_unique<LockOn>();
@@ -92,7 +93,7 @@ void Player::Update()
 	object3d_->SetTranslate(transform_.translate);
 
 	// プレイヤーのローカル行列を作成
-	Matrix4x4 worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
+	worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
 	// カメラのワールド行列を乗算
 	worldMatrix = Multiply(worldMatrix, camera_->GetWorldMatrix());
 	// プレイヤーのワールド座標をセット
@@ -109,8 +110,7 @@ void Player::Update()
 
 #ifdef USE_IMGUI
 	ImGui::Begin("Player");
-	Vector3 transform = object3d_->GetWorldTranslate();
-	ImGui::DragFloat3("pos", &transform.x);
+	ImGui::DragFloat3("pos", &transform_.translate.x);
 	ImGui::DragFloat3("velocity", &velocity.x);
 	ImGui::DragFloat3("target", &targetPosition.x);
 
@@ -194,12 +194,21 @@ void Player::UpdateReticle()
 	reticle_->SetTransform(reticleTransform_);
 
 	// 3Dオブジェクトの更新
-	Matrix4x4 worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
+	Matrix4x4 worldMatrix = MakeAffineMatrixQuat(reticleTransform_.scale, reticleTransform_.rotate, reticleTransform_.translate);
+	worldMatrix = Multiply(worldMatrix, camera_->GetWorldMatrix());
 	reticle_->SetWorldMatrix(worldMatrix);
 	reticle_->Update();
 
 	// スプライトのレティクルに座標設定
 	lockOn_->LockOnTarget(reticle_);
+
+#ifdef USE_IMGUI
+	ImGui::Begin("Reticle");
+	ImGui::DragFloat3("pos", &reticleTransform_.translate.x);
+	
+	ImGui::End();
+
+#endif // USE_IMGUI
 
 
 }
