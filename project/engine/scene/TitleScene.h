@@ -1,5 +1,7 @@
 #pragma once
 #include "BaseScene.h"
+#include "Sprite.h"
+#include <memory>
 
 class TitleScene : public BaseScene
 {
@@ -14,5 +16,6 @@ public:
 	void Draw() override;
 
 private:
-
+	// タイトルロゴの画像
+	std::unique_ptr<Sprite> titleLogo_;
 };

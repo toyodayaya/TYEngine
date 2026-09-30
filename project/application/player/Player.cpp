@@ -18,7 +18,7 @@ void Player::Initialize(const QuaternionTransform& transform, const std::string&
 {
 	// オブジェクトの初期化
 	object3d_ = std::make_unique<Object3d>();
-	object3d_->Initialize(Object3dCommon::GetInstance());
+	object3d_->Initialize();
 	object3d_->SetModel(filePath);
 	object3d_->SetEnvironmentMapTextureFilePath("resources/human/white.png");
 	object3d_->SetTransform(transform);
@@ -30,7 +30,7 @@ void Player::Initialize(const QuaternionTransform& transform, const std::string&
 
 	// 3Dレティクルオブジェクトの初期化
 	reticle_ = std::make_unique<Object3d>();
-	reticle_->Initialize(Object3dCommon::GetInstance());
+	reticle_->Initialize();
 	reticle_->SetModel(filePath_);
 	reticle_->SetEnvironmentMapTextureFilePath("resources/human/white.png");
 	reticle_->SetTransform(transform_);

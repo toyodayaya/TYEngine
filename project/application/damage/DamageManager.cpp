@@ -33,7 +33,7 @@ void DamageManager::Initialize()
 				std::string filePath = "resources/numbers/" + std::to_string(j) + ".png";
 				TextureManager::GetInstance()->LoadTexture(filePath);
 				auto sprite = std::make_unique<Sprite>();
-				sprite->Initialize(SpriteCommon::GetInstance(), filePath);
+				sprite->Initialize(filePath);
 				numbers_[r][i].push_back(std::move(sprite));
 			}
 		}
@@ -45,7 +45,7 @@ void DamageManager::Initialize()
 		std::string filePath = "resources/numbers/" + std::to_string(i+1) + "s.png";
 		TextureManager::GetInstance()->LoadTexture(filePath);
 		auto sprite = std::make_unique<Sprite>();
-		sprite->Initialize(SpriteCommon::GetInstance(), filePath);
+		sprite->Initialize(filePath);
 		Vector2 pos = { 0.0f,static_cast<float>((i * 90) + 320) };
 		sprite->SetPosition(pos);
 		rankSprite_.push_back(std::move(sprite));

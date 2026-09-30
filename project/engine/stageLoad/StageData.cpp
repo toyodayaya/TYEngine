@@ -380,7 +380,7 @@ void StageData::CreateObject(const ObjectData& objectData, Object3d* parent)
 	// レベルデータからオブジェクトを生成、配置
 	std::unique_ptr<Object3d> object3d = std::make_unique<Object3d>();
 	// オブジェクトの初期化
-	object3d->Initialize(Object3dCommon::GetInstance());
+	object3d->Initialize();
 	// モデルをセット
 	object3d->SetModel(objectData.filePath);
 	// 環境マップ用テクスチャデータをセット

@@ -9,10 +9,10 @@
 
 using namespace MathManager;
 
-void Object3d::Initialize(Object3dCommon* object3dManager)
+void Object3d::Initialize()
 {
 	// 引数で受け取ってメンバ変数として記録する
-	this->object3dManager = object3dManager;
+	this->object3dManager = Object3dCommon::GetInstance();
 	dxBasis_ = object3dManager->GetDxBasis();
 
 

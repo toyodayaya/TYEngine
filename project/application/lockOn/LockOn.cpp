@@ -8,7 +8,7 @@ void LockOn::Initialize()
 	// 3Dレティクルスプライトの初期化
 	TextureManager::GetInstance()->LoadTexture("resources/sprite/circle.png");
 	reticleSprite_ = std::make_unique<Sprite>();
-	reticleSprite_->Initialize(SpriteCommon::GetInstance(), spriteFilePath_);
+	reticleSprite_->Initialize(spriteFilePath_);
 	reticleSprite_->SetAnchorPoint(Vector2{ 0.5f,0.5f });
 	reticleSprite_->SetSize(Vector2{ 64.0f,64.0f });
 }

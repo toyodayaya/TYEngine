@@ -4,11 +4,11 @@
 #include "ImGuiManager.h"
 using namespace MathManager;
 
-void Sprite::Initialize(SpriteCommon* spriteCommon, std::string textureFilePath)
+void Sprite::Initialize(std::string textureFilePath)
 {
 	// 引数で受け取ってメンバ変数に記録する
-	this->spriteManager_ = spriteCommon;
-	dxBasis_ = spriteCommon->GetDxBasis();
+	this->spriteManager_ = SpriteCommon::GetInstance();
+	dxBasis_ = SpriteCommon::GetInstance()->GetDxBasis();
 	filePath = textureFilePath;
 
 	// デフォルトカメラをセット

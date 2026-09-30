@@ -44,7 +44,7 @@ private:
 
 public:
 	// 初期化
-	void Initialize(SpriteCommon* spriteCommon,std::string textureFilePath);
+	void Initialize(std::string textureFilePath);
 
 	// 頂点データ作成
 	void CreateVertexData();
