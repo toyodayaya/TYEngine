@@ -46,6 +46,7 @@ public:
 		kGrayScale,
 		kSepiaScale,
 		kVignetting,
+		kDoubleVignetting,
 		kBoxFilter,
 		kGaussianFilter,
 		kOutline,
@@ -69,6 +70,8 @@ public:
 	void GenerateSepia();
 	// Vignettingの生成
 	void GenerateVignetting();
+	// DoubleVignettingの生成
+	void GenerateDoubleVignetting();
 	// BoxFilterの生成
 	void GenerateBoxFilter();
 	// GaussianFilterの生成
@@ -147,6 +150,9 @@ private:
 	// Vignetting
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC vignettingGPSD_{};
 	Microsoft::WRL::ComPtr <ID3D12PipelineState> vignettingGPS_;
+	// DoubleVignetting
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC doubleVignettingGPSD_{};
+	Microsoft::WRL::ComPtr <ID3D12PipelineState> doubleVignettingGPS_;
 	// BoxFilter
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC boxFilterGPSD_{};
 	Microsoft::WRL::ComPtr <ID3D12PipelineState> boxFilterGPS_;

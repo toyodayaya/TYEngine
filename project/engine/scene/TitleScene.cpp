@@ -2,10 +2,11 @@
 #include "SceneManager.h"
 #include "Input.h"
 #include "ImguiManager.h"
+#include "RenderTexture.h"
 
 void TitleScene::Initialize()
 {
-	
+	RenderTexture::GetInstance()->SetPostEffect(RenderTexture::PostEffect::kDoubleVignetting);
 }
 
 void TitleScene::Finalize()

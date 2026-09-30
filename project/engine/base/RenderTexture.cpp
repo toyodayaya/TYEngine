@@ -209,6 +209,9 @@ void RenderTexture::GeneratePostEffect()
 
 	// Vignetting
 	GenerateVignetting();
+
+	// DoubleVignetting
+	GenerateDoubleVignetting();
 	
 	// BoxFilter
 	GenerateBoxFilter();
@@ -291,6 +294,29 @@ void RenderTexture::GenerateVignetting()
 	// 生成
 	HRESULT hr = dxBasis_->GetDevice()->CreateGraphicsPipelineState(&vignettingGPSD_,
 		IID_PPV_ARGS(&vignettingGPS_));
+	assert(SUCCEEDED(hr));
+
+
+}
+
+void RenderTexture::GenerateDoubleVignetting()
+{
+	// 設定をコピー
+	doubleVignettingGPSD_ = graphicPipelineStateDesc;
+
+	// PSをコンパイル
+	Microsoft::WRL::ComPtr <IDxcBlob> pixelShaderBlobDoubleVignetting;
+	pixelShaderBlobDoubleVignetting = dxBasis_->CompileShader(L"resources/shaders/postEffect/DoubleVignette.PS.hlsl",
+		L"ps_6_0");
+	assert(pixelShaderBlobDoubleVignetting != nullptr);
+	doubleVignettingGPSD_.PS =
+	{
+		pixelShaderBlobDoubleVignetting->GetBufferPointer(),
+		pixelShaderBlobDoubleVignetting->GetBufferSize()
+	};
+	// 生成
+	HRESULT hr = dxBasis_->GetDevice()->CreateGraphicsPipelineState(&doubleVignettingGPSD_,
+		IID_PPV_ARGS(&doubleVignettingGPS_));
 	assert(SUCCEEDED(hr));
 
 
@@ -487,6 +513,11 @@ void RenderTexture::DrawSettingPSO()
 	case kVignetting:
 		// Vignettingのシェーダー
 		dxBasis_->GetCommandList()->SetPipelineState(vignettingGPS_.Get());
+		break;
+
+	case kDoubleVignetting:
+		// DoubleVignettingのシェーダー
+		dxBasis_->GetCommandList()->SetPipelineState(doubleVignettingGPS_.Get());
 		break;
 
 	case kBoxFilter:

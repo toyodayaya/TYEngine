@@ -377,6 +377,7 @@
     <FxCompile Include="resources\shaders\postEffect\Vignette.PS.hlsl">
       <Filter>シェーダーファイル</Filter>
     </FxCompile>
+    <FxCompile Include="resources\shaders\postEffect\DoubleVignette.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\scene\AbstractSceneFactory.h">

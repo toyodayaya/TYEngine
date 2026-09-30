@@ -20,6 +20,7 @@ void Bullet::Initialize(const QuaternionTransform& transform, const std::string&
 	object3d_->SetTransform(transform);
 	velocity_ = velocity;
 	transform_ = transform;
+	worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
 	// コライダーを生成
 
 #ifdef _DEBUG
