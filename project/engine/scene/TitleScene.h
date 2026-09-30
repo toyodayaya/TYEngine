@@ -2,6 +2,7 @@
 #include "BaseScene.h"
 #include "Sprite.h"
 #include <memory>
+#include "StageData.h"
 
 class TitleScene : public BaseScene
 {
@@ -18,4 +19,12 @@ public:
 private:
 	// タイトルロゴの画像
 	std::unique_ptr<Sprite> titleLogo_;
+	std::unique_ptr<Sprite> pressSpace_;
+
+	// 点滅用の変数
+	float alpha_ = 0.0f;
+	bool isVisible_ = false;
+
+	// ステージデータ
+	StageData* stageData_ = nullptr;
 };

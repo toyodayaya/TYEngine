@@ -78,6 +78,7 @@ public:
 	void SetPosition(const Vector2& position) { this->pos = position; }
 	void SetRotation(float rotation) { this->rotation = rotation; }
 	void SetColor(const Vector4& color) { materialData->color = color; }
+	void SetAlpha(const float& alpha) { materialData->color.w = alpha; }
 	void SetSize(const Vector2& size) { this->size = size; }
 	void SetAnchorPoint(const Vector2& anchorPoint) { this->anchorPoint = anchorPoint; }
 	void SetFlipX(bool isFlipX) { this->isFlipX_ = isFlipX; }

@@ -7,6 +7,7 @@
 #include "Bullet.h"
 #include "ChangePostEffectEvent.h"
 #include "ChangeSceneEvent.h"
+#include "TitleCameraEvent.h"
 #include "RailCameraController.h"
 #include <string>
 #include <vector>

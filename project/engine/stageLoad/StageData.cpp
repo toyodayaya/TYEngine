@@ -615,12 +615,23 @@ void StageData::CreateEvents(const EventSpawnData& eventData)
 	{
 		event = std::make_unique<ChangeSceneEvent>();
 	}
+	else if (eventData.eventName == "TitleCamera")
+	{
+		event = std::make_unique<TitleCameraEvent>();
+	}
 	else
 	{
 		event = std::make_unique<ChangePostEffectEvent>();
 	}
 
+	// イベントを初期化
 	event->Initialize(eventData.transform);
+
+	if (eventData.eventName == "TitleCamera")
+	{
+		TitleCameraEvent* titleCamera = dynamic_cast<TitleCameraEvent*>(event.get());
+		titleCamera->SetCamera(camera_);
+	}
 
 	// コライダーがあれば生成、配置
 	if (eventData.collider.hasCollier)

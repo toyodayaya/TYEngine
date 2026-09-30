@@ -9,14 +9,11 @@
 
 void GamePlayScene::Initialize()
 {
-	// スプライトを読み込む
-	TextureManager::GetInstance()->LoadTexture("resources/human/white.png");
-	ModelManager::GetInstance()->LoadModel("resources/skydome", "skydome.obj", Model::AnimationType::kNone);
-
 	// objファイルからモデルを読み込む
 	ModelManager::GetInstance()->LoadModel("resources/player", "player.obj", Model::AnimationType::kNone);
 	ModelManager::GetInstance()->LoadModel("resources/enemy", "enemy.obj", Model::AnimationType::kNone);
 	ModelManager::GetInstance()->LoadModel("resources/cube", "cube.obj", Model::AnimationType::kNone);
+	ModelManager::GetInstance()->LoadModel("resources/skydome", "skydome.obj", Model::AnimationType::kNone);
 	// テクスチャの読み込み
 	TextureManager::GetInstance()->LoadTexture("resources/model/rostock_laage_airport_4k.dds");
 

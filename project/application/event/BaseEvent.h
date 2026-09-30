@@ -8,5 +8,6 @@ public:
 	virtual void Initialize(const QuaternionTransform& transform) = 0;
 	
 private:
+
 };
 

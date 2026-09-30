@@ -134,6 +134,7 @@ namespace MathManager
 	Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix);
 
 	// 線形補間
+	float FloatLerp(const float& start, const float& end, float t);
 	Vector3 Lerp(const Vector3& start, const Vector3& end, float t);
 	Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
 

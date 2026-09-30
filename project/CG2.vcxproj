@@ -159,6 +159,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\bullet\Bullet.cpp" />
     <ClCompile Include="application\bullet\BulletManager.cpp" />
     <ClCompile Include="application\damage\DamageManager.cpp" />
+    <ClCompile Include="application\event\TitleCameraEvent.cpp" />
     <ClCompile Include="application\enemy\Enemy.cpp" />
     <ClCompile Include="application\event\BaseEvent.cpp" />
     <ClCompile Include="application\event\ChangePostEffectEvent.cpp" />
@@ -381,6 +382,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\bullet\Bullet.h" />
     <ClInclude Include="application\bullet\BulletManager.h" />
     <ClInclude Include="application\damage\DamageManager.h" />
+    <ClInclude Include="application\event\TitleCameraEvent.h" />
     <ClInclude Include="application\enemy\Enemy.h" />
     <ClInclude Include="application\event\BaseEvent.h" />
     <ClInclude Include="application\event\ChangePostEffectEvent.h" />
