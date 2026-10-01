@@ -381,6 +381,7 @@
       <Filter>シェーダーファイル</Filter>
     </FxCompile>
     <FxCompile Include="resources\shaders\postEffect\DoubleVignette.PS.hlsl" />
+    <FxCompile Include="resources\shaders\object3d\ToyObject3d.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\scene\AbstractSceneFactory.h">

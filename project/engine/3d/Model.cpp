@@ -316,7 +316,7 @@ void Model::CreateMaterialData3d()
 	// UVTransform行列を単位行列で初期化
 	materialData_->uvTransform = MakeIdentity4x4();
 	// 光沢度
-	materialData_->shininess = 2.0f;
+	materialData_->shininess = 10.0f;
 	// 映り込み
 	materialData_->environmentCoefficient = 1.0f;
 	materialData_->useEnvironmentMap = false;

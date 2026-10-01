@@ -53,6 +53,15 @@ struct CameraForGPU
 	Vector3 worldPosition;
 };
 
+struct ToyTexture
+{
+	float rimLightPower;
+	float rimLightIntensity;
+	float saturation;
+	float contrast;
+	float ambientStrength;
+};
+
 class Object3d
 {
 public:
@@ -73,6 +82,8 @@ public:
 	void CreateSpotLight();
 	// カメラデータの作成
 	void CreateCameraResource();
+	// おもちゃ風質感データ作成
+	void CreateToyTexture();
 
 	// setter
 	void SetModel(const std::string& filePath);
@@ -129,6 +140,10 @@ private:
 	// カメラデータ
 	Microsoft::WRL::ComPtr<ID3D12Resource> cameraResource;
 	CameraForGPU* cameraData_ = nullptr;
+
+	// おもちゃ風質感リソース
+	Microsoft::WRL::ComPtr <ID3D12Resource> toyTextureResource;
+	ToyTexture* toyTextureData = nullptr;
 
 	EulerTransform cameraTransform;
 	QuaternionTransform transform;

@@ -34,6 +34,9 @@ void Object3d::Initialize()
 	// カメラデータ作成
 	CreateCameraResource();
 
+	// おもちゃ風質感データ作成
+	CreateToyTexture();
+
 	// Transform変数を作る
 	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
@@ -110,6 +113,26 @@ void Object3d::CreateCameraResource()
 
 }
 
+void Object3d::CreateToyTexture()
+{
+	// おもちゃ風質感用のリソースを作る
+	toyTextureResource = dxBasis_->CreateBufferResources(sizeof(SpotLight));
+	// 書き込むためのアドレスを取得
+	toyTextureResource->Map(
+		0, nullptr, reinterpret_cast<void**>(&toyTextureData));
+
+	// データの初期値を設定
+	// 緑っぽい輝き
+	toyTextureData->rimLightPower = 4.0f;
+	toyTextureData->rimLightIntensity = 0.25f;
+	// 陰影
+	toyTextureData->ambientStrength = 0.1f;
+	// 彩度
+	toyTextureData->saturation = 1.3f;
+	// コントラスト
+	toyTextureData->contrast = 1.15f;
+}
+
 void Object3d::SetModel(const std::string& filePath)
 {
 	// モデルを検索してセットする
@@ -179,16 +202,36 @@ void Object3d::Draw()
 
 	// wvp用のCBufferの場所を設定
 	dxBasis_->GetCommandList()->SetGraphicsRootConstantBufferView(1, transformationResource->GetGPUVirtualAddress());
-	// 平行光源用のCBufferの場所を設定
-	dxBasis_->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
-	// 点光源用のCBufferの場所を設定
-	dxBasis_->GetCommandList()->SetGraphicsRootConstantBufferView(5, pointLightResource->GetGPUVirtualAddress());
-	// スポットライト用のCBufferの場所を設定
-	dxBasis_->GetCommandList()->SetGraphicsRootConstantBufferView(6, spotLightResource->GetGPUVirtualAddress());
-	// カメラリソース用のCBufferの場所を設定
-	dxBasis_->GetCommandList()->SetGraphicsRootConstantBufferView(4, cameraResource->GetGPUVirtualAddress());
-	// SRVのDescriptorTableの先頭を設定
-	dxBasis_->GetCommandList()->SetGraphicsRootDescriptorTable(7, TextureManager::GetInstance()->GetSRVHandleGPU(environmentMapTextureFilePath));
+
+	// モデルの質感タイプで分岐
+	switch (object3dManager->GetTextureType())
+	{
+	case Object3dCommon::TextureType::kNormal:
+		// 平行光源用のCBufferの場所を設定
+		dxBasis_->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
+		// カメラリソース用のCBufferの場所を設定
+		dxBasis_->GetCommandList()->SetGraphicsRootConstantBufferView(4, cameraResource->GetGPUVirtualAddress());
+		// 点光源用のCBufferの場所を設定
+		dxBasis_->GetCommandList()->SetGraphicsRootConstantBufferView(5, pointLightResource->GetGPUVirtualAddress());
+		// スポットライト用のCBufferの場所を設定
+		dxBasis_->GetCommandList()->SetGraphicsRootConstantBufferView(6, spotLightResource->GetGPUVirtualAddress());
+		// SRVのDescriptorTableの先頭を設定
+		dxBasis_->GetCommandList()->SetGraphicsRootDescriptorTable(7, TextureManager::GetInstance()->GetSRVHandleGPU(environmentMapTextureFilePath));
+
+
+		break;
+
+	case Object3dCommon::TextureType::kToy:
+		// 平行光源用のCBufferの場所を設定
+		dxBasis_->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
+		// カメラリソース用のCBufferの場所を設定
+		dxBasis_->GetCommandList()->SetGraphicsRootConstantBufferView(4, cameraResource->GetGPUVirtualAddress());
+		// おもちゃ風質感リソース用のCBufferの場所を設定
+		dxBasis_->GetCommandList()->SetGraphicsRootConstantBufferView(5, toyTextureResource->GetGPUVirtualAddress());
+
+		break;
+
+	}
 
 
 	// 3Dモデルが割り当てられていれば描画する
