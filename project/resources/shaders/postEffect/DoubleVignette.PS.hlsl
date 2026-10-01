@@ -13,14 +13,14 @@ PixelShaderOutput main(VertexShaderOutput input)
     PixelShaderOutput output;
     output.color = gTexture.Sample(gSampler, input.texcoord);
     
-    float32_t2 uvLeft = input.texcoord - float32_t2(0.35f, 0.5f);
-    float32_t2 uvRight = input.texcoord - float32_t2(0.65f, 0.5f);
+    float32_t2 uvLeft = input.texcoord - float32_t2(0.3f, 0.5f);
+    float32_t2 uvRight = input.texcoord - float32_t2(0.7f, 0.5f);
     
     uvLeft.x *= 1280.0f / 720.0f;
     uvRight.x *= 1280.0f / 720.0f;
     
-    float vignetteLeft = saturate(1.0f - length(uvLeft) / 0.6f);
-    float vignetteRight = saturate(1.0f - length(uvRight) / 0.6f);
+    float vignetteLeft = saturate(1.0f - length(uvLeft) / 0.5f);
+    float vignetteRight = saturate(1.0f - length(uvRight) / 0.5f);
 
     
     float vignette = max(vignetteLeft, vignetteRight);

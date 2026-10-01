@@ -19,15 +19,16 @@ void TitleScene::Initialize()
 
 	// objファイルからモデルを読み込む
 	ModelManager::GetInstance()->LoadModel("resources/model", "box.obj", Model::AnimationType::kNone);
+	ModelManager::GetInstance()->LoadModel("resources/skydome", "skydome.obj", Model::AnimationType::kNone);
 
 	// タイトルロゴを初期化
 	titleLogo_ = std::make_unique<Sprite>();
 	titleLogo_->Initialize("resources/sprite/title/titleLogo.png");
-	titleLogo_->SetPosition(Vector2{ 430.0f,30.0f });
+	titleLogo_->SetPosition(Vector2{ 430.0f,80.0f });
 
 	pressSpace_ = std::make_unique<Sprite>();
 	pressSpace_->Initialize("resources/sprite/title/pressSpace.png");
-	pressSpace_->SetPosition(Vector2{ 250.0f,600.0f });
+	pressSpace_->SetPosition(Vector2{ 250.0f,550.0f });
 
 	// ステージを読み込む
 	StageManager::GetInstance()->LoadJsonData("resources/stages", "title.json");
@@ -89,6 +90,7 @@ void TitleScene::Update()
 	
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE))
 	{
+		// シーンを切り替える
 		SceneManager::GetInstance()->ChangeScene("GamePlayScene");
 	}
 }

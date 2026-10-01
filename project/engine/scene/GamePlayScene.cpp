@@ -6,9 +6,13 @@
 #include "SkyboxCommon.h"
 #include "Input.h"
 #include "SceneManager.h"
+#include "RenderTexture.h"
 
 void GamePlayScene::Initialize()
 {
+	// ポストエフェクトを指定
+	RenderTexture::GetInstance()->SetPostEffect(RenderTexture::PostEffect::kNormal);
+
 	// objファイルからモデルを読み込む
 	ModelManager::GetInstance()->LoadModel("resources/player", "player.obj", Model::AnimationType::kNone);
 	ModelManager::GetInstance()->LoadModel("resources/enemy", "enemy.obj", Model::AnimationType::kNone);
