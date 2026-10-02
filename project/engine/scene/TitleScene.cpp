@@ -11,6 +11,7 @@ void TitleScene::Initialize()
 {
 	// ポストエフェクトを指定
 	RenderTexture::GetInstance()->SetPostEffect(RenderTexture::PostEffect::kDoubleVignetting);
+	RenderTexture::GetInstance()->SetIsFadeIn(true);
 
 	// テクスチャデータを読み込む
 	TextureManager::GetInstance()->LoadTexture("resources/human/white.png");
@@ -57,6 +58,16 @@ void TitleScene::Update()
 	// ステージを更新
 	stageData_->Update();
 
+	// フェードイン演出
+	RenderTexture::GetInstance()->SceneChangeEffect();
+
+	if (RenderTexture::GetInstance()->GetRadiusData() < 0.0f)
+	{
+		// シーンを切り替える
+		SceneManager::GetInstance()->ChangeScene("GamePlayScene");
+		return;
+	}
+
 	// PressSpaceを点滅させる
 	if (isVisible_)
 	{
@@ -87,11 +98,11 @@ void TitleScene::Update()
 	titleLogo_->Update();
 	pressSpace_->Update();
 
-	
+
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE))
 	{
-		// シーンを切り替える
-		SceneManager::GetInstance()->ChangeScene("GamePlayScene");
+		// フェードアウトフラグ
+		RenderTexture::GetInstance()->SetIsFadeIn(false);
 	}
 }
 

@@ -39,6 +39,11 @@ public:
 		float time;
 	};
 
+	struct MaterialRadius
+	{
+		float radius;
+	};
+
 	// ポストエフェクトのタイプ
 	enum PostEffect
 	{
@@ -93,14 +98,21 @@ public:
 	void CreateProjectionInverse();
 	// 経過時間の作成
 	void CreateMaterialTime();
+	// 切り抜き半径データ作成
+	void CreateMaterialRadius();
 	// getter
 	DirectXBasis* GetDxBasis() const { return dxBasis_; }
 	Camera* GetDefaultCamera() const { return defaultCamera_; }
 	Microsoft::WRL::ComPtr <ID3D12Resource> GetTexture() const { return texture_; }
+	float GetRadiusData() const { return radiusData_->radius; }
 	// setter
 	void SetDefaultCamera(Camera* camera) { this->defaultCamera_ = camera; }
 	void SetPostEffect(PostEffect type) { this->type_ = type; }
 	void SetDissolveTexture(std::string filePath) { dissolveFilePath_ = filePath; }
+	void SetIsFadeIn(bool isFadeIn) { isFadeIn_ = isFadeIn; }
+
+	// シーン遷移用更新
+	void SceneChangeEffect();
 
 	// インスタンス
 	static RenderTexture* GetInstance();
@@ -136,6 +148,10 @@ private:
 	// 経過時間
 	Microsoft::WRL::ComPtr <ID3D12Resource> materialTimeResource_;
 	MaterialTime* timeData_ = nullptr;
+
+	// 切り抜き半径
+	Microsoft::WRL::ComPtr <ID3D12Resource> materialRadiusResource_;
+	MaterialRadius* radiusData_ = nullptr;
 
 	// 各シェーダーのPSO
 	// normal
@@ -174,6 +190,11 @@ private:
 
 	// 使用するシェーダーのタイプ
 	PostEffect type_ = kNormal;
+
+	// 半径の上限値
+	const float kMaxRadius = 0.5f;
+	// フェードインアウト判定用フラグ
+	bool isFadeIn_ = false;
 };
 
 

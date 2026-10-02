@@ -11,7 +11,8 @@
 void GamePlayScene::Initialize()
 {
 	// ポストエフェクトを指定
-	RenderTexture::GetInstance()->SetPostEffect(RenderTexture::PostEffect::kNormal);
+	//RenderTexture::GetInstance()->SetPostEffect(RenderTexture::PostEffect::kNormal);
+	RenderTexture::GetInstance()->SetIsFadeIn(true);
 
 	// objファイルからモデルを読み込む
 	ModelManager::GetInstance()->LoadModel("resources/player", "player.obj", Model::AnimationType::kNone);
@@ -58,6 +59,9 @@ void GamePlayScene::Update()
 	{
 		SceneManager::GetInstance()->ChangeScene("TitleScene");
 	}
+
+	// フェードイン演出
+	RenderTexture::GetInstance()->SceneChangeEffect();
 }
 
 void GamePlayScene::Draw()

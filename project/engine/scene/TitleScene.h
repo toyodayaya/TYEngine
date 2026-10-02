@@ -27,4 +27,6 @@ private:
 
 	// ステージデータ
 	StageData* stageData_ = nullptr;
+
+	
 };

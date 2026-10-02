@@ -17,7 +17,7 @@ RenderTexture* RenderTexture::GetInstance()
 	return instance.get();
 }
 
-void RenderTexture::Initialize(DirectXBasis* directXBasis,SrvManager* srvManager)
+void RenderTexture::Initialize(DirectXBasis* directXBasis, SrvManager* srvManager)
 {
 	// 引数で受け取ってメンバ変数として記録する
 	dxBasis_ = directXBasis;
@@ -31,6 +31,9 @@ void RenderTexture::Initialize(DirectXBasis* directXBasis,SrvManager* srvManager
 
 	// 経過時間を作成
 	CreateMaterialTime();
+
+	// 切り抜き半径を作成
+	CreateMaterialRadius();
 
 	// 描画用テクスチャを読み込む
 	filePath_ = "resources/sprite/uvChecker.png";
@@ -212,25 +215,25 @@ void RenderTexture::GeneratePostEffect()
 
 	// DoubleVignetting
 	GenerateDoubleVignetting();
-	
+
 	// BoxFilter
 	GenerateBoxFilter();
-	
+
 	// GaussianFilter
 	GenerateGaussianFilter();
 
 	// OutLine
 	GenerateOutline();
-	
+
 	// radialBlur
 	GenerateRadialBlur();
 
 	// Dissolve
 	GenerateDissolve();
-	
+
 	// Random
 	GenerateRandom();
-	
+
 }
 
 void RenderTexture::GenerateGrayScale()
@@ -474,6 +477,38 @@ void RenderTexture::CreateMaterialTime()
 	timeData_->time += kDeltaTime;
 }
 
+void RenderTexture::CreateMaterialRadius()
+{
+	// 切り抜き半径用のリソースを作る
+	materialRadiusResource_ = dxBasis_->CreateBufferResources(sizeof(MaterialRadius));
+	// データを書き込む
+	// 書き込むためのアドレスを取得
+	materialRadiusResource_->Map(0, nullptr, reinterpret_cast<void**>(&radiusData_));
+	// 半径を設定
+	radiusData_->radius = 0.0f;
+}
+
+
+void RenderTexture::SceneChangeEffect()
+{
+	if (isFadeIn_)
+	{
+		if (radiusData_->radius < kMaxRadius)
+		{
+			radiusData_->radius += 0.01f;
+		}
+	}
+	else
+	{
+		if (radiusData_->radius > 0.0f)
+		{
+			radiusData_->radius -= 0.01f;
+		}
+	}
+
+
+}
+
 void RenderTexture::DrawSettingCommon()
 {
 	// RootSignatureを設定
@@ -518,6 +553,8 @@ void RenderTexture::DrawSettingPSO()
 	case kDoubleVignetting:
 		// DoubleVignettingのシェーダー
 		dxBasis_->GetCommandList()->SetPipelineState(doubleVignettingGPS_.Get());
+		// 切り抜き半径用のCBufferの場所を設定
+		dxBasis_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialRadiusResource_->GetGPUVirtualAddress());
 		break;
 
 	case kBoxFilter:
