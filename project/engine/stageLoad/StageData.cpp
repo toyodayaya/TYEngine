@@ -6,6 +6,7 @@
 #include <externals/nlohmannJson/Json.hpp>
 #include "Object3dCommon.h"
 #include "ModelManager.h"
+#include "PlayerManager.h"
 #include "EventManager.h"
 #include "EnemyManager.h"
 #include "BulletManager.h"
@@ -44,11 +45,10 @@ void StageData::Update()
 	EnemyManager::GetInstance()->Update();
 
 	// プレイヤーの更新処理
-	for (const std::unique_ptr<Player>& player : players_)
+	if (isPlayerReality_)
 	{
-		player->Update();
+		PlayerManager::GetInstance()->Update();
 	}
-
 
 	// 弾の更新処理
 	BulletManager::GetInstance()->Update();
@@ -66,9 +66,9 @@ void StageData::Draw()
 	}
 
 	// プレイヤーの描画処理
-	for (const std::unique_ptr<Player>& player : players_)
+	if (isPlayerReality_)
 	{
-		player->Draw();
+		PlayerManager::GetInstance()->Draw();
 	}
 
 	// 敵の描画処理
@@ -144,7 +144,10 @@ void StageData::ClearStage()
 {
 	object3ds.clear();
 	CollisionManager::GetInstance()->Finalize();
-	players_.clear();
+	if (isPlayerReality_)
+	{
+		PlayerManager::GetInstance()->Finalize();
+	}
 	EnemyManager::GetInstance()->Finalize();
 	BulletManager::GetInstance()->Finalize();
 	EventManager::GetInstance()->Finalize();
@@ -461,17 +464,22 @@ StageData::PlayerSpawnData StageData::LoadPlayer(nlohmann::json& player)
 
 void StageData::CreatePlayer(const PlayerSpawnData& playerData)
 {
-	std::unique_ptr<Player> player = std::make_unique<Player>();
-	player->Initialize(playerData.transform, playerData.filePath, true);
-	player->SetCamera(camera_);
+	// プレイヤーステートファクトリーの生成とセット
+	playerStateFactory = std::make_unique <PlayerStateFactory>();
+	PlayerManager::GetInstance()->SetPlayerStateFactory(std::move(playerStateFactory));
+	// プレイヤーマネージャーに最初のプレイヤーステートをセット
+	PlayerManager::GetInstance()->ChangePlayerState("NormalPlayer");
+	// プレイヤーマネージャーに初期データをセット
+	PlayerManager::GetInstance()->SetPlayerData(playerData.transform, playerData.filePath, true,camera_);
 
 	// コライダーがあれば生成、配置
 	if (playerData.collider.hasCollier)
 	{
-		CreateCollider(playerData.collider, player.get());
+		CreateCollider(playerData.collider, PlayerManager::GetInstance()->GetNextPlayer().get());
 	}
 
-	players_.push_back(std::move(player));
+	// プレイヤーの実在フラグを立てる
+	isPlayerReality_ = true;
 }
 
 StageData::EnemySpawnData StageData::LoadEnemy(nlohmann::json& enemy)

@@ -2,7 +2,7 @@
 #include "MathManager.h"
 #include "DirectXBasis.h"
 #include "Object3d.h"
-#include "Player.h"
+#include "PlayerStateFactory.h"
 #include "Enemy.h"
 #include "Bullet.h"
 #include "ChangePostEffectEvent.h"
@@ -150,8 +150,10 @@ private:
 	LevelData levelData_;
 	// オブジェクトデータ
 	std::vector<std::unique_ptr<Object3d>> object3ds;
-	// プレイヤーデータ
-	std::vector<std::unique_ptr<Player>> players_;
+	// プレイヤーステートファクトリー
+	std::unique_ptr <PlayerStateFactory> playerStateFactory;
+	// プレイヤー実在フラグ
+	bool isPlayerReality_;
 	// コライダーデータ
 	// 制御点データ
 	std::vector<Vector3> railPoints_;

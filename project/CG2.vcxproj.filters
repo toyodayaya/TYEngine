@@ -258,7 +258,7 @@
     <ClCompile Include="application\event\EventManager.cpp">
       <Filter>ソース ファイル\application\event</Filter>
     </ClCompile>
-    <ClCompile Include="application\player\Player.cpp">
+    <ClCompile Include="application\player\NormalPlayer.cpp">
       <Filter>ソース ファイル\application\player</Filter>
     </ClCompile>
     <ClCompile Include="application\collider\CollisionManager.cpp">
@@ -295,6 +295,15 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\event\TitleCameraEvent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\player\BasePlayer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\player\PlayerStateFactory.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="application\player\PlayerManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -747,7 +756,7 @@
     <ClInclude Include="application\enemy\EnemyManager.h">
       <Filter>ヘッダー ファイル\application\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="application\player\Player.h">
+    <ClInclude Include="application\player\NormalPlayer.h">
       <Filter>ヘッダー ファイル\application\player</Filter>
     </ClInclude>
     <ClInclude Include="application\collider\CollisionManager.h">
@@ -784,6 +793,18 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\event\TitleCameraEvent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\player\AbstractPlayerStateFactory.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\player\BasePlayer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\player\PlayerManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\player\PlayerStateFactory.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

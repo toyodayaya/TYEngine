@@ -2,7 +2,7 @@
 #include "Object3d.h"
 #include "Sprite.h"
 #include <memory>
-#include "BaseCharacter.h"
+#include "BasePlayer.h"
 #include "Bullet.h"
 #include "LockOn.h"
 #include "Camera.h"
@@ -13,11 +13,11 @@
 #endif // _DEBUG
 
 
-class Player : public BaseCharacter
+class NormalPlayer : public BasePlayer
 {
 public:
 	// 初期化
-	void Initialize(const QuaternionTransform& transform, const std::string& filePath, bool isRailcamera);
+	void Initialize(const QuaternionTransform& transform, const std::string& filePath, bool isRailcamera, Camera* camera) override;
 	// 更新
 	void Update() override;
 	// 描画
@@ -34,9 +34,10 @@ public:
 	// 3Dレティクルの更新処理
 	void UpdateReticle();
 
-	// setter
-	void SetCamera(Camera* camera) { this->camera_ = camera; }
+	// プレイヤーの移動処理
+	void Move();
 
+	
 	// getter
 	Vector3 GetReticleWorldTranslate() { return { reticleWorldMatrix.m[3][0], reticleWorldMatrix.m[3][1], reticleWorldMatrix.m[3][2] }; }
 
@@ -68,11 +69,11 @@ private:
 	Vector3 targetPosition;
 	bool isRailCamera;
 
-	// HP
-	int hp_ = 2;
-
 	// カメラ
 	Camera* camera_ = nullptr;
+
+	// HP
+	int hp_ = 2;
 
 	// 3dオブジェクト
 	std::unique_ptr<Object3d> object3d_;
