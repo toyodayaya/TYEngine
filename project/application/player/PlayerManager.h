@@ -1,8 +1,10 @@
 #pragma once
-#include "BasePlayer.h"
+#include "BasePlayerState.h"
 #include "PlayerStateFactory.h"
 #include <memory>
 #include "Camera.h"
+#include "Object3d.h"
+#include "Player.h"
 #include "MathManager.h"
 using namespace MathManager;
 
@@ -32,6 +34,8 @@ private:
 	static std::unique_ptr<PlayerManager> instance;
 
 public:
+	// 初期化
+	void Initialize(const QuaternionTransform& transform, const std::string filePath, Camera* camera);
 	// 次状態予約
 	void ChangePlayerState(const std::string& playerState);
 	// 更新
@@ -40,34 +44,26 @@ public:
 	void Draw();
 	// 終了
 	void Finalize();
-
+	
 	// インスタンス
 	static PlayerManager* GetInstance();
 
 	// プレイヤーステートファクトリーのセット
 	void SetPlayerStateFactory(std::unique_ptr<AbstractPlayerStateFactory> playerStateFactory) { playerStateFactory_ = std::move(playerStateFactory); }
 
-	// setter
-	void SetPlayerData(const QuaternionTransform& transform, const std::string& filePath, bool isRailcamera,Camera* camera);
 	// getter
-	const std::unique_ptr<BasePlayer>& GetNextPlayer()  { return nextPlayer_; }
+	const std::unique_ptr<Player>& GetPlayer()  { return player_; }
+	const std::string& GetPlayerState() { return playerStateName_; }
 
 private:
-	// 実行中のプレイヤーステート
-	std::unique_ptr<BasePlayer> player_;
+	// プレイヤーの本体ポインタ
+	std::unique_ptr<Player> player_;
 	// 次プレイヤーステート
-	std::unique_ptr<BasePlayer> nextPlayer_ = nullptr;
+	std::unique_ptr<BasePlayerState> nextPlayerState_ = nullptr;
 	// プレイヤーステートファクトリー
 	std::unique_ptr<AbstractPlayerStateFactory> playerStateFactory_ = nullptr;
 
-	// プレイヤーステート間で引き継ぐ変数
-	// 座標
-	QuaternionTransform transform_;
-	// ファイルのパス
-	std::string filePath_;
-	// レールカメラフラグ
-	bool isRailCamera_;
-	// カメラ
-	Camera* camera_ = nullptr;
+	// プレイヤーステート名を記録
+	std::string playerStateName_;
 };
 

@@ -168,7 +168,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\collider\CollisionManager.cpp" />
     <ClCompile Include="application\base\BaseCharacter.cpp" />
     <ClCompile Include="application\event\ChangeSceneEvent.cpp" />
-    <ClCompile Include="application\player\BasePlayer.cpp" />
+    <ClCompile Include="application\player\BasePlayerState.cpp" />
     <ClCompile Include="application\player\PlayerStateFactory.cpp" />
     <ClCompile Include="application\player\PlayerManager.cpp" />
     <ClCompile Include="engine\animation\AnimationCommon.cpp" />
@@ -217,6 +217,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\railCamera\RailCameraController.cpp" />
     <ClCompile Include="application\skydome\Skydome.cpp" />
     <ClCompile Include="engine\scene\ResultScene.cpp" />
+    <ClCompile Include="application\player\StandByPlayer.cpp" />
+    <ClCompile Include="application\player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\object3d\ToyObject3d.PS.hlsl">
@@ -400,7 +402,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\base\BaseCharacter.h" />
     <ClInclude Include="application\event\ChangeSceneEvent.h" />
     <ClInclude Include="application\player\AbstractPlayerStateFactory.h" />
-    <ClInclude Include="application\player\BasePlayer.h" />
+    <ClInclude Include="application\player\BasePlayerState.h" />
     <ClInclude Include="application\player\PlayerStateFactory.h" />
     <ClInclude Include="application\player\PlayerManager.h" />
     <ClInclude Include="engine\animation\AnimationCommon.h" />
@@ -524,6 +526,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\lockOn\LockOn.h" />
     <ClInclude Include="application\skydome\Skydome.h" />
     <ClInclude Include="engine\scene\ResultScene.h" />
+    <ClInclude Include="application\player\StandByPlayer.h" />
+    <ClInclude Include="application\player\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

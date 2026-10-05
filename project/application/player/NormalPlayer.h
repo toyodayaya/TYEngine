@@ -2,22 +2,17 @@
 #include "Object3d.h"
 #include "Sprite.h"
 #include <memory>
-#include "BasePlayer.h"
+#include "BasePlayerState.h"
 #include "Bullet.h"
 #include "LockOn.h"
 #include "Camera.h"
+#include "Player.h"
 
-#ifdef _DEBUG
-#include "DebugDraw.h"
-#include "DebugDrawCommon.h"
-#endif // _DEBUG
-
-
-class NormalPlayer : public BasePlayer
+class NormalPlayer : public BasePlayerState
 {
 public:
 	// 初期化
-	void Initialize(const QuaternionTransform& transform, const std::string& filePath, bool isRailcamera, Camera* camera) override;
+	void Initialize(Player* player) override;
 	// 更新
 	void Update() override;
 	// 描画
@@ -39,9 +34,16 @@ public:
 
 	
 	// getter
+	Vector3 GetWorldTranslate() { return { worldMatrix.m[3][0], worldMatrix.m[3][1], worldMatrix.m[3][2] }; }
 	Vector3 GetReticleWorldTranslate() { return { reticleWorldMatrix.m[3][0], reticleWorldMatrix.m[3][1], reticleWorldMatrix.m[3][2] }; }
 
 private:
+	// プレイヤーのポインタ
+	Player* player_ = nullptr;
+	// ワールドトランスフォーム
+	QuaternionTransform transform_;
+	// ワールド行列
+	Matrix4x4 worldMatrix;
 
 	// 当たり判定フラグ
 	bool isHit_;
@@ -67,7 +69,6 @@ private:
 
 	Vector3 velocity;
 	Vector3 targetPosition;
-	bool isRailCamera;
 
 	// カメラ
 	Camera* camera_ = nullptr;
@@ -76,10 +77,6 @@ private:
 	int hp_ = 2;
 
 	// 3dオブジェクト
-	std::unique_ptr<Object3d> object3d_;
-
-#ifdef _DEBUG
-	std::unique_ptr<DebugDraw> debugDraw;
-#endif // _DEBUG
+	Object3d* object3d_;
 
 };

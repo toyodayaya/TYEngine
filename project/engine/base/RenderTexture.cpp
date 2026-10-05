@@ -493,7 +493,7 @@ void RenderTexture::SceneChangeEffect()
 {
 	if (isFadeIn_)
 	{
-		if (radiusData_->radius < maxRadius_)
+		if (radiusData_->radius <= maxRadius_)
 		{
 			radiusData_->radius += 0.01f;
 		}

@@ -7,11 +7,12 @@
 #include "Input.h"
 #include "SceneManager.h"
 #include "RenderTexture.h"
+#include "PlayerManager.h"
 
 void GamePlayScene::Initialize()
 {
 	// ポストエフェクトを指定
-	RenderTexture::GetInstance()->SetMaxRadius(6.0f);
+	RenderTexture::GetInstance()->SetMaxRadius(kMaxRadius_);
 	RenderTexture::GetInstance()->SetIsFadeIn(true);
 
 	// objファイルからモデルを読み込む
@@ -62,6 +63,14 @@ void GamePlayScene::Update()
 
 	// フェードイン演出
 	RenderTexture::GetInstance()->SceneChangeEffect();
+
+	if (PlayerManager::GetInstance()->GetPlayerState() == "StandByPlayer")
+	{
+		if (RenderTexture::GetInstance()->GetRadiusData() >= kMaxRadius_)
+		{
+			PlayerManager::GetInstance()->ChangePlayerState("NormalPlayer");
+		}
+	}
 }
 
 void GamePlayScene::Draw()

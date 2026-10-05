@@ -464,18 +464,19 @@ StageData::PlayerSpawnData StageData::LoadPlayer(nlohmann::json& player)
 
 void StageData::CreatePlayer(const PlayerSpawnData& playerData)
 {
+	
 	// プレイヤーステートファクトリーの生成とセット
 	playerStateFactory = std::make_unique <PlayerStateFactory>();
 	PlayerManager::GetInstance()->SetPlayerStateFactory(std::move(playerStateFactory));
 	// プレイヤーマネージャーに最初のプレイヤーステートをセット
-	PlayerManager::GetInstance()->ChangePlayerState("NormalPlayer");
-	// プレイヤーマネージャーに初期データをセット
-	PlayerManager::GetInstance()->SetPlayerData(playerData.transform, playerData.filePath, true,camera_);
+	PlayerManager::GetInstance()->ChangePlayerState("StandByPlayer");
+	// プレイヤーの初期化
+	PlayerManager::GetInstance()->Initialize(playerData.transform, playerData.filePath, camera_);
 
 	// コライダーがあれば生成、配置
 	if (playerData.collider.hasCollier)
 	{
-		CreateCollider(playerData.collider, PlayerManager::GetInstance()->GetNextPlayer().get());
+		CreateCollider(playerData.collider, PlayerManager::GetInstance()->GetPlayer().get());
 	}
 
 	// プレイヤーの実在フラグを立てる

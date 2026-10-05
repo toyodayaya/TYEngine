@@ -22,6 +22,8 @@ private:
 	// skybox
 	std::unique_ptr<Skydome> skydome;
 	QuaternionTransform skydomeTransform;
+	// フェードイン最大値
+	const float kMaxRadius_ = 0.7f;
 
 
 };

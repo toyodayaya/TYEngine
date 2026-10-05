@@ -1,4 +1,5 @@
 #include "RailCameraController.h"
+#include "PlayerManager.h"
 #ifdef _DEBUG
 #include "DebugDrawCommon.h"
 #endif // _DEBUG
@@ -54,6 +55,12 @@ void RailCameraController::Initialize(const QuaternionTransform& transform)
 
 void RailCameraController::Update()
 {
+	if (PlayerManager::GetInstance()->GetPlayerState() == "StandByPlayer")
+	{
+		// プレイヤーが待機状態なら処理しない
+		return;
+	}
+
 	// カメラの座標を求める
 	t += 0.001f;
 	Vector3 pos = CatmullRomPosition(railPoints_, t);

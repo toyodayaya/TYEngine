@@ -14,22 +14,19 @@
 
 #endif // _DEBUG
 
-void NormalPlayer::Initialize(const QuaternionTransform& transform, const std::string& filePath, bool isRailCamera, Camera* camera)
+void NormalPlayer::Initialize(Player* player)
 {
+	// 引数で受け取ってメンバ変数に記録
+	player_ = player;
+	camera_ = player_->GetCamera();
+
 	// オブジェクトの初期化
-	object3d_ = std::make_unique<Object3d>();
-	object3d_->Initialize();
-	object3d_->SetModel(filePath);
-	object3d_->SetEnvironmentMapTextureFilePath("resources/human/white.png");
-	object3d_->SetTransform(transform);
-	object3d_->SetIsRailCamera(isRailCamera);
-	transform_ = transform;
+	object3d_ = player_->GetObject3d();
+	object3d_->SetIsRailCamera(true);
+	transform_ = object3d_->GetTransform();
+	transform_.translate = object3d_->GetWorldTranslate();
 	transform_.translate = Vector3Add(transform_.translate, offset_);
 	isHit_ = false;
-
-	// 引数で受け取ってメンバ変数として記録
-	camera_ = camera;
-
 
 	// 3Dレティクルオブジェクトの初期化
 	reticle_ = std::make_unique<Object3d>();
@@ -37,26 +34,13 @@ void NormalPlayer::Initialize(const QuaternionTransform& transform, const std::s
 	reticle_->SetModel(filePath_);
 	reticle_->SetEnvironmentMapTextureFilePath("resources/human/white.png");
 	reticle_->SetTransform(transform_);
-	reticle_->SetIsRailCamera(isRailCamera);
+	reticle_->SetIsRailCamera(true);
 	reticleTransform_ = transform_;
 	reticleTransform_.translate = Vector3Add(reticleTransform_.translate, offset_);
 
 	// ロックオンマークを初期化
 	lockOn_ = std::make_unique<LockOn>();
 	lockOn_->Initialize();
-
-	isDead_ = false;
-
-#ifdef _DEBUG
-	// デバッグ描画用の箱を初期化、生成
-	debugDraw = std::make_unique<DebugDraw>();
-	debugDraw->Initialize(DebugDrawCommon::GetInstance(), "resources/human/white.png", DebugDraw::DrawState::kBox);
-	debugDraw->SetBoxScale(transform.scale);
-	debugDraw->SetBoxTranslate(transform.translate);
-	debugDraw->SetRotate(transform.rotate);
-	debugDraw->SetIsRailCamera(isRailCamera);
-
-#endif // _DEBUG
 }
 
 void NormalPlayer::Update()
@@ -86,15 +70,7 @@ void NormalPlayer::Update()
 
 #endif // USE_IMGUI
 
-#ifdef _DEBUG
-	debugDraw->SetWorldMatrix(worldMatrix);
-	debugDraw->UpdateBox();
-#endif // _DEBUG
 
-	if (isDead_)
-	{
-		SceneManager::GetInstance()->ChangeScene("TitleScene");
-	}
 }
 
 void NormalPlayer::Draw()
@@ -107,11 +83,6 @@ void NormalPlayer::Draw()
 
 	object3d_->Draw();
 	lockOn_->Draw();
-
-#ifdef _DEBUG
-	debugDraw->DrawBox();
-
-#endif // _DEBUG
 }
 
 void NormalPlayer::Finalize()
@@ -217,6 +188,7 @@ void NormalPlayer::Move()
 	worldMatrix = Multiply(worldMatrix, camera_->GetWorldMatrix());
 	// プレイヤーのワールド座標をセット
 	object3d_->SetWorldMatrix(worldMatrix);
+	player_->SetWorldMatrix(worldMatrix);
 
 	// 3Dオブジェクトを更新
 	object3d_->Update();
