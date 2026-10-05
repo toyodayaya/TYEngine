@@ -110,6 +110,7 @@ public:
 	void SetPostEffect(PostEffect type) { this->type_ = type; }
 	void SetDissolveTexture(std::string filePath) { dissolveFilePath_ = filePath; }
 	void SetIsFadeIn(bool isFadeIn) { isFadeIn_ = isFadeIn; }
+	void SetMaxRadius(const float& maxRadius) { maxRadius_ = maxRadius; }
 
 	// シーン遷移用更新
 	void SceneChangeEffect();
@@ -192,7 +193,7 @@ private:
 	PostEffect type_ = kNormal;
 
 	// 半径の上限値
-	const float kMaxRadius = 0.5f;
+	float maxRadius_ = 0.5f;
 	// フェードインアウト判定用フラグ
 	bool isFadeIn_ = false;
 };

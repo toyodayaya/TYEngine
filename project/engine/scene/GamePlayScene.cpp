@@ -11,7 +11,7 @@
 void GamePlayScene::Initialize()
 {
 	// ポストエフェクトを指定
-	//RenderTexture::GetInstance()->SetPostEffect(RenderTexture::PostEffect::kNormal);
+	RenderTexture::GetInstance()->SetMaxRadius(6.0f);
 	RenderTexture::GetInstance()->SetIsFadeIn(true);
 
 	// objファイルからモデルを読み込む
