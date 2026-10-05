@@ -25,5 +25,8 @@ private:
 	std::unique_ptr<DebugDraw> debugDraw;
 #endif // _DEBUG
 
+	// ヒットフラグ
+	bool isHit_ = false;
+
 };
 

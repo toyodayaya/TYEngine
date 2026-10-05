@@ -28,5 +28,6 @@ private:
 	// ステージデータ
 	StageData* stageData_ = nullptr;
 
-	
+	// フェードイン最大値
+	const float kMaxRadius_ = 0.5f;
 };

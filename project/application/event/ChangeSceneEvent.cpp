@@ -1,7 +1,7 @@
 #include "ChangeSceneEvent.h"
 #include "SceneManager.h"
-#include "Object3d.h"
-#include "Object3dCommon.h"
+#include "PlayerManager.h"
+#include "RenderTexture.h"
 #ifdef _DEBUG
 #include "DebugDrawCommon.h"
 #endif // _DEBUG
@@ -32,6 +32,19 @@ void ChangeSceneEvent::Finalize()
 
 void ChangeSceneEvent::Update()
 {
+	if (isHit_)
+	{
+		// フェードアウト演出
+		RenderTexture::GetInstance()->SceneChangeEffect();
+
+		if (RenderTexture::GetInstance()->GetRadiusData() <= 0.0f)
+		{
+			// シーンを切り替える
+			SceneManager::GetInstance()->ChangeScene("ResultScene");
+			return;
+		}
+
+	}
 	
 #ifdef _DEBUG
 	// デバッグ描画の更新処理
@@ -48,6 +61,16 @@ void ChangeSceneEvent::Draw()
 
 void ChangeSceneEvent::OnCollision()
 {
-	// プレイヤーが接触したらリザルトシーンへ
-	SceneManager::GetInstance()->ChangeScene("ResultScene");
+	if (isHit_)
+	{
+		return;
+	}
+
+	// プレイヤーが接触したら状態遷移
+	PlayerManager::GetInstance()->ChangePlayerState("StandByPlayer");
+	// ヒットフラグを立てる
+	isHit_ = true;
+	// フェードアウトフラグを立てる
+	RenderTexture::GetInstance()->SetIsFadeIn(false);
+
 }

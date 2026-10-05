@@ -34,7 +34,7 @@ void WinAPIManager::Initialize()
 	// ウインドウの生成
 	hwnd = CreateWindow(
 		wc.lpszClassName, // 利用するクラス名
-		L"ストライクトイ", // タイトルバーの文字
+		L"LE3C_16_トヨダ_ヤヤ_操玩郷", // タイトルバーの文字
 		WS_OVERLAPPEDWINDOW, // ウインドウスタイル
 		CW_USEDEFAULT, // 表示X座標（OSに任せる）
 		CW_USEDEFAULT, // 表示Y座標（OSに任せる）

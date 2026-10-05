@@ -11,6 +11,7 @@ void TitleScene::Initialize()
 {
 	// ポストエフェクトを指定
 	RenderTexture::GetInstance()->SetPostEffect(RenderTexture::PostEffect::kDoubleVignetting);
+	RenderTexture::GetInstance()->SetMaxRadius(kMaxRadius_);
 	RenderTexture::GetInstance()->SetIsFadeIn(true);
 
 	// テクスチャデータを読み込む
@@ -64,7 +65,7 @@ void TitleScene::Update()
 	if (RenderTexture::GetInstance()->GetRadiusData() <= 0.0f)
 	{
 		// シーンを切り替える
-		SceneManager::GetInstance()->ChangeScene("GamePlayScene");
+		SceneManager::GetInstance()->ChangeScene("TitleScene");
 		return;
 	}
 
