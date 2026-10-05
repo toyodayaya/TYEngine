@@ -500,7 +500,7 @@ void RenderTexture::SceneChangeEffect()
 	}
 	else
 	{
-		if (radiusData_->radius > 0.0f)
+		if (radiusData_->radius >= 0.0f)
 		{
 			radiusData_->radius -= 0.01f;
 		}

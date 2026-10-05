@@ -61,7 +61,7 @@ void TitleScene::Update()
 	// フェードイン演出
 	RenderTexture::GetInstance()->SceneChangeEffect();
 
-	if (RenderTexture::GetInstance()->GetRadiusData() < 0.0f)
+	if (RenderTexture::GetInstance()->GetRadiusData() <= 0.0f)
 	{
 		// シーンを切り替える
 		SceneManager::GetInstance()->ChangeScene("GamePlayScene");
