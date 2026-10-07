@@ -55,9 +55,9 @@ void RailCameraController::Initialize(const QuaternionTransform& transform)
 
 void RailCameraController::Update()
 {
-	if (PlayerManager::GetInstance()->GetPlayerState() == "StandByPlayer")
+	if (PlayerManager::GetInstance()->GetPlayerState() == "StartSequencePlayer")
 	{
-		// プレイヤーが待機状態なら処理しない
+		// プレイヤーがスタート演出中なら処理しない
 		return;
 	}
 

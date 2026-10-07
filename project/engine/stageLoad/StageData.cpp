@@ -469,7 +469,7 @@ void StageData::CreatePlayer(const PlayerSpawnData& playerData)
 	playerStateFactory = std::make_unique <PlayerStateFactory>();
 	PlayerManager::GetInstance()->SetPlayerStateFactory(std::move(playerStateFactory));
 	// プレイヤーマネージャーに最初のプレイヤーステートをセット
-	PlayerManager::GetInstance()->ChangePlayerState("StandByPlayer");
+	PlayerManager::GetInstance()->ChangePlayerState("StartSequencePlayer");
 	// プレイヤーの初期化
 	PlayerManager::GetInstance()->Initialize(playerData.transform, playerData.filePath, camera_);
 

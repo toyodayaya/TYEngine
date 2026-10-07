@@ -44,6 +44,8 @@ void Player::Update()
 #ifdef USE_IMGUI
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("pos", &transform_.translate.x);
+	ImGui::DragFloat4("rotate", &transform_.rotate.x);
+
 
 	ImGui::End();
 

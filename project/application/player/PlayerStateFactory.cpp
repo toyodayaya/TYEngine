@@ -1,6 +1,7 @@
 #include "PlayerStateFactory.h"
 #include "NormalPlayer.h"
 #include "StandByPlayer.h"
+#include "StartSequencePlayer.h"
 
 std::unique_ptr<BasePlayerState> PlayerStateFactory::CreatePlayerState(const std::string& playerState)
 {
@@ -14,6 +15,10 @@ std::unique_ptr<BasePlayerState> PlayerStateFactory::CreatePlayerState(const std
 	else if (playerState == "StandByPlayer")
 	{
 		nextPlayerState = std::make_unique<StandByPlayer>();
+	}
+	else if (playerState == "StartSequencePlayer")
+	{
+		nextPlayerState = std::make_unique<StartSequencePlayer>();
 	}
 
 	return nextPlayerState;

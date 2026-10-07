@@ -63,14 +63,6 @@ void GamePlayScene::Update()
 
 	// フェードイン演出
 	RenderTexture::GetInstance()->SceneChangeEffect();
-
-	if (PlayerManager::GetInstance()->GetPlayerState() == "StandByPlayer")
-	{
-		if (RenderTexture::GetInstance()->GetRadiusData() >= kMaxRadius_)
-		{
-			PlayerManager::GetInstance()->ChangePlayerState("NormalPlayer");
-		}
-	}
 }
 
 void GamePlayScene::Draw()
