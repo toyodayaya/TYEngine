@@ -44,6 +44,9 @@ public:
 	// シーンファクトリーのセット
 	void SetSceneFactory(std::unique_ptr<AbstractSceneFactory> sceneFactory) { sceneFactory_ = std::move(sceneFactory); }
 
+	// setter
+	void SetIsChangeScene(bool isSceneChange) { scene_->SetIsSceneChange(isSceneChange); }
+
 private:
 	// 実行中のシーン
 	std::unique_ptr<BaseScene> scene_;

@@ -1,5 +1,5 @@
 #include "DeadPlayer.h"
-#include "PlayerManager.h"
+#include "SceneManager.h"
 #include "MathManager.h"
 using namespace MathManager;
 
@@ -58,6 +58,8 @@ void DeadPlayer::Update()
 
 				// フェーズ切り替え
 				phase_ = kPlayerDead;
+				// シーン遷移フラグを立てる
+				SceneManager::GetInstance()->SetIsChangeScene(true);
 			}
 
 			// 線形補間用の変数をリセット
@@ -93,24 +95,15 @@ void DeadPlayer::Update()
 		}
 		else
 		{
-			// 死亡演出が終わっていたら
-			if (isReached_)
-			{
-				// ステートを変更する
-				//PlayerManager::GetInstance()->ChangePlayerState("NormalPlayer");
-			}
-			else
-			{
-				// それぞれの座標と角度を変更する
-				startPos_ = transform_.translate;
-				startAngle_ = transform_.rotate;
+			// それぞれの座標と角度を変更する
+			startPos_ = transform_.translate;
+			startAngle_ = transform_.rotate;
 
-				targetPos_.y = -6.0f;
-				targetAngle_.x = 6.0f;
+			targetPos_.y = -6.0f;
+			targetAngle_.x = 6.0f;
 
-				// 線形補間用の変数をリセット
-				t_ = 0.0f;
-			}
+			// 線形補間用の変数をリセット
+			t_ = 0.0f;
 
 		}
 

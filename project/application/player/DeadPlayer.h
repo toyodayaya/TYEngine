@@ -58,7 +58,5 @@ private:
 	std::random_device seedGenerator;
 	// 現在のフェーズ
 	Phase phase_ = kCameraShake;
-	// 上限まで行ったか判定するフラグ
-	bool isReached_ = false;
 };
 

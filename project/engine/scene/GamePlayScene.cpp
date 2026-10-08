@@ -56,13 +56,28 @@ void GamePlayScene::Update()
 	// skydomeの更新処理
 	skydome->Update();
 
-	if (Input::GetInstance()->TriggerKey(DIK_E))
-	{
-		SceneManager::GetInstance()->ChangeScene("TitleScene");
-	}
-
 	// フェードイン演出
 	RenderTexture::GetInstance()->SceneChangeEffect();
+
+	// フェードアウトフラグがないとき
+	if (RenderTexture::GetInstance()->IsFadeIn())
+	{
+		// シーン遷移フラグが立ったら
+		if (isChangeScene_)
+		{
+			// フェードアウト開始
+			RenderTexture::GetInstance()->SetIsFadeIn(false);
+		}
+	}
+	else
+	{
+		if (RenderTexture::GetInstance()->GetRadiusData() <= 0.0f)
+		{
+			// シーンを切り替える
+			SceneManager::GetInstance()->ChangeScene("TitleScene");
+			return;
+		}
+	}
 }
 
 void GamePlayScene::Draw()

@@ -105,6 +105,7 @@ public:
 	Camera* GetDefaultCamera() const { return defaultCamera_; }
 	Microsoft::WRL::ComPtr <ID3D12Resource> GetTexture() const { return texture_; }
 	float GetRadiusData() const { return radiusData_->radius; }
+	bool IsFadeIn() const { return isFadeIn_; }
 	// setter
 	void SetDefaultCamera(Camera* camera) { this->defaultCamera_ = camera; }
 	void SetPostEffect(PostEffect type) { this->type_ = type; }

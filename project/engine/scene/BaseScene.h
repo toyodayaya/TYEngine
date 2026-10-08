@@ -15,7 +15,12 @@ public:
 	// 仮想デストラクタ
 	virtual ~BaseScene() = default;
 
-private:
+	// setter
+	void SetIsSceneChange(bool isChangeScene) { isChangeScene_ = isChangeScene; }
+
+protected:
+	// シーン遷移フラグ
+	bool isChangeScene_ = false;
 	
 };
 
