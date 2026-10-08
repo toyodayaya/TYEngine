@@ -62,8 +62,10 @@ private:
 	Matrix4x4 reticleWorldMatrix;
 	// 自機から3Dレティクルまでの距離
 	const float kDistance_ = 5.0f;
+	// カメラから自機へのオフセット
+	Vector3 playerOffset_ = { 0.0f,0.0f,10.0f };
 	// 自機から3Dレティクルへのオフセット
-	Vector3 offset_ = { 0.0f,0.0f,10.0f };
+	Vector3 reticleOffset_ = { 0.0f,0.0f,10.0f };
 	// ロックオンのポインタ
 	std::unique_ptr<LockOn> lockOn_;
 

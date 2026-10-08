@@ -74,7 +74,7 @@ void GamePlayScene::Update()
 		if (RenderTexture::GetInstance()->GetRadiusData() <= 0.0f)
 		{
 			// シーンを切り替える
-			SceneManager::GetInstance()->ChangeScene("TitleScene");
+			SceneManager::GetInstance()->ChangeScene("GameOverScene");
 			return;
 		}
 	}

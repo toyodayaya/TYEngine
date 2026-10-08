@@ -52,7 +52,7 @@ void DeadPlayer::Update()
 		{
 			if (cameraShakeTime_ >= 0.5f)
 			{
-				cameraAngle_ = { 0.0f,0.0f,0.0f,1.0f };
+				cameraAngle_ = startCameraAngle_;
 				// カメラの角度を設定
 				camera_->SetRotate(cameraAngle_);
 

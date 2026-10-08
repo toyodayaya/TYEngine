@@ -26,7 +26,8 @@ void NormalPlayer::Initialize(Player* player)
 	object3d_->SetIsRailCamera(true);
 	transform_ = object3d_->GetTransform();
 	transform_.translate = object3d_->GetWorldTranslate();
-	transform_.translate = Vector3Add(transform_.translate, offset_);
+	transform_.rotate = { 0.0f,0.0f,0.0f,1.0f };
+	transform_.translate = Vector3Add(transform_.translate, playerOffset_);
 	isHit_ = false;
 
 	// 3Dレティクルオブジェクトの初期化
@@ -37,7 +38,7 @@ void NormalPlayer::Initialize(Player* player)
 	reticle_->SetTransform(transform_);
 	reticle_->SetIsRailCamera(true);
 	reticleTransform_ = transform_;
-	reticleTransform_.translate = Vector3Add(reticleTransform_.translate, offset_);
+	reticleTransform_.translate = Vector3Add(reticleTransform_.translate, reticleOffset_);
 
 	// ロックオンマークを初期化
 	lockOn_ = std::make_unique<LockOn>();
@@ -64,9 +65,10 @@ void NormalPlayer::Update()
 #ifdef USE_IMGUI
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("pos", &transform_.translate.x);
+	ImGui::DragFloat4("rotate", &transform_.rotate.x);
 	ImGui::DragFloat3("velocity", &velocity.x);
 	ImGui::DragFloat3("target", &targetPosition.x);
-
+	ImGui::DragFloat3("reticlePos", &reticleTransform_.translate.x);
 	ImGui::End();
 
 #endif // USE_IMGUI
@@ -84,6 +86,7 @@ void NormalPlayer::Draw()
 
 	object3d_->Draw();
 	lockOn_->Draw();
+	reticle_->Draw();
 }
 
 void NormalPlayer::Finalize()
@@ -127,11 +130,11 @@ void NormalPlayer::UpdateReticle()
 {
 	// 自機のワールド行列の回転を適用
 	Matrix4x4 world = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
-	offset_ = TransformNormal(offset_, world);
+	reticleOffset_ = TransformNormal(reticleOffset_, world);
 	// ベクトルの長さを整える
-	offset_ = FloatMultiply(Normalize(offset_), kDistance_);
+	reticleOffset_ = FloatMultiply(Normalize(reticleOffset_), kDistance_);
 	// 3Dレティクルの位置を決定
-	reticleTransform_.translate = Vector3Add(transform_.translate, offset_);
+	reticleTransform_.translate = Vector3Add(transform_.translate, reticleOffset_);
 	reticle_->SetTransform(reticleTransform_);
 
 	// 3Dオブジェクトの更新

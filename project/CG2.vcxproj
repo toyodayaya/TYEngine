@@ -174,6 +174,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\player\PlayerStateFactory.cpp" />
     <ClCompile Include="application\player\PlayerManager.cpp" />
     <ClCompile Include="engine\animation\AnimationCommon.cpp" />
+    <ClCompile Include="engine\scene\GameOverScene.cpp" />
     <ClCompile Include="engine\scene\BaseScene.cpp" />
     <ClCompile Include="engine\audio\Audio.cpp" />
     <ClCompile Include="engine\base\Camera.cpp" />
@@ -410,6 +411,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\player\PlayerStateFactory.h" />
     <ClInclude Include="application\player\PlayerManager.h" />
     <ClInclude Include="engine\animation\AnimationCommon.h" />
+    <ClInclude Include="engine\scene\GameOverScene.h" />
     <ClInclude Include="engine\scene\AbstractSceneFactory.h" />
     <ClInclude Include="engine\scene\BaseScene.h" />
     <ClInclude Include="engine\audio\Audio.h" />
