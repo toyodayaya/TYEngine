@@ -69,7 +69,6 @@ void TitleCameraEvent::Move()
 		t_ = 0.0f;
 
 		// 乱数生成器の初期化
-		std::random_device seedGenerator;
 		std::mt19937 randomEngine(seedGenerator());
 
 		// ランダムの範囲

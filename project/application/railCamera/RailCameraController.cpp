@@ -55,46 +55,45 @@ void RailCameraController::Initialize(const QuaternionTransform& transform)
 
 void RailCameraController::Update()
 {
-	if (PlayerManager::GetInstance()->GetPlayerState() == "StartSequencePlayer")
+	if (PlayerManager::GetInstance()->GetPlayerState() == "NormalPlayer")
 	{
-		// プレイヤーがスタート演出中なら処理しない
-		return;
-	}
+		// プレイヤーが移動中のみ処理する
+		
+	    // カメラの座標を求める
+		t += 0.001f;
+		Vector3 pos = CatmullRomPosition(railPoints_, t);
+		transform_.translate = pos;
 
-	// カメラの座標を求める
-	t += 0.001f;
-	Vector3 pos = CatmullRomPosition(railPoints_, t);
-	transform_.translate = pos;
+		// カメラの角度を求める
+		float targetT = t + offset_;
+		Vector3 target = CatmullRomPosition(railPoints_, targetT);
+		Vector3 forward = Vector3Subtract(target, pos);
+		forward = Normalize(forward);
+		// Y軸周り角度
+		float yaw = std::atan2(forward.x, forward.z);
+		transform_.rotate.y = yaw;
+		// Y軸周りの回転行列
+		Matrix4x4 rotate = MakeRotateYMatrix(yaw);
+		Vector3 velocityZ = TransformNormal(forward, rotate);
+		// X軸周り角度
+		transform_.rotate.x = std::atan2(-velocityZ.y, velocityZ.z);
 
-	// カメラの角度を求める
-	float targetT = t + offset_;
-	Vector3 target = CatmullRomPosition(railPoints_, targetT);
-	Vector3 forward = Vector3Subtract(target,pos);
-	forward = Normalize(forward);
-	// Y軸周り角度
-	float yaw = std::atan2(forward.x, forward.z);
-	transform_.rotate.y = yaw;
-	// Y軸周りの回転行列
-	Matrix4x4 rotate = MakeRotateYMatrix(yaw);
-	Vector3 velocityZ = TransformNormal(forward, rotate);
-	// X軸周り角度
-	transform_.rotate.x = std::atan2(-velocityZ.y, velocityZ.z);
-
-	// カメラに反映
-	camera_->SetTransform(transform_);
-	camera_->Update();
+		// カメラに反映
+		camera_->SetTransform(transform_);
+		camera_->Update();
 
 #ifdef _DEBUG
-	// デバッグ描画の更新
-	debugLine_->UpdateLine();
+		// デバッグ描画の更新
+		debugLine_->UpdateLine();
 
-	for (auto& debugDraw : debugPoint_)
-	{
-		debugDraw->Update();
-	}
+		for (auto& debugDraw : debugPoint_)
+		{
+			debugDraw->Update();
+		}
 
 #endif // _DEBUG
-	
+	}
+
 }
 
 void RailCameraController::Draw()

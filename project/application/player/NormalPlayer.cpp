@@ -7,6 +7,7 @@
 #include "Input.h"
 #include "BulletManager.h"
 #include "SceneManager.h"
+#include "PlayerManager.h"
 
 #ifdef _DEBUG
 #include "DebugDraw.h"
@@ -90,12 +91,13 @@ void NormalPlayer::Finalize()
 
 void NormalPlayer::OnCollision()
 {
-	//isDead_ = true;
+	// ステートを変更する
+	PlayerManager::GetInstance()->ChangePlayerState("DeadPlayer");
 }
 
 void NormalPlayer::CreateBullet()
 {
-	
+
 	if (lockOn_->GetTarget())
 	{
 		targetPosition = lockOn_->GetTarget()->GetWorldTranslate();
@@ -110,13 +112,13 @@ void NormalPlayer::CreateBullet()
 	bulletTransform.translate = GetWorldTranslate();
 
 	// 速度を算出
-	velocity = Vector3Subtract(targetPosition,bulletTransform.translate);
+	velocity = Vector3Subtract(targetPosition, bulletTransform.translate);
 	velocity = Normalize(velocity);
 	velocity = FloatMultiply(velocity, kBulletSpeed_);
 
 	// 生成と初期化
 	std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
-	bullet->Initialize(bulletTransform, filePath_, velocity,false);
+	bullet->Initialize(bulletTransform, filePath_, velocity, false);
 	BulletManager::GetInstance()->SetBullets(std::move(bullet));
 
 }
@@ -144,7 +146,7 @@ void NormalPlayer::UpdateReticle()
 #ifdef USE_IMGUI
 	ImGui::Begin("Reticle");
 	ImGui::DragFloat3("pos", &reticleTransform_.translate.x);
-	
+
 	ImGui::End();
 
 #endif // USE_IMGUI

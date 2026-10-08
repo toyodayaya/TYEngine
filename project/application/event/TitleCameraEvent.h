@@ -2,6 +2,7 @@
 #include "BaseEvent.h"
 #include "EventManager.h"
 #include "Camera.h"
+#include <random>
 
 #ifdef _DEBUG
 #include "DebugDraw.h"
@@ -40,5 +41,8 @@ private:
 	Quaternion angle_;
 	Quaternion targetAngle_;
 	Quaternion startAngle_;
+
+	// 乱数生成器
+	std::random_device seedGenerator;
 };
 
