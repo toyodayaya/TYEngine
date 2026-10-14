@@ -54,7 +54,8 @@ void GameOverScene::Initialize()
 
 void GameOverScene::Finalize()
 {
-
+	stageData_->ClearStage();
+	stageData_ = nullptr;
 }
 
 void GameOverScene::Update()
