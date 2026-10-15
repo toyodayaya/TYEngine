@@ -44,11 +44,11 @@ void GameOverScene::Initialize()
 	cursor_->SetPosition(Vector2{ 600.0f,300.0f });
 
 	// ステージを読み込む
-	StageManager::GetInstance()->LoadJsonData("resources/stages", "title.json");
+	StageManager::GetInstance()->LoadJsonData("resources/stages", "gameover.json");
 	// ステージを設定する
-	stageData_ = StageManager::GetInstance()->FindJsonData("title.json");
+	stageData_ = StageManager::GetInstance()->FindJsonData("gameover.json");
 	// ステージを作成する
-	stageData_->CreateStage("title.json");
+	stageData_->CreateStage("gameover.json");
 
 }
 
@@ -67,6 +67,9 @@ void GameOverScene::Update()
 	ImGui::End();
 
 #endif // USE_IMGUI
+
+	// ステージを更新
+	stageData_->Update();
 
 	// カーソルを動かす処理
 	MoveCursor();
@@ -111,6 +114,9 @@ void GameOverScene::Update()
 
 void GameOverScene::Draw()
 {
+	// ステージを描画
+	stageData_->Draw();
+
 	// スプライトの描画
 	gameOver_->Draw();
 	cursor_->Draw();
