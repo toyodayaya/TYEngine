@@ -42,8 +42,6 @@ public:
 
 private:
 
-	// 当たり判定フラグ
-	bool isHit_;
 	// ファイル名
 	std::string filePath_ = "cube.obj";
 

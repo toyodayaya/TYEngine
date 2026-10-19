@@ -11,6 +11,7 @@ public:
 	// getter
 	QuaternionTransform GetTransform() { return transform_; }
 	bool IsDead() { return isDead_; }
+	bool IsHit() { return isHit_; }
 	Vector3 GetWorldTranslate() { return { worldMatrix.m[3][0], worldMatrix.m[3][1], worldMatrix.m[3][2]}; }
 	
 
@@ -31,6 +32,10 @@ protected:
 	QuaternionTransform transform_;
 	// デスフラグ
 	bool isDead_ = false;
+	// 当たり判定フラグ
+	bool isHit_;
+	// ヒットタイマー
+	float hitTimer_ = 0.0f;
 	// ワールド行列
 	Matrix4x4 worldMatrix;
 

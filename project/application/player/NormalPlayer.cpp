@@ -8,6 +8,7 @@
 #include "BulletManager.h"
 #include "SceneManager.h"
 #include "PlayerManager.h"
+#include <cmath>
 
 #ifdef _DEBUG
 #include "DebugDraw.h"
@@ -47,6 +48,13 @@ void NormalPlayer::Initialize(Player* player)
 
 void NormalPlayer::Update()
 {
+	// ヒットフラグが立っていたら
+	if (isHit_)
+	{
+		// ヒットタイマーを更新する
+		HitTimerUpdate();
+	}
+
 	// キー入力で弾を生成
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE))
 	{
@@ -78,13 +86,21 @@ void NormalPlayer::Update()
 
 void NormalPlayer::Draw()
 {
-	// 当たっていたら非表示にする
+	// ヒットフラグが立っていたら
 	if (isHit_)
 	{
-		return;
+		// 点滅させる
+		if (hitTimer_ % 2  == 0.0f)
+		{
+			object3d_->Draw();
+		}
+	}
+	else
+	{
+		// オブジェクトを描画する
+		object3d_->Draw();
 	}
 
-	object3d_->Draw();
 	lockOn_->Draw();
 	reticle_->Draw();
 }
@@ -94,8 +110,18 @@ void NormalPlayer::Finalize()
 
 void NormalPlayer::OnCollision()
 {
-	// ステートを変更する
-	PlayerManager::GetInstance()->ChangePlayerState("DeadPlayer");
+	// HPが0になったら
+	if (hp_ <= 0)
+	{
+		// ステートを変更する
+		PlayerManager::GetInstance()->ChangePlayerState("DeadPlayer");
+	}
+	else
+	{
+		// ヒットフラグを立てる
+		isHit_ = true;
+	}
+
 }
 
 void NormalPlayer::CreateBullet()
@@ -197,4 +223,20 @@ void NormalPlayer::Move()
 
 	// 3Dオブジェクトを更新
 	object3d_->Update();
+}
+
+void NormalPlayer::HitTimerUpdate()
+{
+	// ヒットタイマーが0になったら
+	if (hitTimer_ <= 0)
+	{
+		// フラグを元に戻す
+		isHit_ = false;
+		hitTimer_ = 60;
+	}
+	else
+	{
+		// ヒットタイマーを減らす
+		hitTimer_--;
+	}
 }

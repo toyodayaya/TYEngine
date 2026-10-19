@@ -32,6 +32,8 @@ public:
 	// プレイヤーの移動処理
 	void Move();
 
+	// ヒットタイマー更新処理
+	void HitTimerUpdate();
 	
 	// getter
 	Vector3 GetWorldTranslate() { return { worldMatrix.m[3][0], worldMatrix.m[3][1], worldMatrix.m[3][2] }; }
@@ -46,7 +48,9 @@ private:
 	Matrix4x4 worldMatrix;
 
 	// 当たり判定フラグ
-	bool isHit_;
+	bool isHit_ = false;
+	// ヒットタイマー
+	int hitTimer_ = 60;
 	// ファイル名
 	std::string filePath_ = "cube.obj";
 	std::string spriteFilePath_ = "resources/sprite/circle.png";
