@@ -24,5 +24,5 @@ void StandByPlayer::Draw()
 void StandByPlayer::Finalize()
 {}
 
-void StandByPlayer::OnCollision()
+void StandByPlayer::OnCollision(std::string hitObjectType)
 {}

@@ -16,7 +16,7 @@ public:
 	void Finalize() override;
 
 	// 衝突応答
-	void OnCollision() override;
+	void OnCollision(std::string hitObjectType) override;
 
 	// ヒットタイマー更新処理
 	void HitTimerUpdate();

@@ -1,5 +1,6 @@
 #include "PlayerManager.h"
 #include <cassert>
+#include "NormalPlayer.h"
 
 std::unique_ptr<PlayerManager> PlayerManager::instance = nullptr;
 
@@ -10,6 +11,17 @@ PlayerManager* PlayerManager::GetInstance()
 		instance = std::make_unique<PlayerManager>(ConstructorKey());
 	}
 	return instance.get();
+}
+
+void PlayerManager::SetBeamPoint(int point)
+{
+	// プレイヤーステートが通常の時のみ
+	if (playerStateName_ == "NormalPlayer")
+	{
+		// 引数で受け取ったポイントを加算
+		NormalPlayer* normalPlayer = dynamic_cast<NormalPlayer*>(player_->GetPlayerState());
+		normalPlayer->SetBeamPoint(point);
+	}
 }
 
 void PlayerManager::Initialize(const QuaternionTransform& transform, const std::string filePath, Camera* camera)

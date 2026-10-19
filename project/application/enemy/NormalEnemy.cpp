@@ -1,4 +1,5 @@
 #include "NormalEnemy.h"
+#include "PlayerManager.h"
 #ifdef _DEBUG
 #include "DebugDraw.h"
 #include "DebugDrawCommon.h"
@@ -53,7 +54,7 @@ void NormalEnemy::Draw()
 void NormalEnemy::Finalize()
 {}
 
-void NormalEnemy::OnCollision()
+void NormalEnemy::OnCollision(std::string hitObjectType)
 {
 	if (isHit_)
 	{
@@ -61,15 +62,25 @@ void NormalEnemy::OnCollision()
 		return;
 	}
 
-
-	// HPを減らす
-	hp_--;
-
-	// HPが0になったら
-	if (hp_ <= 0)
+	// 当たったオブジェクトのタイプで分岐
+	if (hitObjectType == "PlayerSpawn")
 	{
-		// ステートを変更する
-		//enemy_->ChangeEnemyState("DeadEnemy");
+
+	}
+	else if (hitObjectType == "BulletSpawn")
+	{
+		// HPを減らす
+		hp_--;
+
+		// ビームポイントを加算
+		PlayerManager::GetInstance()->SetBeamPoint(5);
+
+		// HPが0になったら
+		if (hp_ <= 0)
+		{
+			// ステートを変更する
+			//enemy_->ChangeEnemyState("DeadEnemy");
+		}
 	}
 
 	// ヒットフラグを立てる

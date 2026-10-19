@@ -39,7 +39,7 @@ void TitleCameraEvent::Draw()
 
 }
 
-void TitleCameraEvent::OnCollision()
+void TitleCameraEvent::OnCollision(std::string hitObjectType)
 {
 	
 }

@@ -20,7 +20,7 @@ public:
 	// 描画
 	void Draw() override;
 	// 衝突応答
-	void OnCollision() override;
+	void OnCollision(std::string hitObjectType) override;
 
 	// カメラを動かす関数
 	void Move();

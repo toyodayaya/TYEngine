@@ -21,7 +21,7 @@ public:
 	void Finalize() override;
 
 	// 衝突応答
-	void OnCollision() override;
+	void OnCollision(std::string hitObjectType) override;
 
 	// 弾の生成処理
 	void CreateBullet();
@@ -40,6 +40,9 @@ public:
 	// getter
 	Vector3 GetWorldTranslate() { return { worldMatrix.m[3][0], worldMatrix.m[3][1], worldMatrix.m[3][2] }; }
 	Vector3 GetReticleWorldTranslate() { return { reticleWorldMatrix.m[3][0], reticleWorldMatrix.m[3][1], reticleWorldMatrix.m[3][2] }; }
+
+	// setter
+	void SetBeamPoint(int point);
 
 private:
 	// プレイヤーのポインタ
@@ -83,6 +86,9 @@ private:
 	int beamFireInterval_ = 3;
 	// ビーム
 	std::vector<std::unique_ptr<Bullet>> beamBullet_;
+	// ビーム発射可能ポイント
+	const int kCanFireBeamPoint = 10;
+	int currentBeamPoint_ = 0;
 
 	Vector3 velocity;
 	Vector3 targetPosition;

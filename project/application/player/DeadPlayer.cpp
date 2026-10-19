@@ -134,5 +134,5 @@ void DeadPlayer::Draw()
 void DeadPlayer::Finalize()
 {}
 
-void DeadPlayer::OnCollision()
+void DeadPlayer::OnCollision(std::string hitObjectType)
 {}

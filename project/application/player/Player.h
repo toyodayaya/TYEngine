@@ -27,7 +27,7 @@ public:
 	void Finalize() override;
 
 	// 衝突応答
-	void OnCollision() override;
+	void OnCollision(std::string hitObjectType) override;
 
 	// プレイヤーステートを変更する
 	void ChangePlayerState(std::unique_ptr<BasePlayerState> nextState);
@@ -39,6 +39,7 @@ public:
 	// getter
 	Object3d* GetObject3d() { return object3d_.get(); }
 	Camera* GetCamera() { return camera_; }
+	BasePlayerState* GetPlayerState() { return state_.get(); }
 
 private:
 

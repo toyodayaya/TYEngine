@@ -36,7 +36,7 @@ void Bullet::Initialize(const QuaternionTransform& transform, const std::string&
 	colliders.center = Vector3{ 0.0f,0.0f,0.0f };
 	colliders.size = transform.scale;
 	colliders.parent = this;
-	colliders.objectType = "PlayerSpawn";
+	colliders.objectType = "BulletSpawn";
 	CollisionManager::GetInstance()->SetColliders(colliders);
 
 	isDead_ = false;
@@ -94,7 +94,16 @@ void Bullet::Draw()
 
 }
 
-void Bullet::OnCollision()
+void Bullet::OnCollision(std::string hitObjectType)
 {
-	isDead_ = true;
+	// 当たったオブジェクトのタイプで分岐
+	if (hitObjectType == "PlayerSpawn")
+	{
+		// プレイヤーだったらスキップ
+		return;
+	}
+	else if (hitObjectType == "EnemySpawn")
+	{
+		isDead_ = true;
+	}
 }

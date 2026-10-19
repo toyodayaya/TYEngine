@@ -59,18 +59,21 @@ void ChangeSceneEvent::Draw()
 #endif // _DEBUG
 }
 
-void ChangeSceneEvent::OnCollision()
+void ChangeSceneEvent::OnCollision(std::string hitObjectType)
 {
 	if (isHit_)
 	{
 		return;
 	}
 
-	// プレイヤーが接触したら状態遷移
-	PlayerManager::GetInstance()->ChangePlayerState("StandByPlayer");
-	// ヒットフラグを立てる
-	isHit_ = true;
-	// フェードアウトフラグを立てる
-	RenderTexture::GetInstance()->SetIsFadeIn(false);
-
+	// 当たったオブジェクトのタイプで分岐
+	if (hitObjectType == "PlayerSpawn")
+	{
+		// プレイヤーが接触したら状態遷移
+		PlayerManager::GetInstance()->ChangePlayerState("StandByPlayer");
+		// ヒットフラグを立てる
+		isHit_ = true;
+		// フェードアウトフラグを立てる
+		RenderTexture::GetInstance()->SetIsFadeIn(false);
+	}
 }

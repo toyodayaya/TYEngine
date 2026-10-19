@@ -80,8 +80,14 @@ void NormalPlayer::Update()
 		}
 		else if (Input::GetInstance()->TriggerKey(DIK_RETURN))
 		{
-			// ビーム発射可能フラグを立てる
-			canFireBeam_ = true;
+			// ポイントが貯まっていたら
+			if (currentBeamPoint_ >= kCanFireBeamPoint)
+			{
+				// ビーム発射可能フラグを立てる
+				canFireBeam_ = true;
+				// ビームポイントをリセット
+				currentBeamPoint_ = 0;
+			}
 		}
 	}
 
@@ -131,7 +137,7 @@ void NormalPlayer::Draw()
 void NormalPlayer::Finalize()
 {}
 
-void NormalPlayer::OnCollision()
+void NormalPlayer::OnCollision(std::string hitObjectType)
 {
 	if (isHit_)
 	{
@@ -139,16 +145,25 @@ void NormalPlayer::OnCollision()
 		return;
 	}
 
-
-	// HPを減らす
-	hp_--;
-
-	// HPが0になったら
-	if (hp_ <= 0)
+	// 当たったオブジェクトのタイプで分岐
+	if (hitObjectType == "BulletSpawn")
 	{
-		// ステートを変更する
-		PlayerManager::GetInstance()->ChangePlayerState("DeadPlayer");
+		// 自弾だったらスキップ
+		return;
 	}
+	else if (hitObjectType == "EnemySpawn")
+	{
+		// HPを減らす
+		hp_--;
+
+		// HPが0になったら
+		if (hp_ <= 0)
+		{
+			// ステートを変更する
+			PlayerManager::GetInstance()->ChangePlayerState("DeadPlayer");
+		}
+	}
+
 
 	// ヒットフラグを立てる
 	isHit_ = true;
@@ -307,5 +322,17 @@ void NormalPlayer::HitTimerUpdate()
 	{
 		// ヒットタイマーを減らす
 		hitTimer_--;
+	}
+}
+
+void NormalPlayer::SetBeamPoint(int point)
+{
+	// 引数で受け取ったポイントを加算
+	currentBeamPoint_ += point;
+
+	// ポイント上限を超えたらカンスト
+	if (kCanFireBeamPoint <= currentBeamPoint_)
+	{
+		currentBeamPoint_ = kCanFireBeamPoint;
 	}
 }

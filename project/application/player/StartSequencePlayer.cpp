@@ -43,5 +43,5 @@ void StartSequencePlayer::Draw()
 void StartSequencePlayer::Finalize()
 {}
 
-void StartSequencePlayer::OnCollision()
+void StartSequencePlayer::OnCollision(std::string hitObjectType)
 {}

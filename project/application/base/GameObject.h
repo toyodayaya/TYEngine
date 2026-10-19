@@ -23,7 +23,7 @@ public:
 	virtual void Finalize() = 0;
 
 	// オブジェクトの衝突応答
-	virtual void OnCollision() = 0;
+	virtual void OnCollision(std::string hitObjectType) = 0;
 
 	// 仮想デストラクタ
 	virtual ~GameObject() = default;

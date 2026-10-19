@@ -71,10 +71,10 @@ void Player::Draw()
 void Player::Finalize()
 {}
 
-void Player::OnCollision()
+void Player::OnCollision(std::string hitObjectType)
 {
 	// 衝突応答
-	state_->OnCollision();
+	state_->OnCollision(hitObjectType);
 }
 
 void Player::ChangePlayerState(std::unique_ptr<BasePlayerState> nextState)

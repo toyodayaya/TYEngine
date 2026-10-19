@@ -54,6 +54,8 @@ public:
 	// getter
 	const std::unique_ptr<Player>& GetPlayer()  { return player_; }
 	const std::string& GetPlayerState() { return playerStateName_; }
+	// setter
+	void SetBeamPoint(int point);
 
 private:
 	// プレイヤーの本体ポインタ
