@@ -38,8 +38,7 @@ public:
 	void Draw();
 	// 終了
 	void Finalize();
-
-
+	
 	// setter
 	void SetEnemies(std::unique_ptr<BaseEnemy> enemy) { enemies_.push_back(std::move(enemy)); }
 	// getter

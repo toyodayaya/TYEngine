@@ -464,7 +464,7 @@ StageData::PlayerSpawnData StageData::LoadPlayer(nlohmann::json& player)
 
 void StageData::CreatePlayer(const PlayerSpawnData& playerData)
 {
-	
+
 	// プレイヤーステートファクトリーの生成とセット
 	playerStateFactory = std::make_unique <PlayerStateFactory>();
 	PlayerManager::GetInstance()->SetPlayerStateFactory(std::move(playerStateFactory));
@@ -527,8 +527,15 @@ StageData::EnemySpawnData StageData::LoadEnemy(nlohmann::json& enemy)
 
 void StageData::CreateEnemy(const EnemySpawnData& enemyData)
 {
+
+	// 敵の初期化
 	std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>();
 	enemy->Initialize(enemyData.transform, enemyData.filePath);
+	// 敵ステートファクトリーの生成とセット
+	enemyStateFactory = std::make_unique <EnemyStateFactory>();
+	enemy->SetEnemyStateFactory(std::move(enemyStateFactory));
+	// 敵に最初のプレイヤーステートをセット
+	enemy->ChangeEnemyState("NormalEnemy");
 
 	// コライダーがあれば生成、配置
 	if (enemyData.collider.hasCollier)

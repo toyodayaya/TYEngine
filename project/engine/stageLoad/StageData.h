@@ -4,6 +4,7 @@
 #include "Object3d.h"
 #include "PlayerStateFactory.h"
 #include "Enemy.h"
+#include "EnemyStateFactory.h"
 #include "Bullet.h"
 #include "ChangePostEffectEvent.h"
 #include "ChangeSceneEvent.h"
@@ -154,6 +155,8 @@ private:
 	std::unique_ptr <PlayerStateFactory> playerStateFactory;
 	// プレイヤー実在フラグ
 	bool isPlayerReality_;
+	// 敵ステートファクトリー
+	std::unique_ptr<EnemyStateFactory> enemyStateFactory;
 	// コライダーデータ
 	// 制御点データ
 	std::vector<Vector3> railPoints_;

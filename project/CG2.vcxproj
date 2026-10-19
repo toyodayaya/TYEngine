@@ -159,6 +159,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\bullet\Bullet.cpp" />
     <ClCompile Include="application\bullet\BulletManager.cpp" />
     <ClCompile Include="application\damage\DamageManager.cpp" />
+    <ClCompile Include="application\enemy\BaseEnemyState.cpp" />
+    <ClCompile Include="application\enemy\EnemyStateFactory.cpp" />
+    <ClCompile Include="application\enemy\NormalEnemy.cpp" />
     <ClCompile Include="application\event\TitleCameraEvent.cpp" />
     <ClCompile Include="application\enemy\Enemy.cpp" />
     <ClCompile Include="application\event\BaseEvent.cpp" />
@@ -395,6 +398,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\bullet\Bullet.h" />
     <ClInclude Include="application\bullet\BulletManager.h" />
     <ClInclude Include="application\damage\DamageManager.h" />
+    <ClInclude Include="application\enemy\AbstractEnemyStateFactory.h" />
+    <ClInclude Include="application\enemy\BaseEnemyState.h" />
+    <ClInclude Include="application\enemy\EnemyStateFactory.h" />
+    <ClInclude Include="application\enemy\NormalEnemy.h" />
     <ClInclude Include="application\event\TitleCameraEvent.h" />
     <ClInclude Include="application\enemy\Enemy.h" />
     <ClInclude Include="application\event\BaseEvent.h" />

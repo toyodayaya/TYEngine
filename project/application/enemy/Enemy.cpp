@@ -39,6 +39,17 @@ void Enemy::Finalize()
 
 void Enemy::Update()
 {
+
+	// 敵ステート切り替え
+
+	// 次敵ステートの予約があったら
+	if (nextEnemyState_)
+	{
+		// ステートを変更する
+		ChangeEnemyState(std::move(nextEnemyState_));
+	}
+
+	// 敵を更新する
 	if (isHit_)
 	{
 		hitTimer_--;
@@ -50,7 +61,8 @@ void Enemy::Update()
 
 	}
 
-	object3d_->Update();
+	// ステートを更新する
+	state_->Update();
 
 #ifdef _DEBUG
 	debugDraw->UpdateBox();
@@ -60,8 +72,8 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
-	object3d_->Draw();
-
+	// ステートを描画する
+	state_->Draw();
 #ifdef _DEBUG
 	debugDraw->DrawBox();
 
@@ -70,18 +82,6 @@ void Enemy::Draw()
 
 void Enemy::OnCollision()
 {
-	if (!isHit_ && !isDead_)
-	{
-		hp_ -= 5;
-
-		if (hp_ <= 0)
-		{
-			isDead_ = true;
-		}
-		else
-		{
-			isHit_ = true;
-			DamageManager::GetInstance()->AddScore(10);
-		}
-	}
+	// 衝突応答
+	state_->OnCollision();
 }

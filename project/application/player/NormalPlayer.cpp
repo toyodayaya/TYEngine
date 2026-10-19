@@ -102,7 +102,6 @@ void NormalPlayer::Draw()
 	}
 
 	lockOn_->Draw();
-	reticle_->Draw();
 }
 
 void NormalPlayer::Finalize()
