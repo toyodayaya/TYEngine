@@ -89,7 +89,7 @@
                     1.0
                 ]
             },
-            "file_name": "box.obj"
+            "file_name": "floor.obj"
         },
         {
             "type": "MESH",
@@ -112,7 +112,7 @@
                     2.0
                 ]
             },
-            "file_name": "box.obj"
+            "file_name": "normal.obj"
         },
         {
             "type": "MESH",
@@ -135,7 +135,7 @@
                     5.170657634735107
                 ]
             },
-            "file_name": "box.obj"
+            "file_name": "normal.obj"
         },
         {
             "type": "MESH",
@@ -158,7 +158,7 @@
                     8.585723876953125
                 ]
             },
-            "file_name": "box.obj"
+            "file_name": "tall.obj"
         },
         {
             "type": "MESH",
@@ -181,7 +181,7 @@
                     2.0
                 ]
             },
-            "file_name": "box.obj"
+            "file_name": "tall.obj"
         },
         {
             "type": "MESH",

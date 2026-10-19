@@ -22,6 +22,10 @@ void TitleScene::Initialize()
 	// objファイルからモデルを読み込む
 	ModelManager::GetInstance()->LoadModel("resources/model", "box.obj", Model::AnimationType::kNone);
 	ModelManager::GetInstance()->LoadModel("resources/skydome", "skydome.obj", Model::AnimationType::kNone);
+	ModelManager::GetInstance()->LoadModel("resources/object", "tall.obj", Model::AnimationType::kNone);
+	ModelManager::GetInstance()->LoadModel("resources/object", "normal.obj", Model::AnimationType::kNone);
+	ModelManager::GetInstance()->LoadModel("resources/object", "floor.obj", Model::AnimationType::kNone);
+
 
 	// タイトルロゴを初期化
 	titleLogo_ = std::make_unique<Sprite>();
