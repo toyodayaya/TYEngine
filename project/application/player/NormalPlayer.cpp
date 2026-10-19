@@ -90,7 +90,7 @@ void NormalPlayer::Draw()
 	if (isHit_)
 	{
 		// 点滅させる
-		if (hitTimer_ % 2  == 0.0f)
+		if (hitTimer_ % 2 == 0.0f)
 		{
 			object3d_->Draw();
 		}
@@ -110,17 +110,25 @@ void NormalPlayer::Finalize()
 
 void NormalPlayer::OnCollision()
 {
+	if (isHit_)
+	{
+		// 既に当たっていたら処理しない
+		return;
+	}
+
+
+	// HPを減らす
+	hp_--;
+
 	// HPが0になったら
 	if (hp_ <= 0)
 	{
 		// ステートを変更する
 		PlayerManager::GetInstance()->ChangePlayerState("DeadPlayer");
 	}
-	else
-	{
-		// ヒットフラグを立てる
-		isHit_ = true;
-	}
+
+	// ヒットフラグを立てる
+	isHit_ = true;
 
 }
 

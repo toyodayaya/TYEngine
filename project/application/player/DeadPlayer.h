@@ -48,6 +48,7 @@ private:
 	Quaternion startAngle_;
 	Quaternion startCameraAngle_;
 	Quaternion cameraAngle_;
+	Quaternion initCameraAngle_;
 	// カメラ移動フラグ
 	bool isMoveCamera_ = false;
 	// カメラシェイク時間

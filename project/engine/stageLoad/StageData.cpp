@@ -117,9 +117,8 @@ void StageData::CheckAllCollision()
 				continue;
 			}
 
-			// デスフラグかヒットフラグが立っていたらスキップ
-			if (colliders.parent->IsDead() || collidersHit.parent->IsDead()
-				|| colliders.parent->IsHit() || collidersHit.parent->IsHit())
+			// デスフラグか立っていたらスキップ
+			if (colliders.parent->IsDead() || collidersHit.parent->IsDead())
 			{
 				continue;
 			}

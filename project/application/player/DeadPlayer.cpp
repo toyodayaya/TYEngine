@@ -1,5 +1,6 @@
 #include "DeadPlayer.h"
 #include "SceneManager.h"
+#include "ImGuiManager.h"
 #include "MathManager.h"
 using namespace MathManager;
 
@@ -13,16 +14,27 @@ void DeadPlayer::Initialize(Player* player)
 	object3d_ = player_->GetObject3d();
 	object3d_->SetIsRailCamera(false);
 	transform_ = object3d_->GetTransform();
+	transform_.translate = player_->GetWorldTranslate();
 	startAngle_ = object3d_->GetRotate();
 	startPos_ = player_->GetWorldTranslate();
 	targetPos_ = player_->GetWorldTranslate();
 	targetPos_.y += 3.0f;
 	targetAngle_ = object3d_->GetRotate();
 	targetAngle_.x = -3.0f;
+	initCameraAngle_ = camera_->GetRotate();
 }
 
 void DeadPlayer::Update()
 {
+
+#ifdef USE_IMGUI
+	ImGui::Begin("DeadPlayer");
+	ImGui::DragFloat3("pos", &transform_.translate.x);
+	ImGui::DragFloat4("rotate", &transform_.rotate.x);
+	ImGui::End();
+
+#endif // USE_IMGUI
+
 	// フェーズによって分岐
 	switch (phase_)
 	{
@@ -52,9 +64,8 @@ void DeadPlayer::Update()
 		{
 			if (cameraShakeTime_ >= 0.5f)
 			{
-				cameraAngle_ = startCameraAngle_;
 				// カメラの角度を設定
-				camera_->SetRotate(cameraAngle_);
+				camera_->SetRotate(initCameraAngle_);
 
 				// フェーズ切り替え
 				phase_ = kPlayerDead;
@@ -75,8 +86,8 @@ void DeadPlayer::Update()
 			// カメラの次の角度を決定
 			startCameraAngle_ = camera_->GetRotate();
 			targetCameraAngle_ = camera_->GetRotate();
-			targetCameraAngle_.x = distribution(randomEngine);
-			targetCameraAngle_.y = distributionY(randomEngine);
+			targetCameraAngle_.x += distribution(randomEngine);
+			targetCameraAngle_.y += distributionY(randomEngine);
 
 			// フラグを立てる
 			isMoveCamera_ = true;
@@ -107,11 +118,11 @@ void DeadPlayer::Update()
 
 		}
 
-		object3d_->SetTransform(transform_);
-		object3d_->Update();
+		
 		break;
 	}
-
+object3d_->SetTransform(transform_);
+		object3d_->Update();
 
 }
 
