@@ -5,7 +5,7 @@ using namespace MathManager;
 
 class Object3d;
 
-class BaseCharacter
+class GameObject
 {
 public:
 	// getter
@@ -25,7 +25,7 @@ public:
 	virtual void OnCollision() = 0;
 
 	// 仮想デストラクタ
-	virtual ~BaseCharacter() = default;
+	virtual ~GameObject() = default;
 
 protected:
 	QuaternionTransform transform_;

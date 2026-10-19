@@ -3,7 +3,7 @@
 #include "TextureManager.h"
 #include "ImGuiManager.h"
 #include "Object3d.h"
-#include "BaseCharacter.h"
+#include "GameObject.h"
 using namespace MathManager;
 
 void DebugDraw::Initialize(DebugDrawCommon* debugDrawCommon, std::string textureFilePath, DrawState state)

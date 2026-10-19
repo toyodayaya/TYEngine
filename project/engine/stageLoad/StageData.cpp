@@ -566,7 +566,7 @@ StageData::ColliderSpawnData StageData::LoadCollider(nlohmann::json& collider)
 	return colliderData;
 }
 
-void StageData::CreateCollider(const ColliderSpawnData& collider, BaseCharacter* parent)
+void StageData::CreateCollider(const ColliderSpawnData& collider, GameObject* parent)
 {
 	ColliderSpawnData colliders = collider;
 	colliders.parent = parent;

@@ -7,7 +7,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "SrvManager.h"
-#include "BaseCharacter.h"
+#include "GameObject.h"
 
 class DebugDrawCommon;
 class DirectXBasis;
@@ -101,7 +101,7 @@ public:
 	void SetBoxTranslate(const Vector3& translate) { this->transformBox.translate = translate; }
 	void SetCamera(Camera* camera) { this->camera = camera; }
 	void SetMatrix(const Matrix4x4& matrix) { transformationData->World = matrix; }
-	void SetParent(BaseCharacter* parent) { this->parent = parent; }
+	void SetParent(GameObject* parent) { this->parent = parent; }
 	void SetIsRailCamera(bool isRailCamera) { this->isRailCamera_ = isRailCamera; }
 	void SetWorldMatrix(const Matrix4x4& worldMatrix) { this->worldMatrix = worldMatrix; }
 
@@ -109,7 +109,7 @@ public:
 	const Vector3& GetScale() const { return transform.scale; }
 	const Quaternion& GetRotate() const { return transform.rotate; }
 	const Vector3& GetTranslate() const { return transform.translate; }
-	BaseCharacter* GetParent() { return parent; }
+	GameObject* GetParent() { return parent; }
 	
 	
 private:
@@ -183,7 +183,7 @@ private:
 	QuaternionTransform transformBox;
 
 	// 親オブジェクト
-	BaseCharacter* parent;
+	GameObject* parent;
 	// レールカメラかどうか判定するフラグ
 	bool isRailCamera_;
 	

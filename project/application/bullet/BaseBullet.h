@@ -1,12 +1,12 @@
 #pragma once
 #include "Object3d.h"
-#include "BaseCharacter.h"
+#include "GameObject.h"
 #ifdef _DEBUG
 #include "DebugDraw.h"
 #include "DebugDrawCommon.h"
 #endif // _DEBUG
 
-class BaseBullet : public BaseCharacter
+class BaseBullet : public GameObject
 {
 public:
 	// 初期化

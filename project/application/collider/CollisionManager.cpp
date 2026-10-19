@@ -17,7 +17,7 @@ void CollisionManager::Finalize()
 	instance.reset();
 }
 
-void CollisionManager::RemoveCollider(BaseCharacter* parent)
+void CollisionManager::RemoveCollider(GameObject* parent)
 {
 	colliders_.erase(std::remove_if(
 			colliders_.begin(),

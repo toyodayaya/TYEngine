@@ -2,7 +2,7 @@
 #include "Object3d.h"
 #include "Sprite.h"
 #include <memory>
-#include "BaseCharacter.h"
+#include "GameObject.h"
 #include "Bullet.h"
 #include "LockOn.h"
 #include "Camera.h"
@@ -14,7 +14,7 @@
 #endif // _DEBUG
 
 
-class Player : public BaseCharacter
+class Player : public GameObject
 {
 public:
 	// 初期化

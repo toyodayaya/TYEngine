@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 #include <externals/nlohmannJson/Json.hpp>
-#include "BaseCharacter.h"
+#include "GameObject.h"
 
 class StageManager;
 
@@ -27,7 +27,7 @@ public:
 		Vector3 size;
 		int32_t hasCollier;
 		std::string objectType;
-		BaseCharacter* parent;
+		GameObject* parent;
 	};
 
 	// オブジェクトの生成データ
@@ -131,7 +131,7 @@ public:
 	// コライダー読み込みの関数
 	ColliderSpawnData LoadCollider(nlohmann::json& collider);
 	// コライダー生成の関数
-	void CreateCollider(const ColliderSpawnData& colliderData, BaseCharacter* parent);
+	void CreateCollider(const ColliderSpawnData& colliderData, GameObject* parent);
 	// イベントデータ読み込みの関数
 	EventSpawnData LoadEvent(nlohmann::json& event);
 	// イベント生成の関数

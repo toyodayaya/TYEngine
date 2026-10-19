@@ -47,6 +47,6 @@ public:
 	// 終了
 	void Finalize();
 	// 削除処理
-	void RemoveCollider(BaseCharacter* parent);
+	void RemoveCollider(GameObject* parent);
 };
 

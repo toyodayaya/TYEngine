@@ -1,7 +1,7 @@
 #pragma once
-#include "BaseCharacter.h"
+#include "GameObject.h"
 
-class BaseEvent : public BaseCharacter
+class BaseEvent : public GameObject
 {
 public:
 	// 初期化
