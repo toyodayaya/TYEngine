@@ -55,10 +55,34 @@ void NormalPlayer::Update()
 		HitTimerUpdate();
 	}
 
-	// キー入力で弾を生成
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE))
+	// ビーム発射フラグが立っていたら
+	if (canFireBeam_)
 	{
-		CreateBullet();
+		// ビーム発射間隔が経過したら
+		if (beamFireInterval_ <= 0)
+		{
+			// 弾数分ビームを生成する
+			CreateBeam();
+			// 間隔をリセット
+			beamFireInterval_ = 3;
+		}
+		else
+		{
+			beamFireInterval_--;
+		}
+	}
+	else
+	{
+		// キー入力で弾を生成
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE))
+		{
+			CreateBullet();
+		}
+		else if (Input::GetInstance()->TriggerKey(DIK_RETURN))
+		{
+			// ビーム発射可能フラグを立てる
+			canFireBeam_ = true;
+		}
 	}
 
 	// プレイヤーの移動処理
@@ -150,6 +174,36 @@ void NormalPlayer::CreateBullet()
 	// 速度を算出
 	velocity = Vector3Subtract(targetPosition, bulletTransform.translate);
 	velocity = Normalize(velocity);
+	velocity = FloatMultiply(velocity, kBeamSpeed_);
+
+	// 生成と初期化
+	std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
+	bullet->Initialize(bulletTransform, filePath_, velocity, false);
+	BulletManager::GetInstance()->SetBullets(std::move(bullet));
+
+}
+
+void NormalPlayer::CreateBeam()
+{
+	// ビーム弾数をカウント
+	currentBeamBulletNum++;
+
+	if (lockOn_->GetTarget())
+	{
+		targetPosition = lockOn_->GetTarget()->GetWorldTranslate();
+	}
+	else
+	{
+		targetPosition = GetReticleWorldTranslate();
+	}
+
+	// ビームの初期座標を設定
+	QuaternionTransform bulletTransform = transform_;
+	bulletTransform.translate = GetWorldTranslate();
+
+	// 速度を算出
+	velocity = Vector3Subtract(targetPosition, bulletTransform.translate);
+	velocity = Normalize(velocity);
 	velocity = FloatMultiply(velocity, kBulletSpeed_);
 
 	// 生成と初期化
@@ -157,6 +211,14 @@ void NormalPlayer::CreateBullet()
 	bullet->Initialize(bulletTransform, filePath_, velocity, false);
 	BulletManager::GetInstance()->SetBullets(std::move(bullet));
 
+	// 弾数上限に達したら
+	if (currentBeamBulletNum >= kBeamBulletNum)
+	{
+		// ビーム発射フラグを外す
+		canFireBeam_ = false;
+		// 弾数カウントをリセット
+		currentBeamBulletNum = 0;
+	}
 }
 
 void NormalPlayer::UpdateReticle()

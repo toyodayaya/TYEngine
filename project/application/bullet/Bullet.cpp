@@ -61,6 +61,11 @@ void Bullet::Update()
 	// 座標を更新
 	transform_.translate = Vector3Add(transform_.translate, velocity_);
 	object3d_->SetTranslate(transform_.translate);
+	// 弾のローカル行列を作成
+	worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
+	// 弾のワールド座標をセット
+	object3d_->SetWorldMatrix(worldMatrix);
+	// オブジェクトを更新
 	object3d_->Update();
 
 #ifdef _DEBUG

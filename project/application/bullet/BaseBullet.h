@@ -20,7 +20,7 @@ protected:
 	Vector3 velocity_;
 	// 生存時間
 	float currentTime_ = 0;
-	const float kLifeTime_ = 5;
+	const float kLifeTime_ = 3;
 
 	// 3dオブジェクト
 	std::unique_ptr<Object3d> object3d_;

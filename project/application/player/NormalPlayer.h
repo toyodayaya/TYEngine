@@ -25,6 +25,8 @@ public:
 
 	// 弾の生成処理
 	void CreateBullet();
+	// ビームの生成処理
+	void CreateBeam();
 
 	// 3Dレティクルの更新処理
 	void UpdateReticle();
@@ -56,6 +58,7 @@ private:
 	std::string spriteFilePath_ = "resources/sprite/circle.png";
 	// 弾の速度
 	const float kBulletSpeed_ = 1.0f;
+	const float kBeamSpeed_ = 2.0f;
 	// 移動限界
 	const float kMoveLimitX_ = 7.0f;
 	const float kMoveLimitY_ = 4.0f;
@@ -73,6 +76,14 @@ private:
 	// ロックオンのポインタ
 	std::unique_ptr<LockOn> lockOn_;
 
+	// ビームの弾数
+	const int kBeamBulletNum = 10;
+	int currentBeamBulletNum = 0;
+	// ビーム発射間隔
+	int beamFireInterval_ = 3;
+	// ビーム
+	std::vector<std::unique_ptr<Bullet>> beamBullet_;
+
 	Vector3 velocity;
 	Vector3 targetPosition;
 
@@ -84,5 +95,8 @@ private:
 
 	// 3dオブジェクト
 	Object3d* object3d_;
+
+	// ビーム発射フラグ
+	bool canFireBeam_ = false;
 
 };
