@@ -498,7 +498,7 @@ void RenderTexture::SceneChangeEffect()
 	{
 		if (radiusData_->radius <= maxRadius_)
 		{
-			radiusData_->radius += 0.01f;
+			radiusData_->radius += 0.015f;
 		}
 	}
 	else

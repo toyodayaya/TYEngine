@@ -1,5 +1,6 @@
 #include "StartSequencePlayer.h"
 #include "PlayerManager.h"
+#include "SceneManager.h"
 #include "MathManager.h"
 using namespace MathManager;
 
@@ -21,14 +22,16 @@ void StartSequencePlayer::Update()
 	// 目標地点めがけてイージング
 	if (t_ <= 1.0f)
 	{
-		t_ += 0.01f;
+		t_ += 0.0075f;
 		transform_.translate = Lerp(startPos_, targetPos_, t_);
 		transform_.rotate = Slerp(startAngle_, targetAngle_, t_);
 	}
 	else
 	{
 		// スタート演出が終わったらステートを変更する
-		PlayerManager::GetInstance()->ChangePlayerState("NormalPlayer");
+		//PlayerManager::GetInstance()->ChangePlayerState("NormalPlayer");
+		// コンテスト用にシーン遷移
+		SceneManager::GetInstance()->ChangeScene("TitleScene");
 	}
 
 	object3d_->SetTransform(transform_);
