@@ -1,6 +1,5 @@
 #include "StartSequencePlayer.h"
 #include "PlayerManager.h"
-#include "SceneManager.h"
 #include "MathManager.h"
 using namespace MathManager;
 
@@ -29,9 +28,7 @@ void StartSequencePlayer::Update()
 	else
 	{
 		// スタート演出が終わったらステートを変更する
-		//PlayerManager::GetInstance()->ChangePlayerState("NormalPlayer");
-		// コンテスト用にシーン遷移
-		SceneManager::GetInstance()->ChangeScene("TitleScene");
+		PlayerManager::GetInstance()->ChangePlayerState("NormalPlayer");
 	}
 
 	object3d_->SetTransform(transform_);
