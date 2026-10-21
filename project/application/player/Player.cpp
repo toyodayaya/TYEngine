@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Model.h"
+#include "TextureManager.h"
 #include "ImGuiManager.h"
 #include "BasePlayerState.h"
 #include "Object3d.h"
@@ -22,6 +23,12 @@ void Player::Initialize(const QuaternionTransform& transform, const std::string&
 
 	// 引数で受け取ってメンバ変数に記録
 	camera_ = camera;
+
+	// テクスチャデータを読み込む
+	TextureManager::GetInstance()->LoadTexture("resources/UI/move.png");
+	TextureManager::GetInstance()->LoadTexture("resources/UI/hp.png");
+	TextureManager::GetInstance()->LoadTexture("resources/UI/hpbar.png");
+	TextureManager::GetInstance()->LoadTexture("resources/UI/enter.png");
 
 
 #ifdef _DEBUG
