@@ -46,9 +46,8 @@ void NormalPlayer::Initialize(Player* player)
 	lockOn_->Initialize();
 
 	// UIスプライトの初期化
-	moveSprite_ = player_->GetMoveSprite().get();
-	hpSprite_ = &player_->GetHpSprite();
-	beamSprite_ = &player_->GetBeamSprite();
+	inGameUI_ = player_->GetInGameUI();
+	inGameUI_->SetCanFireBeamPoint(kCanFireBeamPoint);
 }
 
 void NormalPlayer::Update()
@@ -60,41 +59,8 @@ void NormalPlayer::Update()
 		HitTimerUpdate();
 	}
 
-	// ビーム発射フラグが立っていたら
-	if (canFireBeam_)
-	{
-		// ビーム発射間隔が経過したら
-		if (beamFireInterval_ <= 0)
-		{
-			// 弾数分ビームを生成する
-			CreateBeam();
-			// 間隔をリセット
-			beamFireInterval_ = 3;
-		}
-		else
-		{
-			beamFireInterval_--;
-		}
-	}
-	else
-	{
-		// キー入力で弾を生成
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE))
-		{
-			CreateBullet();
-		}
-		else if (Input::GetInstance()->TriggerKey(DIK_RETURN))
-		{
-			// ポイントが貯まっていたら
-			if (currentBeamPoint_ >= kCanFireBeamPoint)
-			{
-				// ビーム発射可能フラグを立てる
-				canFireBeam_ = true;
-				// ビームポイントをリセット
-				currentBeamPoint_ = 0;
-			}
-		}
-	}
+	// プレイヤーの攻撃処理
+	Attack();
 
 	// プレイヤーの移動処理
 	Move();
@@ -106,27 +72,8 @@ void NormalPlayer::Update()
 	lockOn_->Update();
 
 	// スプライトの更新
-	moveSprite_->Update();
-	for (const auto& hpSprite : *hpSprite_)
-	{
-		hpSprite->Update();
-	}
-
-
-	// ポイントが貯まっていたら
-	if (currentBeamPoint_ >= kCanFireBeamPoint)
-	{
-		// プレイヤーの位置を算出
-		Vector3 playerpos = Project(Vector3{ 0.0f,0.0f,0.0f }, 0.0f, 0.0f, 1280.0f, 720.0f, object3d_->GetWorldViewProjection());
-		Vector2 pos = { playerpos.x,playerpos.y };
-
-		// ビームUIを更新
-		for (const auto& beamSprite : *beamSprite_)
-		{
-			beamSprite->SetPosition(pos);
-			beamSprite->Update();
-		}
-	}
+	inGameUI_->SetCurrentBeamPoint(currentBeamPoint_);
+	inGameUI_->Update();
 
 #ifdef USE_IMGUI
 	ImGui::Begin("Player");
@@ -163,21 +110,7 @@ void NormalPlayer::Draw()
 	lockOn_->Draw();
 
 	// UIの描画
-	moveSprite_->Draw();
-	for (const auto& hpSprite : *hpSprite_)
-	{
-		hpSprite->Draw();
-	}
-
-	// ポイントが貯まっていたら
-	if (currentBeamPoint_ >= kCanFireBeamPoint)
-	{
-		// ビームUIを描画
-		for (const auto& beamSprite : *beamSprite_)
-		{
-			beamSprite->Draw();
-		}
-	}
+	inGameUI_->Draw();
 }
 
 void NormalPlayer::Finalize()
@@ -353,6 +286,46 @@ void NormalPlayer::Move()
 
 	// 3Dオブジェクトを更新
 	object3d_->Update();
+}
+
+void NormalPlayer::Attack()
+{
+	// ビーム発射フラグが立っていたら
+	if (canFireBeam_)
+	{
+		// ビーム発射間隔が経過したら
+		if (beamFireInterval_ <= 0)
+		{
+			// 弾数分ビームを生成する
+			CreateBeam();
+			// 間隔をリセット
+			beamFireInterval_ = 3;
+		}
+		else
+		{
+			beamFireInterval_--;
+		}
+	}
+	else
+	{
+		// キー入力で弾を生成
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE))
+		{
+			CreateBullet();
+		}
+		else if (Input::GetInstance()->TriggerKey(DIK_RETURN))
+		{
+			// ポイントが貯まっていたら
+			if (currentBeamPoint_ >= kCanFireBeamPoint)
+			{
+				// ビーム発射可能フラグを立てる
+				canFireBeam_ = true;
+				// ビームポイントをリセット
+				currentBeamPoint_ = 0;
+			}
+		}
+	}
+
 }
 
 void NormalPlayer::HitTimerUpdate()

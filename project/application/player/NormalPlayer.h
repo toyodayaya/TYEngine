@@ -7,6 +7,7 @@
 #include "LockOn.h"
 #include "Camera.h"
 #include "Player.h"
+#include "InGameUI.h"
 
 class NormalPlayer : public BasePlayerState
 {
@@ -34,12 +35,17 @@ public:
 	// プレイヤーの移動処理
 	void Move();
 
+	// プレイヤーの攻撃処理
+	void Attack();
+
 	// ヒットタイマー更新処理
 	void HitTimerUpdate();
 	
 	// getter
 	Vector3 GetWorldTranslate() { return { worldMatrix.m[3][0], worldMatrix.m[3][1], worldMatrix.m[3][2] }; }
 	Vector3 GetReticleWorldTranslate() { return { reticleWorldMatrix.m[3][0], reticleWorldMatrix.m[3][1], reticleWorldMatrix.m[3][2] }; }
+	const int GetCanFireBeamPoint() const { return kCanFireBeamPoint; }
+	int GetCurrentBeamPoint() { return currentBeamPoint_; }
 
 	// setter
 	void SetBeamPoint(int point);
@@ -106,7 +112,5 @@ private:
 	bool canFireBeam_ = false;
 
 	// UIのポインタ
-	Sprite* moveSprite_;
-	const std::vector<std::unique_ptr<Sprite>>* hpSprite_;
-	const std::vector<std::unique_ptr<Sprite>>* beamSprite_;
+	InGameUI* inGameUI_ = nullptr;
 };

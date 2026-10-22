@@ -1,12 +1,12 @@
 #pragma once
 #include "Object3d.h"
-#include "Sprite.h"
 #include <memory>
 #include "GameObject.h"
 #include "Bullet.h"
 #include "LockOn.h"
 #include "Camera.h"
 #include "BasePlayerState.h"
+#include "InGameUI.h"
 
 #ifdef _DEBUG
 #include "DebugDraw.h"
@@ -40,9 +40,10 @@ public:
 	Object3d* GetObject3d() { return object3d_.get(); }
 	Camera* GetCamera() { return camera_; }
 	BasePlayerState* GetPlayerState() { return state_.get(); }
-	const std::unique_ptr<Sprite>& GetMoveSprite() const { return moveSprite_; }
-	const std::vector<std::unique_ptr<Sprite>>& GetHpSprite() const { return hpSprite_; }
-	const std::vector<std::unique_ptr<Sprite>>& GetBeamSprite() const { return beamSprite_; }
+	InGameUI* GetInGameUI() { return inGameUI_.get(); }
+	//const std::unique_ptr<Sprite>& GetMoveSprite() const { return moveSprite_; }
+	//const std::vector<std::unique_ptr<Sprite>>& GetHpSprite() const { return hpSprite_; }
+	//const std::vector<std::unique_ptr<Sprite>>& GetBeamSprite() const { return beamSprite_; }
 
 
 private:
@@ -63,10 +64,9 @@ private:
 	std::unique_ptr<BasePlayerState> state_;
 
 	// UI
-	std::unique_ptr<Sprite> moveSprite_;
-	std::vector<std::unique_ptr<Sprite>> hpSprite_;
-	std::vector<std::unique_ptr<Sprite>> beamSprite_;
+	std::unique_ptr<InGameUI> inGameUI_;
 
+	
 #ifdef _DEBUG
 	std::unique_ptr<DebugDraw> debugDraw;
 #endif // _DEBUG
