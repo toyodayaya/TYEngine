@@ -9,6 +9,8 @@ void InGameUI::Initialize(Player* player)
 	// 引数で受け取ってメンバ変数に記録
 	player_ = player;
 	object3d_ = player_->GetObject3d();
+	maxHp_ = player_->GetMaxHP();
+	hp_ = player_->GetHP();
 
 	// テクスチャデータを読み込む
 	TextureManager::GetInstance()->LoadTexture("resources/UI/move.png");
@@ -35,8 +37,14 @@ void InGameUI::Initialize(Player* player)
 	hpSprite_[0]->SetPosition(Vector2{ 1000.0f,550.0f });
 	hpSprite_[1]->Initialize("resources/UI/hpbar.png");
 	hpSprite_[1]->SetPosition(Vector2{ 1000.0f,600.0f });
+	Vector2 scale = hpSprite_[1]->GetSize();
+	scale.x = static_cast<float>(maxHp_ * 120);
+	hpSprite_[1]->SetSize(scale);
 	hpSprite_[2]->Initialize("resources/UI/nakami.png");
-	hpSprite_[2]->SetPosition(Vector2{ 1010.0f,610.0f });
+	hpSprite_[2]->SetPosition(Vector2{ 1020.0f,610.0f });
+	Vector2 size = hpSprite_[2]->GetSize();
+	size.x = static_cast<float>(hp_ * 100);
+	hpSprite_[2]->SetSize(size);
 
 	beamSprite_[0]->Initialize("resources/UI/enter.png");
 	beamSprite_[0]->SetPosition(Vector2{ 0.0f,0.0f });
@@ -44,7 +52,6 @@ void InGameUI::Initialize(Player* player)
 	beamSprite_[1]->SetPosition(Vector2{ 0.0f,0.0f });
 	beamSprite_[2]->Initialize("resources/UI/nakami.png");
 	beamSprite_[2]->SetPosition(Vector2{ 0.0f,0.0f });
-
 }
 
 void InGameUI::Update()
@@ -65,8 +72,11 @@ void InGameUI::Update()
 		// プレイヤーの位置を算出
 		Vector3 playerpos = Project(Vector3{ 0.0f,0.0f,0.0f }, 0.0f, 0.0f, 1280.0f, 720.0f, object3d_->GetWorldViewProjection());
 		std::vector<Vector2> pos = { {playerpos.x,playerpos.y},{playerpos.x,playerpos.y},{playerpos.x,playerpos.y} };
-		pos[2].x += 10.0f;
-		pos[2].y += 10.0f;
+		pos[0].x += 50.0f;
+		pos[0].y -= 50.0f;
+		pos[1].x += 50.0f;
+		pos[2].x += 65.0f;
+		pos[2].y += 10.5f;
 
 		// ビームUIを更新
 		for (int i = 0; i < 3; i++)
@@ -97,4 +107,25 @@ void InGameUI::Draw()
 			beamSprite->Draw();
 		}
 	}
+}
+
+void InGameUI::SetHpSize(int hp)
+{
+	Vector2 size = hpSprite_[2]->GetSize();
+	size.x = static_cast<float>(hp * 100);
+	hpSprite_[2]->SetSize(size);
+}
+
+void InGameUI::SetMaxBeamPointSize(int maxPoint)
+{
+	Vector2 size = beamSprite_[1]->GetSize();
+	size.x = static_cast<float>(maxBeamPoint * 12);
+	beamSprite_[1]->SetSize(size);
+}
+
+void InGameUI::SetBeamPointSize(int beamPoint)
+{
+	Vector2 size = beamSprite_[2]->GetSize();
+	size.x = static_cast<float>(currentBeamPoint_ * 10);
+	beamSprite_[2]->SetSize(size);
 }

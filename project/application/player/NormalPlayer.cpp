@@ -21,6 +21,7 @@ void NormalPlayer::Initialize(Player* player)
 	// 引数で受け取ってメンバ変数に記録
 	player_ = player;
 	camera_ = player_->GetCamera();
+	hp_ = player_->GetHP();
 
 	// オブジェクトの初期化
 	object3d_ = player_->GetObject3d();
@@ -42,6 +43,10 @@ void NormalPlayer::Initialize(Player* player)
 	// UIスプライトの初期化
 	inGameUI_ = player_->GetInGameUI();
 	inGameUI_->SetCanFireBeamPoint(kCanFireBeamPoint);
+	inGameUI_->SetMaxBeamPoint(kMaxBeamPoint);
+	inGameUI_->SetMaxBeamPointSize(kMaxBeamPoint);
+	inGameUI_->SetCurrentBeamPoint(currentBeamPoint_);
+	inGameUI_->SetBeamPointSize(currentBeamPoint_);
 }
 
 void NormalPlayer::Update()
@@ -66,7 +71,6 @@ void NormalPlayer::Update()
 	lockOn_->Update();
 
 	// スプライトの更新
-	inGameUI_->SetCurrentBeamPoint(currentBeamPoint_);
 	inGameUI_->Update();
 
 #ifdef USE_IMGUI
@@ -134,7 +138,11 @@ void NormalPlayer::OnCollision(std::string hitObjectType)
 		{
 			// ステートを変更する
 			PlayerManager::GetInstance()->ChangePlayerState("DeadPlayer");
+			hp_ = 0;
 		}
+
+		inGameUI_->SetHpSize(hp_);
+		player_->SetHP(hp_);
 	}
 
 
@@ -316,6 +324,8 @@ void NormalPlayer::Attack()
 				canFireBeam_ = true;
 				// ビームポイントをリセット
 				currentBeamPoint_ = 0;
+				inGameUI_->SetCurrentBeamPoint(currentBeamPoint_);
+				inGameUI_->SetBeamPointSize(currentBeamPoint_);
 			}
 		}
 	}
@@ -344,8 +354,11 @@ void NormalPlayer::SetBeamPoint(int point)
 	currentBeamPoint_ += point;
 
 	// ポイント上限を超えたらカンスト
-	if (kCanFireBeamPoint <= currentBeamPoint_)
+	if (kMaxBeamPoint <= currentBeamPoint_)
 	{
-		currentBeamPoint_ = kCanFireBeamPoint;
+		currentBeamPoint_ = kMaxBeamPoint;
 	}
+
+	inGameUI_->SetCurrentBeamPoint(currentBeamPoint_);
+	inGameUI_->SetBeamPointSize(currentBeamPoint_);
 }

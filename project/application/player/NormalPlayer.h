@@ -45,6 +45,7 @@ public:
 	Vector3 GetWorldTranslate() { return { worldMatrix.m[3][0], worldMatrix.m[3][1], worldMatrix.m[3][2] }; }
 	Vector3 GetReticleWorldTranslate() { return { reticleWorldMatrix.m[3][0], reticleWorldMatrix.m[3][1], reticleWorldMatrix.m[3][2] }; }
 	const int GetCanFireBeamPoint() const { return kCanFireBeamPoint; }
+	const int GetMaxBeamPoint() const { return kMaxBeamPoint; }
 	int GetCurrentBeamPoint() { return currentBeamPoint_; }
 
 	// setter
@@ -93,7 +94,8 @@ private:
 	// ビーム
 	std::vector<std::unique_ptr<Bullet>> beamBullet_;
 	// ビーム発射可能ポイント
-	const int kCanFireBeamPoint = 10;
+	const int kCanFireBeamPoint = 5;
+	const int kMaxBeamPoint = 15;
 	int currentBeamPoint_ = 0;
 
 	Vector3 velocity;

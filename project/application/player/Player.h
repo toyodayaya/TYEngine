@@ -35,6 +35,7 @@ public:
 	// setter
 	void SetCamera(Camera* camera) { this->camera_ = camera; }
 	void SetWorldMatrix(const Matrix4x4& matrix) { worldMatrix = matrix; }
+	void SetHP(int hp) { hp_ = hp; }
 
 	// getter
 	Object3d* GetObject3d() { return object3d_.get(); }
@@ -43,6 +44,8 @@ public:
 	BasePlayerState* GetPlayerState() { return state_.get(); }
 	InGameUI* GetInGameUI() { return inGameUI_.get(); }
 	LockOn* GetLockOn() { return lockOn_.get(); }
+	const int GetMaxHP() const { return kMaxHp; }
+	int GetHP() { return hp_; }
 
 private:
 
@@ -50,6 +53,7 @@ private:
 	std::string filePath_ = "cube.obj";
 
 	// HP
+	const int kMaxHp = 2;
 	int hp_ = 2;
 
 	// カメラ

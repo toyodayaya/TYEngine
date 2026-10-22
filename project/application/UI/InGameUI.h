@@ -19,7 +19,11 @@ public:
 
 	// setter
 	void SetCanFireBeamPoint(int point) { canFireBeamPoint = point; }
+	void SetMaxBeamPoint(int maxPoint) { maxBeamPoint = maxPoint; }
 	void SetCurrentBeamPoint(int beamPoint) { currentBeamPoint_ = beamPoint; }
+	void SetHpSize(int hp);
+	void SetMaxBeamPointSize(int maxPoint);
+	void SetBeamPointSize(int beamPoint);
 
 private:
 	// UI
@@ -29,7 +33,10 @@ private:
 
 	// ビーム発射可能ポイント
 	int canFireBeamPoint = 0;
+	int maxBeamPoint = 0;
 	int currentBeamPoint_ = 0;
+	int maxHp_ = 0;
+	int hp_ = 0;
 
 	// 3dオブジェクト
 	Object3d* object3d_;
