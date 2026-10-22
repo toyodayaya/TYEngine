@@ -17,7 +17,7 @@ public:
 	void Finalize();
 
 	// ターゲット算出
-	void LockOnTarget(const std::unique_ptr<Object3d>& reticle);
+	void LockOnTarget(Object3d* reticle);
 
 	// getter
 	BaseEnemy* GetTarget() const { return target_; }
@@ -26,7 +26,7 @@ private:
 	// 当たり判定フラグ
 	bool isHit_;
 	// ファイル名
-	std::string spriteFilePath_ = "resources/sprite/circle.png";
+	std::string spriteFilePath_ = "resources/UI/lockOn.png";
 	// 弾の速度
 	// 3Dレティクル用のスプライト
 	std::unique_ptr<Sprite> reticleSprite_;

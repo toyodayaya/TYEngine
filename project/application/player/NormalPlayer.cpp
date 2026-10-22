@@ -32,18 +32,12 @@ void NormalPlayer::Initialize(Player* player)
 	isHit_ = false;
 
 	// 3Dレティクルオブジェクトの初期化
-	reticle_ = std::make_unique<Object3d>();
-	reticle_->Initialize();
-	reticle_->SetModel(filePath_);
-	reticle_->SetEnvironmentMapTextureFilePath("resources/human/white.png");
-	reticle_->SetTransform(transform_);
-	reticle_->SetIsRailCamera(true);
+	reticle_ = player_->GetReticle();
 	reticleTransform_ = transform_;
 	reticleTransform_.translate = Vector3Add(reticleTransform_.translate, reticleOffset_);
 
 	// ロックオンマークを初期化
-	lockOn_ = std::make_unique<LockOn>();
-	lockOn_->Initialize();
+	lockOn_ = player_->GetLockOn();
 
 	// UIスプライトの初期化
 	inGameUI_ = player_->GetInGameUI();

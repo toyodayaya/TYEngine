@@ -72,7 +72,7 @@ private:
 	const float kMoveLimitX_ = 7.0f;
 	const float kMoveLimitY_ = 4.0f;
 	// 3Dレティクルオブジェクト
-	std::unique_ptr<Object3d> reticle_;
+	Object3d* reticle_;
 	// 3Dレティクルのワールドトランスフォーム
 	QuaternionTransform reticleTransform_;
 	Matrix4x4 reticleWorldMatrix;
@@ -83,7 +83,7 @@ private:
 	// 自機から3Dレティクルへのオフセット
 	Vector3 reticleOffset_ = { 0.0f,0.0f,10.0f };
 	// ロックオンのポインタ
-	std::unique_ptr<LockOn> lockOn_;
+	LockOn* lockOn_;
 
 	// ビームの弾数
 	const int kBeamBulletNum = 10;

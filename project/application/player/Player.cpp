@@ -21,6 +21,19 @@ void Player::Initialize(const QuaternionTransform& transform, const std::string&
 	transform_ = transform;
 	isHit_ = false;
 
+	// 3Dレティクルオブジェクトの初期化
+	reticle_ = std::make_unique<Object3d>();
+	reticle_->Initialize();
+	reticle_->SetModel(filePath_);
+	reticle_->SetEnvironmentMapTextureFilePath("resources/human/white.png");
+	reticle_->SetTransform(transform_);
+	reticle_->SetIsRailCamera(true);
+	reticleTransform_ = transform_;
+	reticleTransform_.translate = Vector3Add(reticleTransform_.translate, reticleOffset_);
+
+	lockOn_ = std::make_unique<LockOn>();
+	lockOn_->Initialize();
+
 	// 引数で受け取ってメンバ変数に記録
 	camera_ = camera;
 

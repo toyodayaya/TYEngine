@@ -6,11 +6,11 @@
 void LockOn::Initialize()
 {
 	// 3Dレティクルスプライトの初期化
-	TextureManager::GetInstance()->LoadTexture("resources/sprite/circle.png");
+	TextureManager::GetInstance()->LoadTexture("resources/UI/lockOn.png");
 	reticleSprite_ = std::make_unique<Sprite>();
 	reticleSprite_->Initialize(spriteFilePath_);
 	reticleSprite_->SetAnchorPoint(Vector2{ 0.5f,0.5f });
-	reticleSprite_->SetSize(Vector2{ 64.0f,64.0f });
+	reticleSprite_->SetSize(Vector2{ 120.0f,120.0f });
 }
 
 void LockOn::Update()
@@ -27,7 +27,7 @@ void LockOn::Draw()
 	}
 }
 
-void LockOn::LockOnTarget(const std::unique_ptr<Object3d>& reticle)
+void LockOn::LockOnTarget(Object3d* reticle)
 {
 	// レティクルの座標をスクリーン座標に変換
 	Vector3 translate = Project(Vector3{ 0.0f,0.0f,0.0f }, 0.0f, 0.0f, 1280.0f, 720.0f, reticle->GetWorldViewProjection());

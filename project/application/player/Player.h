@@ -38,13 +38,11 @@ public:
 
 	// getter
 	Object3d* GetObject3d() { return object3d_.get(); }
+	Object3d* GetReticle() { return reticle_.get(); }
 	Camera* GetCamera() { return camera_; }
 	BasePlayerState* GetPlayerState() { return state_.get(); }
 	InGameUI* GetInGameUI() { return inGameUI_.get(); }
-	//const std::unique_ptr<Sprite>& GetMoveSprite() const { return moveSprite_; }
-	//const std::vector<std::unique_ptr<Sprite>>& GetHpSprite() const { return hpSprite_; }
-	//const std::vector<std::unique_ptr<Sprite>>& GetBeamSprite() const { return beamSprite_; }
-
+	LockOn* GetLockOn() { return lockOn_.get(); }
 
 private:
 
@@ -66,6 +64,15 @@ private:
 	// UI
 	std::unique_ptr<InGameUI> inGameUI_;
 
+	// 3Dレティクルオブジェクト
+	std::unique_ptr<Object3d> reticle_;
+	// 3Dレティクルのワールドトランスフォーム
+	QuaternionTransform reticleTransform_;
+	// 自機から3Dレティクルへのオフセット
+	Vector3 reticleOffset_ = { 0.0f,0.0f,10.0f };
+
+	// ロックオンのポインタ
+	std::unique_ptr<LockOn> lockOn_;
 	
 #ifdef _DEBUG
 	std::unique_ptr<DebugDraw> debugDraw;
