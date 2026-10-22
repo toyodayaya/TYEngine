@@ -105,10 +105,8 @@ private:
 	// ビーム発射フラグ
 	bool canFireBeam_ = false;
 
-	// UI
-	std::unique_ptr<Sprite> moveSprite_;
-	std::unique_ptr<Sprite> hpSprite_;
-	std::unique_ptr<Sprite> hpBarSprite_;
-	std::unique_ptr<Sprite> enterSprite_;
-	std::unique_ptr<Sprite> beamSprite_;
+	// UIのポインタ
+	Sprite* moveSprite_;
+	const std::vector<std::unique_ptr<Sprite>>* hpSprite_;
+	const std::vector<std::unique_ptr<Sprite>>* beamSprite_;
 };

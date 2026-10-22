@@ -30,6 +30,30 @@ void Player::Initialize(const QuaternionTransform& transform, const std::string&
 	TextureManager::GetInstance()->LoadTexture("resources/UI/hpbar.png");
 	TextureManager::GetInstance()->LoadTexture("resources/UI/enter.png");
 
+	// UIスプライトの初期化
+	moveSprite_ = std::make_unique<Sprite>();
+	moveSprite_->Initialize("resources/UI/move.png");
+	moveSprite_->SetPosition(Vector2{ 30.0f,520.0f });
+
+	for (size_t i = 0; i < 2; i++)
+	{
+		auto hpSprite = std::make_unique<Sprite>();
+		hpSprite_.push_back(std::move(hpSprite));
+
+		auto beamSprite = std::make_unique<Sprite>();
+		beamSprite_.push_back(std::move(beamSprite));
+	}
+
+	hpSprite_[0]->Initialize("resources/UI/hp.png");
+	hpSprite_[0]->SetPosition(Vector2{ 1000.0f,550.0f });
+	hpSprite_[1]->Initialize("resources/UI/hpbar.png");
+	hpSprite_[1]->SetPosition(Vector2{ 1000.0f,600.0f });
+
+	beamSprite_[0]->Initialize("resources/UI/enter.png");
+	beamSprite_[0]->SetPosition(Vector2{ 0.0f,550.0f });
+	beamSprite_[1]->Initialize("resources/UI/hpbar.png");
+	beamSprite_[1]->SetPosition(Vector2{ 0.0f,550.0f });
+
 
 #ifdef _DEBUG
 	// デバッグ描画用の箱を初期化、生成

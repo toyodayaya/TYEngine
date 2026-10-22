@@ -46,21 +46,9 @@ void NormalPlayer::Initialize(Player* player)
 	lockOn_->Initialize();
 
 	// UIスプライトの初期化
-	moveSprite_ = std::make_unique<Sprite>();
-	moveSprite_->Initialize("resources/UI/move.png");
-	moveSprite_->SetPosition(Vector2{ 30.0f,520.0f });
-	hpSprite_ = std::make_unique<Sprite>();
-	hpSprite_->Initialize("resources/UI/hp.png");
-	hpSprite_->SetPosition(Vector2{ 1000.0f,550.0f });
-	hpBarSprite_ = std::make_unique<Sprite>();
-	hpBarSprite_->Initialize("resources/UI/hpbar.png");
-	hpBarSprite_->SetPosition(Vector2{ 1000.0f,600.0f });
-	enterSprite_ = std::make_unique<Sprite>();
-	enterSprite_->Initialize("resources/UI/enter.png");
-	enterSprite_->SetPosition(Vector2{ 0.0f,550.0f });
-	beamSprite_ = std::make_unique<Sprite>();
-	beamSprite_->Initialize("resources/UI/hpbar.png");
-	beamSprite_->SetPosition(Vector2{ 0.0f,550.0f });
+	moveSprite_ = player_->GetMoveSprite().get();
+	hpSprite_ = &player_->GetHpSprite();
+	beamSprite_ = &player_->GetBeamSprite();
 }
 
 void NormalPlayer::Update()
@@ -119,8 +107,11 @@ void NormalPlayer::Update()
 
 	// スプライトの更新
 	moveSprite_->Update();
-	hpSprite_->Update();
-	hpBarSprite_->Update();
+	for (const auto& hpSprite : *hpSprite_)
+	{
+		hpSprite->Update();
+	}
+
 
 	// ポイントが貯まっていたら
 	if (currentBeamPoint_ >= kCanFireBeamPoint)
@@ -129,13 +120,12 @@ void NormalPlayer::Update()
 		Vector3 playerpos = Project(Vector3{ 0.0f,0.0f,0.0f }, 0.0f, 0.0f, 1280.0f, 720.0f, object3d_->GetWorldViewProjection());
 		Vector2 pos = { playerpos.x,playerpos.y };
 
-		// ビームUIの位置を設定
-		enterSprite_->SetPosition(pos);
-		beamSprite_->SetPosition(pos);
-
 		// ビームUIを更新
-		enterSprite_->Update();
-		beamSprite_->Update();
+		for (const auto& beamSprite : *beamSprite_)
+		{
+			beamSprite->SetPosition(pos);
+			beamSprite->Update();
+		}
 	}
 
 #ifdef USE_IMGUI
@@ -174,15 +164,19 @@ void NormalPlayer::Draw()
 
 	// UIの描画
 	moveSprite_->Draw();
-	hpSprite_->Draw();
-	hpBarSprite_->Draw();
+	for (const auto& hpSprite : *hpSprite_)
+	{
+		hpSprite->Draw();
+	}
 
 	// ポイントが貯まっていたら
 	if (currentBeamPoint_ >= kCanFireBeamPoint)
 	{
 		// ビームUIを描画
-		enterSprite_->Draw();
-		beamSprite_->Draw();
+		for (const auto& beamSprite : *beamSprite_)
+		{
+			beamSprite->Draw();
+		}
 	}
 }
 

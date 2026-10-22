@@ -40,6 +40,10 @@ public:
 	Object3d* GetObject3d() { return object3d_.get(); }
 	Camera* GetCamera() { return camera_; }
 	BasePlayerState* GetPlayerState() { return state_.get(); }
+	const std::unique_ptr<Sprite>& GetMoveSprite() const { return moveSprite_; }
+	const std::vector<std::unique_ptr<Sprite>>& GetHpSprite() const { return hpSprite_; }
+	const std::vector<std::unique_ptr<Sprite>>& GetBeamSprite() const { return beamSprite_; }
+
 
 private:
 
@@ -57,6 +61,11 @@ private:
 
 	// プレイヤーの状態
 	std::unique_ptr<BasePlayerState> state_;
+
+	// UI
+	std::unique_ptr<Sprite> moveSprite_;
+	std::vector<std::unique_ptr<Sprite>> hpSprite_;
+	std::vector<std::unique_ptr<Sprite>> beamSprite_;
 
 #ifdef _DEBUG
 	std::unique_ptr<DebugDraw> debugDraw;
