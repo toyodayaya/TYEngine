@@ -33,7 +33,7 @@ private:
 	// 線形補間用の変数
 	float t_ = 0.0f;
 	// 目標角度
-	Quaternion targetAngle_ = { 0.0f,0.0f,0.0f,1.0f };
+	Quaternion targetAngle_ = { 0.0f,0.7f,0.0f,0.7f };
 	// 初期角度
 	Quaternion startAngle_;
 };

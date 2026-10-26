@@ -1,5 +1,6 @@
 #include "RailCameraController.h"
 #include "PlayerManager.h"
+#include "Input.h"
 #ifdef _DEBUG
 #include "DebugDrawCommon.h"
 #endif // _DEBUG
@@ -11,6 +12,10 @@ void RailCameraController::Initialize(const QuaternionTransform& transform)
 	// 引数で受け取ってメンバ変数として記録
 	transform_ = transform;
 	t = 0.0f;
+	nowPoint_ = transform_.translate;
+
+	// ポイント数を記録
+	currentRailPointNum_ = 0;
 
 #ifdef _DEBUG
 	// デバッグ描画を初期化
@@ -58,42 +63,25 @@ void RailCameraController::Update()
 	if (PlayerManager::GetInstance()->GetPlayerState() == "NormalPlayer")
 	{
 		// プレイヤーが移動中のみ処理する
-		
-	    // カメラの座標を求める
-		t += 0.001f;
-		Vector3 pos = CatmullRomPosition(railPoints_, t);
-		transform_.translate = pos;
-
-		// カメラの角度を求める
-		float targetT = t + offset_;
-		Vector3 target = CatmullRomPosition(railPoints_, targetT);
-		Vector3 forward = Vector3Subtract(target, pos);
-		forward = Normalize(forward);
-		// Y軸周り角度
-		float yaw = std::atan2(forward.x, forward.z);
-		transform_.rotate.y = yaw;
-		// Y軸周りの回転行列
-		Matrix4x4 rotate = MakeRotateYMatrix(yaw);
-		Vector3 velocityZ = TransformNormal(forward, rotate);
-		// X軸周り角度
-		transform_.rotate.x = std::atan2(-velocityZ.y, velocityZ.z);
-
-		// カメラに反映
-		camera_->SetTransform(transform_);
-		camera_->Update();
-
-#ifdef _DEBUG
-		// デバッグ描画の更新
-		debugLine_->UpdateLine();
-
-		for (auto& debugDraw : debugPoint_)
-		{
-			debugDraw->Update();
-		}
-
-#endif // _DEBUG
+		// カメラを自動で動かす
+		AutoMove();
+	}
+	else if (PlayerManager::GetInstance()->GetPlayerState() == "SelectScenePlayer")
+	{
+		// 手動で動かす
+		ManualMove();
 	}
 
+#ifdef _DEBUG
+	// デバッグ描画の更新
+	debugLine_->UpdateLine();
+
+	for (auto& debugDraw : debugPoint_)
+	{
+		debugDraw->Update();
+	}
+
+#endif // _DEBUG
 }
 
 void RailCameraController::Draw()
@@ -107,4 +95,77 @@ void RailCameraController::Draw()
 		debugDraw->Draw();
 	}
 #endif // _DEBUG
+}
+
+void RailCameraController::AutoMove()
+{
+	// カメラの座標を求める
+	t += 0.001f;
+	Vector3 pos = CatmullRomPosition(railPoints_, t);
+	transform_.translate = pos;
+
+	// カメラの角度を求める
+	float targetT = t + offset_;
+	Vector3 target = CatmullRomPosition(railPoints_, targetT);
+	Vector3 forward = Vector3Subtract(target, pos);
+	forward = Normalize(forward);
+	// Y軸周り角度
+	float yaw = std::atan2(forward.x, forward.z);
+	transform_.rotate.y = yaw;
+	// Y軸周りの回転行列
+	Matrix4x4 rotate = MakeRotateYMatrix(yaw);
+	Vector3 velocityZ = TransformNormal(forward, rotate);
+	// X軸周り角度
+	transform_.rotate.x = std::atan2(-velocityZ.y, velocityZ.z);
+
+	// カメラに反映
+	camera_->SetTransform(transform_);
+	camera_->Update();
+}
+
+void RailCameraController::ManualMove()
+{
+	// 移動フラグが立っていたら
+	if (isMove_)
+	{
+		// カメラの座標を求める
+		t += 0.01f;
+		nowPoint_ = Lerp(prePoint_, nextPoint_, t);
+		transform_.translate = nowPoint_;
+
+		// 次の制御点に到達したら
+		if (t >= 1.0f)
+		{
+			// 移動フラグを切る
+			isMove_ = false;
+			t = 0.0f;
+		}
+
+		// カメラに反映
+		camera_->SetTranslate(transform_.translate);
+		camera_->Update();
+	}
+	else
+	{
+		// キー入力があったら
+		if (Input::GetInstance()->TriggerKey(DIK_D))
+		{
+			// 移動フラグを立てる
+			isMove_ = true;
+			
+			// 次の制御点番号を加算
+			currentRailPointNum_++;
+
+			if (currentRailPointNum_ >= railPoints_.size())
+			{
+				// 番号が制御点の総数を超えないように調整
+				currentRailPointNum_ = 0;
+			}
+
+			// 次の制御点を設定する
+			prePoint_ = nowPoint_;
+			nowPoint_ = transform_.translate;
+			nextPoint_ = railPoints_[currentRailPointNum_];
+		}
+	}
 }

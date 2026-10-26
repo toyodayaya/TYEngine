@@ -27,13 +27,21 @@ void SelectScenePlayer::Initialize(Player* player)
 	object3d_->SetIsRailCamera(true);
 	transform_ = object3d_->GetTransform();
 	transform_.translate = object3d_->GetWorldTranslate();
-	transform_.rotate = { 0.0f,0.0f,0.0f,1.0f };
 	transform_.translate = Vector3Add(transform_.translate, playerOffset_);
+	transform_.rotate = { 0.0f,0.0f,0.0f,0.0f };
 }
 
 void SelectScenePlayer::Update()
 {
-	// オブジェクトを更新
+	// プレイヤーのローカル行列を作成
+	worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
+	// カメラのワールド行列を乗算
+	worldMatrix = Multiply(worldMatrix, camera_->GetWorldMatrix());
+	// プレイヤーのワールド座標をセット
+	object3d_->SetWorldMatrix(worldMatrix);
+	player_->SetWorldMatrix(worldMatrix);
+
+	// 3Dオブジェクトを更新
 	object3d_->Update();
 
 #ifdef USE_IMGUI

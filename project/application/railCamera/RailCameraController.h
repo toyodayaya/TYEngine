@@ -19,6 +19,10 @@ public:
 	// 描画
 	void Draw();
 
+	// カメラを動かす処理
+	void AutoMove();
+	void ManualMove();
+
 	// setter
 	void SetCamera(Camera* camera) { this->camera_ = camera; }
 	void SetRailPoint(const std::vector<Vector3>& railPoint) { railPoints_ = railPoint; }
@@ -31,6 +35,16 @@ private:
 
 	// カメラの制御点
 	std::vector<Vector3> railPoints_;
+	// 前の制御点
+	Vector3 prePoint_;
+	// 今の制御点
+	Vector3 nowPoint_;
+	// 次の制御点
+	Vector3 nextPoint_;
+	// 制御点の数
+	int currentRailPointNum_ = 0;
+	// 移動フラグ
+	bool isMove_ = false;
 
 	// 線形補間用の変数
 	float t = 0.0f;
