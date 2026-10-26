@@ -9,6 +9,7 @@
 #include "ChangePostEffectEvent.h"
 #include "ChangeSceneEvent.h"
 #include "TitleCameraEvent.h"
+#include "SelectSceneEvent.h"
 #include "RailCameraController.h"
 #include <string>
 #include <vector>
@@ -63,6 +64,7 @@ public:
 	{
 		QuaternionTransform transform;
 		std::string eventName;
+		std::string stageName;
 		ColliderSpawnData collider;
 	};
 

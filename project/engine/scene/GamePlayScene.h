@@ -19,6 +19,8 @@ public:
 private:
 	// ステージデータ
 	StageData* stageData_ = nullptr;
+	// ステージ名
+	std::string stageName_;
 	// skybox
 	std::unique_ptr<Skydome> skydome;
 	QuaternionTransform skydomeTransform;

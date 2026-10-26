@@ -16,7 +16,6 @@ void GamePlayScene::Initialize()
 	RenderTexture::GetInstance()->SetIsFadeIn(true);
 
 	// objファイルからモデルを読み込む
-	ModelManager::GetInstance()->LoadModel("resources/player", "player.obj", Model::AnimationType::kNone);
 	ModelManager::GetInstance()->LoadModel("resources/enemy", "enemy.obj", Model::AnimationType::kNone);
 	ModelManager::GetInstance()->LoadModel("resources/cube", "cube.obj", Model::AnimationType::kNone);
 	ModelManager::GetInstance()->LoadModel("resources/skydome", "skydome.obj", Model::AnimationType::kNone);
@@ -26,10 +25,12 @@ void GamePlayScene::Initialize()
 	// ステージを読み込む
 	StageManager::GetInstance()->LoadJsonData("resources/stages", "1.json");
 	StageManager::GetInstance()->LoadJsonData("resources/stages", "2.json");
+	// マネージャーからステージ名を取得
+	stageName_ = StageManager::GetInstance()->GetStageName();
 	// ステージを設定する
-	stageData_ = StageManager::GetInstance()->FindJsonData("1.json");
+	stageData_ = StageManager::GetInstance()->FindJsonData(stageName_);
 	// ステージを作成する
-	stageData_->CreateStage("1.json");
+	stageData_->CreateStage(stageName_);
 
 	// Skyboxの初期化
 	skydomeTransform.translate = { 0.0f,0.0f,0.0f };

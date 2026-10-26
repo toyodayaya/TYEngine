@@ -25,6 +25,9 @@ private:
 	// デフォルトカメラ
 	Camera* defaultCamera_ = nullptr;
 
+	// ステージ名
+	std::string stageName_;
+
 	// インスタンス
 	friend std::default_delete<StageManager>;
 	static std::unique_ptr<StageManager> instance;
@@ -47,6 +50,8 @@ public:
 
 	// getter
 	Camera* GetDefaultCamera() const { return defaultCamera_; }
+	std::string GetStageName() { return stageName_; }
 	// setter
 	void SetDefaultCamera(Camera* camera) { this->defaultCamera_ = camera; }
+	void SetStageName(std::string& name) { stageName_ = name + ".json"; }
 };

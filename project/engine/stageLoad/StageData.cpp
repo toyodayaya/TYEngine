@@ -591,6 +591,12 @@ StageData::EventSpawnData StageData::LoadEvent(nlohmann::json& event)
 		eventSpawnData.eventName = event["event_name"].get<std::string>();
 	}
 
+	if (event.contains("stage_name"))
+	{
+		// イベント名を登録
+		eventSpawnData.stageName = event["stage_name"].get<std::string>();
+	}
+
 	// トランスフォームのパラメータ読み込み
 	nlohmann::json& transform = event["transform"];
 	// 平行移動データを格納
@@ -635,6 +641,10 @@ void StageData::CreateEvents(const EventSpawnData& eventData)
 	{
 		event = std::make_unique<TitleCameraEvent>();
 	}
+	else if (eventData.eventName == "SelectScene")
+	{
+		event = std::make_unique<SelectSceneEvent>();
+	}
 	else
 	{
 		event = std::make_unique<ChangePostEffectEvent>();
@@ -648,6 +658,12 @@ void StageData::CreateEvents(const EventSpawnData& eventData)
 		TitleCameraEvent* titleCamera = dynamic_cast<TitleCameraEvent*>(event.get());
 		titleCamera->SetCamera(camera_);
 	}
+	else if (eventData.eventName == "SelectScene")
+	{
+		SelectSceneEvent* selectScene = dynamic_cast<SelectSceneEvent*>(event.get());
+		selectScene->SetStageName(eventData.stageName);
+	}
+
 
 	// コライダーがあれば生成、配置
 	if (eventData.collider.hasCollier)

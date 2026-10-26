@@ -1,0 +1,387 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "LIGHT",
+            "name": "Light",
+            "transform": {
+                "translation": [
+                    4.076245307922363,
+                    1.0054539442062378,
+                    5.903861999511719
+                ],
+                "rotation": [
+                    0.16907574236392975,
+                    0.27217137813568115,
+                    0.7558803558349609,
+                    0.570947527885437
+                ],
+                "scaling": [
+                    1.0,
+                    0.9999999403953552,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "CAMERA",
+            "name": "Camera",
+            "transform": {
+                "translation": [
+                    14.459737777709961,
+                    0.0,
+                    9.752702713012695
+                ],
+                "rotation": [
+                    0.0,
+                    0.3826834559440613,
+                    0.0,
+                    0.9238795638084412
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    1.0,
+                    0.9999999403953552
+                ]
+            }
+        },
+        {
+            "type": "EventSpawn",
+            "name": "EventSpawn",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "stage_name": "1",
+            "event_name": "SelectScene",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "EventSpawn",
+            "name": "EventSpawn.001",
+            "transform": {
+                "translation": [
+                    0.0,
+                    12.007529258728027,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "stage_name": "2",
+            "event_name": "SelectScene",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "EventSpawn",
+            "name": "EventSpawn.002",
+            "transform": {
+                "translation": [
+                    0.0,
+                    23.59374237060547,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "stage_name": "3",
+            "event_name": "SelectScene",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "EventSpawn",
+            "name": "EventSpawn.003",
+            "transform": {
+                "translation": [
+                    0.0,
+                    34.894832611083984,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "stage_name": "3",
+            "event_name": "SelectScene",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "EventSpawn",
+            "name": "EventSpawn.004",
+            "transform": {
+                "translation": [
+                    0.0,
+                    47.29133605957031,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "stage_name": "3",
+            "event_name": "SelectScene",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "PlayerSpawn",
+            "name": "PlayerSpawn",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    -0.0,
+                    -0.0,
+                    -0.7071067690849304,
+                    0.7071067690849304
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "player.obj",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        }
+    ],
+    "rails": [
+        {
+            "name": "Rail",
+            "points": [
+                {
+                    "type": "RailPoint",
+                    "name": "RailPoint",
+                    "transform": {
+                        "translation": [
+                            7.678263187408447,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                },
+                {
+                    "type": "RailPoint",
+                    "name": "RailPoint.001",
+                    "transform": {
+                        "translation": [
+                            7.678263187408447,
+                            11.908105850219727,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                },
+                {
+                    "type": "RailPoint",
+                    "name": "RailPoint.002",
+                    "transform": {
+                        "translation": [
+                            7.678263187408447,
+                            23.704975128173828,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                },
+                {
+                    "type": "RailPoint",
+                    "name": "RailPoint.003",
+                    "transform": {
+                        "translation": [
+                            7.678263187408447,
+                            35.006065368652344,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                },
+                {
+                    "type": "RailPoint",
+                    "name": "RailPoint.004",
+                    "transform": {
+                        "translation": [
+                            7.678263187408447,
+                            47.40256881713867,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

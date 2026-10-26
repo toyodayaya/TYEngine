@@ -28,7 +28,7 @@ void StartSequencePlayer::Update()
 	else
 	{
 		// スタート演出が終わったらステートを変更する
-		PlayerManager::GetInstance()->ChangePlayerState("NormalPlayer");
+		PlayerManager::GetInstance()->ChangePlayerState("SelectScenePlayer");
 	}
 
 	object3d_->SetTransform(transform_);

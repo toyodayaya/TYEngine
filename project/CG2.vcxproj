@@ -160,6 +160,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\bullet\BulletManager.cpp" />
     <ClCompile Include="application\damage\DamageManager.cpp" />
     <ClCompile Include="application\enemy\BaseEnemyState.cpp" />
+    <ClCompile Include="application\event\SelectSceneEvent.cpp" />
     <ClCompile Include="application\enemy\EnemyStateFactory.cpp" />
     <ClCompile Include="application\enemy\NormalEnemy.cpp" />
     <ClCompile Include="application\event\TitleCameraEvent.cpp" />
@@ -171,6 +172,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\collider\CollisionManager.cpp" />
     <ClCompile Include="application\base\GameObject.cpp" />
     <ClCompile Include="application\event\ChangeSceneEvent.cpp" />
+    <ClCompile Include="application\player\SelectScenePlayer.cpp" />
     <ClCompile Include="application\player\DeadPlayer.cpp" />
     <ClCompile Include="application\player\StartSequencePlayer.cpp" />
     <ClCompile Include="application\player\BasePlayerState.cpp" />
@@ -196,6 +198,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\event\EventManager.cpp" />
     <ClCompile Include="application\lockOn\LockOn.cpp" />
     <ClCompile Include="application\UI\InGameUI.cpp" />
+    <ClCompile Include="engine\scene\SelectScene.cpp" />
     <ClCompile Include="main.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Development|x64'">MaxSpeed</Optimization>
       <WholeProgramOptimization Condition="'$(Configuration)|$(Platform)'=='Development|x64'">true</WholeProgramOptimization>
@@ -401,6 +404,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\damage\DamageManager.h" />
     <ClInclude Include="application\enemy\AbstractEnemyStateFactory.h" />
     <ClInclude Include="application\enemy\BaseEnemyState.h" />
+    <ClInclude Include="application\event\SelectSceneEvent.h" />
     <ClInclude Include="application\enemy\EnemyStateFactory.h" />
     <ClInclude Include="application\enemy\NormalEnemy.h" />
     <ClInclude Include="application\event\TitleCameraEvent.h" />
@@ -412,6 +416,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\collider\CollisionManager.h" />
     <ClInclude Include="application\base\GameObject.h" />
     <ClInclude Include="application\event\ChangeSceneEvent.h" />
+    <ClInclude Include="application\player\SelectScenePlayer.h" />
     <ClInclude Include="application\player\DeadPlayer.h" />
     <ClInclude Include="application\player\StartSequencePlayer.h" />
     <ClInclude Include="application\player\AbstractPlayerStateFactory.h" />
@@ -452,6 +457,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="engine\debugDraw\DebugDraw.h" />
     <ClInclude Include="engine\debugDraw\DebugDrawCommon.h" />
     <ClInclude Include="application\event\EventManager.h" />
+    <ClInclude Include="engine\scene\SelectScene.h" />
     <ClInclude Include="externals\assimp\include\assimp\aabb.h" />
     <ClInclude Include="externals\assimp\include\assimp\ai_assert.h" />
     <ClInclude Include="externals\assimp\include\assimp\anim.h" />
