@@ -252,6 +252,7 @@
                 ]
             },
             "file_name": "player.obj",
+            "player_state": "SelectStartPlayer",
             "collider": {
                 "type": "BOX",
                 "center": [

@@ -46,6 +46,7 @@ public:
 	{
 		QuaternionTransform transform;
 		std::string filePath;
+		std::string stateName;
 		ColliderSpawnData collider;
 		bool hasBullet;
 	};

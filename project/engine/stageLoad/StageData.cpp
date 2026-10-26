@@ -428,6 +428,12 @@ StageData::PlayerSpawnData StageData::LoadPlayer(nlohmann::json& player)
 		playerSpawnData.filePath = player["file_name"].get<std::string>();
 	}
 
+	if (player.contains("player_state"))
+	{
+		// ファイル名を登録
+		playerSpawnData.stateName = player["player_state"].get<std::string>();
+	}
+
 	// トランスフォームのパラメータ読み込み
 	nlohmann::json& transform = player["transform"];
 	// 平行移動データを格納
@@ -469,7 +475,7 @@ void StageData::CreatePlayer(const PlayerSpawnData& playerData)
 	playerStateFactory = std::make_unique <PlayerStateFactory>();
 	PlayerManager::GetInstance()->SetPlayerStateFactory(std::move(playerStateFactory));
 	// プレイヤーマネージャーに最初のプレイヤーステートをセット
-	PlayerManager::GetInstance()->ChangePlayerState("StartSequencePlayer");
+	PlayerManager::GetInstance()->ChangePlayerState(playerData.stateName);
 	// プレイヤーの初期化
 	PlayerManager::GetInstance()->Initialize(playerData.transform, playerData.filePath, camera_);
 
