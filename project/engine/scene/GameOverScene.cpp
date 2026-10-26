@@ -95,7 +95,7 @@ void GameOverScene::Update()
 		}
 		else if (cursorNum_ == 1)
 		{
-			SceneManager::GetInstance()->ChangeScene("TitleScene");
+			SceneManager::GetInstance()->ChangeScene("SelectScene");
 			return;
 		}
 		else

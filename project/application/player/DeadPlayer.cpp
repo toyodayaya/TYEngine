@@ -1,6 +1,7 @@
 #include "DeadPlayer.h"
 #include "SceneManager.h"
 #include "ImGuiManager.h"
+#include "RenderTexture.h"
 #include "MathManager.h"
 using namespace MathManager;
 
@@ -69,8 +70,8 @@ void DeadPlayer::Update()
 
 				// フェーズ切り替え
 				phase_ = kPlayerDead;
-				// シーン遷移フラグを立てる
-				SceneManager::GetInstance()->SetIsChangeScene(true);
+				// フェードアウトフラグを立てる
+				RenderTexture::GetInstance()->SetIsFadeIn(false);
 			}
 
 			// 線形補間用の変数をリセット
@@ -116,6 +117,13 @@ void DeadPlayer::Update()
 			// 線形補間用の変数をリセット
 			t_ = 0.0f;
 
+		}
+
+		if (RenderTexture::GetInstance()->GetRadiusData() <= 0.0f)
+		{
+			// シーンを切り替える
+			SceneManager::GetInstance()->ChangeScene("GameOverScene");
+			return;
 		}
 
 		
