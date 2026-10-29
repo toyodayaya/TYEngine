@@ -64,6 +64,7 @@ public:
 	struct EventSpawnData
 	{
 		QuaternionTransform transform;
+		std::string filePath;
 		std::string eventName;
 		std::string stageName;
 		ColliderSpawnData collider;

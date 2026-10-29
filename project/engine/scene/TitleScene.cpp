@@ -37,7 +37,7 @@ void TitleScene::Initialize()
 	pressSpace_->SetPosition(Vector2{ 250.0f,550.0f });
 
 	// ステージを読み込む
-	StageManager::GetInstance()->LoadJsonData("resources/stages", "title.json");
+	StageManager::GetInstance()->LoadJsonData("resources/stages/json", "title.json");
 	// ステージを設定する
 	stageData_ = StageManager::GetInstance()->FindJsonData("title.json");
 	// ステージを作成する

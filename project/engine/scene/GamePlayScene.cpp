@@ -22,9 +22,6 @@ void GamePlayScene::Initialize()
 	// テクスチャの読み込み
 	TextureManager::GetInstance()->LoadTexture("resources/model/rostock_laage_airport_4k.dds");
 
-	// ステージを読み込む
-	StageManager::GetInstance()->LoadJsonData("resources/stages", "1.json");
-	StageManager::GetInstance()->LoadJsonData("resources/stages", "2.json");
 	// マネージャーからステージ名を取得
 	stageName_ = StageManager::GetInstance()->GetStageName();
 	// ステージを設定する

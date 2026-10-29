@@ -18,8 +18,20 @@ void SelectScene::Initialize()
 	ModelManager::GetInstance()->LoadModel("resources/player", "player.obj", Model::AnimationType::kNone);
 	ModelManager::GetInstance()->LoadModel("resources/cube", "cube.obj", Model::AnimationType::kNone);
 
+	// テクスチャデータを読み込む
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/gameover/cursor.png");
+
+	// カーソル画像を初期化
+	rightCursor_ = std::make_unique<Sprite>();
+	rightCursor_->Initialize("resources/sprite/gameover/cursor.png");
+	rightCursor_->SetPosition(Vector2{ 1000.0f,300.0f });
+	leftCursor_ = std::make_unique<Sprite>();
+	leftCursor_->Initialize("resources/sprite/gameover/cursor.png");
+	leftCursor_->SetPosition(Vector2{ 200.0f,280.0f });
+	leftCursor_->SetRotation(1.05f);
+
 	// ステージを読み込む
-	StageManager::GetInstance()->LoadJsonData("resources/stages", "select.json");
+	StageManager::GetInstance()->LoadJsonData("resources/stages/json", "select.json");
 	// ステージを設定する
 	stageData_ = StageManager::GetInstance()->FindJsonData("select.json");
 	// ステージを作成する
@@ -48,6 +60,10 @@ void SelectScene::Update()
 	// 全ての当たり判定を走査
 	stageData_->CheckAllCollision();
 
+	// スプライトを更新する
+	rightCursor_->Update();
+	leftCursor_->Update();
+
 	// フェードイン演出
 	RenderTexture::GetInstance()->SceneChangeEffect();
 }
@@ -56,4 +72,8 @@ void SelectScene::Draw()
 {
 	// ステージを描画
 	stageData_->Draw();
+
+	// スプライトを描画する
+	rightCursor_->Draw();
+	leftCursor_->Draw();
 }

@@ -26,7 +26,7 @@ private:
 	Camera* defaultCamera_ = nullptr;
 
 	// ステージ名
-	std::string stageName_;
+	std::string stageName_ = "1.json";
 
 	// インスタンス
 	friend std::default_delete<StageManager>;

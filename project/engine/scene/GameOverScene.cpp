@@ -17,7 +17,6 @@ void GameOverScene::Initialize()
 	TextureManager::GetInstance()->LoadTexture("resources/sprite/gameover/titleScene.png");
 	TextureManager::GetInstance()->LoadTexture("resources/sprite/gameover/selectScene.png");
 	TextureManager::GetInstance()->LoadTexture("resources/sprite/gameover/gameScene.png");
-	TextureManager::GetInstance()->LoadTexture("resources/sprite/gameover/cursor.png");
 
 	// ゲームオーバー時ロゴを初期化
 	gameOver_ = std::make_unique<Sprite>();
@@ -44,7 +43,7 @@ void GameOverScene::Initialize()
 	cursor_->SetPosition(Vector2{ 600.0f,300.0f });
 
 	// ステージを読み込む
-	StageManager::GetInstance()->LoadJsonData("resources/stages", "gameover.json");
+	StageManager::GetInstance()->LoadJsonData("resources/stages/json", "gameover.json");
 	// ステージを設定する
 	stageData_ = StageManager::GetInstance()->FindJsonData("gameover.json");
 	// ステージを作成する
@@ -148,6 +147,6 @@ void GameOverScene::MoveCursor()
 	}
 
 	Vector2 pos = nextScene_[cursorNum_]->GetPosition();
-	pos.x -= 50.0f;
+	pos.x -= 200.0f;
 	cursor_->SetPosition(pos);
 }

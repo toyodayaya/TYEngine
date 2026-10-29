@@ -591,6 +591,13 @@ StageData::EventSpawnData StageData::LoadEvent(nlohmann::json& event)
 	// データ格納用の変数を宣言
 	EventSpawnData eventSpawnData;
 
+	if (event.contains("file_name"))
+	{
+		// ファイル名を登録
+		eventSpawnData.filePath = event["file_name"].get<std::string>();
+	}
+
+
 	if (event.contains("event_name"))
 	{
 		// イベント名を登録
@@ -656,8 +663,6 @@ void StageData::CreateEvents(const EventSpawnData& eventData)
 		event = std::make_unique<ChangePostEffectEvent>();
 	}
 
-	// イベントを初期化
-	event->Initialize(eventData.transform);
 
 	if (eventData.eventName == "TitleCamera")
 	{
@@ -668,8 +673,11 @@ void StageData::CreateEvents(const EventSpawnData& eventData)
 	{
 		SelectSceneEvent* selectScene = dynamic_cast<SelectSceneEvent*>(event.get());
 		selectScene->SetStageName(eventData.stageName);
+		selectScene->SetStageFilePath(eventData.filePath);
 	}
 
+	// イベントを初期化
+	event->Initialize(eventData.transform);
 
 	// コライダーがあれば生成、配置
 	if (eventData.collider.hasCollier)
