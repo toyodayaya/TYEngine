@@ -181,7 +181,7 @@
                 ]
             },
             "file_name": "stage.obj",
-            "stage_name": "3",
+            "stage_name": "4",
             "event_name": "SelectScene",
             "collider": {
                 "type": "BOX",
@@ -219,7 +219,7 @@
                 ]
             },
             "file_name": "stage.obj",
-            "stage_name": "3",
+            "stage_name": "5",
             "event_name": "SelectScene",
             "collider": {
                 "type": "BOX",
