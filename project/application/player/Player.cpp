@@ -58,15 +58,6 @@ void Player::Update()
 	// プレイヤーの状態を更新
 	state_->Update();
 
-#ifdef USE_IMGUI
-	ImGui::Begin("Player");
-	ImGui::DragFloat3("pos", &transform_.translate.x);
-	ImGui::DragFloat4("rotate", &transform_.rotate.x);
-
-
-	ImGui::End();
-
-#endif // USE_IMGUI
 
 #ifdef _DEBUG
 	debugDraw->SetWorldMatrix(worldMatrix);

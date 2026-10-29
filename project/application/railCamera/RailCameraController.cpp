@@ -150,17 +150,36 @@ void RailCameraController::ManualMove()
 		// キー入力があったら
 		if (Input::GetInstance()->TriggerKey(DIK_D))
 		{
+			if (currentRailPointNum_ >= railPoints_.size() - 1)
+			{
+				// 番号が制御点の総数を超えたら無効
+				return;
+			}
+
 			// 移動フラグを立てる
 			isMove_ = true;
 			
 			// 次の制御点番号を加算
 			currentRailPointNum_++;
 
-			if (currentRailPointNum_ >= railPoints_.size())
+			// 次の制御点を設定する
+			prePoint_ = nowPoint_;
+			nowPoint_ = transform_.translate;
+			nextPoint_ = railPoints_[currentRailPointNum_];
+		}
+		else if (Input::GetInstance()->TriggerKey(DIK_A))
+		{
+			if (currentRailPointNum_ <= 0)
 			{
-				// 番号が制御点の総数を超えないように調整
-				currentRailPointNum_ = 0;
+				// 番号が制御点の総数を超えたら無効
+				return;
 			}
+
+			// 移動フラグを立てる
+			isMove_ = true;
+
+			// 次の制御点番号を加算
+			currentRailPointNum_--;
 
 			// 次の制御点を設定する
 			prePoint_ = nowPoint_;

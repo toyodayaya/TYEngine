@@ -31,13 +31,6 @@ void GamePlayScene::Initialize()
 	stageData_ = StageManager::GetInstance()->FindJsonData(stageName_);
 	// ステージを作成する
 	stageData_->CreateStage(stageName_);
-
-	// Skyboxの初期化
-	skydomeTransform.translate = { 0.0f,0.0f,0.0f };
-	skydomeTransform.scale = { 1.0f,1.0f,1.0f };
-	skydomeTransform.rotate = { 0.0f,0.0f,0.0f,1.0f };
-	skydome = std::make_unique<Skydome>();
-	skydome->Initialize(skydomeTransform, "skydome.obj");
 }
 
 void GamePlayScene::Finalize()
@@ -54,9 +47,6 @@ void GamePlayScene::Update()
 	// 全ての当たり判定を走査
 	stageData_->CheckAllCollision();
 
-	// skydomeの更新処理
-	skydome->Update();
-
 	// フェードイン演出
 	RenderTexture::GetInstance()->SceneChangeEffect();
 }
@@ -65,7 +55,4 @@ void GamePlayScene::Draw()
 {
 	// ステージを描画
 	stageData_->Draw();
-
-	// skydomeの描画
-	skydome->Draw();
 }

@@ -1,5 +1,4 @@
 #pragma once
-#include "Skydome.h"
 #include "BaseScene.h"
 #include <memory>
 #include "StageData.h"
@@ -21,9 +20,6 @@ private:
 	StageData* stageData_ = nullptr;
 	// ステージ名
 	std::string stageName_;
-	// skybox
-	std::unique_ptr<Skydome> skydome;
-	QuaternionTransform skydomeTransform;
 	// フェードイン最大値
 	const float kMaxRadius_ = 1.0f;
 
