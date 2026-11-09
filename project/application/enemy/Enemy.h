@@ -17,7 +17,6 @@ public:
 	// getter
 	Vector3 GetTranslate() { return transform_.translate; }
 
-
 private:
 	
 };

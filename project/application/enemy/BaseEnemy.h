@@ -22,6 +22,9 @@ public:
 	void SetEnemyStateFactory(std::unique_ptr<AbstractEnemyStateFactory> enemyStateFactory) { enemyStateFactory_ = std::move(enemyStateFactory); }
 	// getter
 	Object3d* GetObject3d() { return object3d_.get(); }
+	// setter
+	void SetIsDead(bool isDead) { isDead_ = isDead; }
+
 
 protected:
 	// 当たり判定用のAABB

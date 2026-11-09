@@ -34,6 +34,8 @@ private:
 
 	// 当たり判定フラグ
 	bool isHit_ = false;
+	// 死亡フラグ
+	bool isDead_ = false;
 	// ヒットタイマー
 	int hitTimer_ = 60;
 	

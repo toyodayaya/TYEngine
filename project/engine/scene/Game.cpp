@@ -17,6 +17,9 @@ void Game::Initialize()
 	// ステージ選択用のUIを初期化
 	SelectSceneUI::GetInstance()->Initialize();
 
+	// スコアUIを初期化
+	ScoreManager::GetInstance()->Initialize();
+
 	// シーンファクトリーの生成とセット
 	sceneFactory = std::make_unique <SceneFactory>();
 	SceneManager::GetInstance()->SetSceneFactory(std::move(sceneFactory));
@@ -80,6 +83,9 @@ void Game::Finalize()
 {
 	// シーン選択UIの終了処理
 	SelectSceneUI::GetInstance()->Finalize();
+
+	// スコアUIの終了処理
+	ScoreManager::GetInstance()->Finalize();
 
 	// シーンマネージャーの終了処理
 	SceneManager::GetInstance()->Finalize();

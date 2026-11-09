@@ -3,7 +3,7 @@
 #include "StageData.h"
 #include "Object3dCommon.h"
 #include "ImGuiManager.h"
-
+#include "ScoreManager.h"
 #ifdef _DEBUG
 #include "DebugDraw.h"
 #include "DebugDrawCommon.h"
@@ -104,6 +104,10 @@ void Bullet::OnCollision(std::string hitObjectType)
 	}
 	else if (hitObjectType == "EnemySpawn")
 	{
+		// 敵だったらスコアを加算
+		ScoreManager::GetInstance()->AddScore(10);
+		ScoreManager::GetInstance()->SetNumber();
+		// 弾の死亡フラグを立てる
 		isDead_ = true;
 	}
 }

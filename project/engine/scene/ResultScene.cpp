@@ -10,14 +10,10 @@ void ResultScene::Initialize()
 {
 	// フェードインフラグを立てる
 	RenderTexture::GetInstance()->SetIsFadeIn(true);
-
-	// スコアを確定させる
-	ScoreManager::GetInstance()->Initialize();
 }
 
 void ResultScene::Finalize()
 {
-	ScoreManager::GetInstance()->Finalize();
 }
 
 void ResultScene::Update()

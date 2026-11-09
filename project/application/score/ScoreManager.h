@@ -27,7 +27,7 @@ private:
 	friend std::default_delete<ScoreManager>;
 	static std::unique_ptr<ScoreManager> instance;
 
-	// ダメージの桁数上限
+	// スコアの桁数上限
 	static const int kNumberArray = 4;
 	// 数字用のスプライト
 	std::vector<std::unique_ptr<Sprite>> numbers_;
@@ -52,8 +52,9 @@ public:
 	// スコア加算処理
 	void AddScore(const int& score);
 
-	// 数字をセットする関数
+	// setter
 	void SetNumber();
+	void SetScore(int score) { score_ = score; }
 
 };
 

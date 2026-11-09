@@ -5,6 +5,7 @@
 #include "Framework.h"
 #include "SceneManager.h"
 #include "SelectSceneUI.h"
+#include "ScoreManager.h"
 #pragma warning(pop)
 
 using namespace MathManager;

@@ -3,11 +3,8 @@
 #include "ModelManager.h"
 #include "StageManager.h"
 #include "StageData.h"
-#include "SkyboxCommon.h"
-#include "Input.h"
-#include "SceneManager.h"
+#include "ScoreManager.h"
 #include "RenderTexture.h"
-#include "PlayerManager.h"
 
 void GamePlayScene::Initialize()
 {
@@ -21,6 +18,9 @@ void GamePlayScene::Initialize()
 	ModelManager::GetInstance()->LoadModel("resources/skydome", "skydome.obj", Model::AnimationType::kNone);
 	// テクスチャの読み込み
 	TextureManager::GetInstance()->LoadTexture("resources/model/rostock_laage_airport_4k.dds");
+
+	// スコアをリセット
+	ScoreManager::GetInstance()->SetScore(0);
 
 	// マネージャーからステージ名を取得
 	stageName_ = StageManager::GetInstance()->GetStageName();
@@ -38,6 +38,9 @@ void GamePlayScene::Finalize()
 
 void GamePlayScene::Update()
 {
+	// スコアUIを更新
+	ScoreManager::GetInstance()->Update();
+
 	// ステージを更新
 	stageData_->Update();
 
@@ -52,4 +55,7 @@ void GamePlayScene::Draw()
 {
 	// ステージを描画
 	stageData_->Draw();
+
+	// スコアUIを描画
+	ScoreManager::GetInstance()->Draw();
 }

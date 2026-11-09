@@ -25,14 +25,14 @@ void ScoreManager::Initialize()
 	// スコア画像を初期化
 	scoreSprite_ = std::make_unique<Sprite>();
 	scoreSprite_->Initialize("resources/sprite/numbers/score.png");
-	scoreSprite_->SetPosition(Vector2(600.0f, 100.0f));
+	scoreSprite_->SetPosition(Vector2(650.0f, 10.0f));
 
 	// 数字の画像を初期化
 	for (size_t i = 0; i < kNumberArray; i++)
 	{
 		auto sprite = std::make_unique<Sprite>();
 		sprite->Initialize("resources/sprite/numbers/numbers.png");
-		sprite->SetPosition(Vector2{ 950.0f + (50.0f * i),100.0f });
+		sprite->SetPosition(Vector2{ 1000.0f + (50.0f * i),10.0f });
 		numbers_.push_back(std::move(sprite));
 	}
 

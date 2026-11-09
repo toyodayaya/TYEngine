@@ -78,8 +78,8 @@ void NormalEnemy::OnCollision(std::string hitObjectType)
 		// HPが0になったら
 		if (hp_ <= 0)
 		{
-			// ステートを変更する
-			//enemy_->ChangeEnemyState("DeadEnemy");
+			// 本体に死亡を通知
+			enemy_->SetIsDead(true);
 		}
 	}
 
