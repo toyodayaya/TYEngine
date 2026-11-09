@@ -19,9 +19,8 @@ public:
 private:
 	// ステージデータ
 	StageData* stageData_ = nullptr;
-	// ゲームオーバー時の画像
-	std::unique_ptr<Sprite> titleLogo_;
-	std::unique_ptr<Sprite> pressSpace_;
+	// クリア時の画像
+	std::unique_ptr<Sprite> clear_;
 	
 };
 
