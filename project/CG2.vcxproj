@@ -230,6 +230,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="engine\scene\ResultScene.cpp" />
     <ClCompile Include="application\player\StandByPlayer.cpp" />
     <ClCompile Include="application\player\Player.cpp" />
+    <ClCompile Include="application\UI\SelectSceneUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\object3d\ToyObject3d.PS.hlsl">
@@ -551,6 +552,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\player\StandByPlayer.h" />
     <ClInclude Include="application\player\Player.h" />
     <ClInclude Include="application\UI\InGameUI.h" />
+    <ClInclude Include="application\UI\SelectSceneUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

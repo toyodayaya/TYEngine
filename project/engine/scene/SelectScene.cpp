@@ -19,14 +19,14 @@ void SelectScene::Initialize()
 	ModelManager::GetInstance()->LoadModel("resources/cube", "cube.obj", Model::AnimationType::kNone);
 
 	// テクスチャデータを読み込む
-	TextureManager::GetInstance()->LoadTexture("resources/sprite/gameover/cursor.png");
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/selectUI/cursor.png");
 
 	// カーソル画像を初期化
 	rightCursor_ = std::make_unique<Sprite>();
-	rightCursor_->Initialize("resources/sprite/gameover/cursor.png");
+	rightCursor_->Initialize("resources/sprite/selectUI/cursor.png");
 	rightCursor_->SetPosition(Vector2{ 1000.0f,300.0f });
 	leftCursor_ = std::make_unique<Sprite>();
-	leftCursor_->Initialize("resources/sprite/gameover/cursor.png");
+	leftCursor_->Initialize("resources/sprite/selectUI/cursor.png");
 	leftCursor_->SetPosition(Vector2{ 200.0f,280.0f });
 	leftCursor_->SetRotation(1.05f);
 
