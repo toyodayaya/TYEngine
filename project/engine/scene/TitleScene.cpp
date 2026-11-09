@@ -69,7 +69,7 @@ void TitleScene::Update()
 	if (RenderTexture::GetInstance()->GetRadiusData() <= 0.0f)
 	{
 		// シーンを切り替える
-		SceneManager::GetInstance()->ChangeScene("SelectScene");
+		SceneManager::GetInstance()->ChangeScene("ResultScene");
 		return;
 	}
 

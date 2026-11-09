@@ -3,17 +3,20 @@
 #include "Input.h"
 #include "ImguiManager.h"
 #include "RenderTexture.h"
+#include "ScoreManager.h"
 
 void ResultScene::Initialize()
 {
 	// フェードインフラグを立てる
 	RenderTexture::GetInstance()->SetIsFadeIn(true);
 
+	// スコアを確定させる
+	ScoreManager::GetInstance()->Initialize();
 }
 
 void ResultScene::Finalize()
 {
-
+	ScoreManager::GetInstance()->Finalize();
 }
 
 void ResultScene::Update()
@@ -41,9 +44,13 @@ void ResultScene::Update()
 		// フェードアウトフラグを立てる
 		RenderTexture::GetInstance()->SetIsFadeIn(false);
 	}
+
+	// スコアの画像を更新する
+	ScoreManager::GetInstance()->Update();
 }
 
 void ResultScene::Draw()
 {
-
+	// スコアの画像を描画する
+	ScoreManager::GetInstance()->Draw();
 }

@@ -1,6 +1,5 @@
 #include "Enemy.h"
 #include "Object3dCommon.h"
-#include "DamageManager.h"
 #ifdef _DEBUG
 #include "DebugDraw.h"
 #include "DebugDrawCommon.h"

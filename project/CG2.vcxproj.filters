@@ -285,7 +285,7 @@
     <ClCompile Include="application\skydome\Skydome.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="application\damage\DamageManager.cpp">
+    <ClCompile Include="application\score\ScoreManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\event\ChangeSceneEvent.cpp">
@@ -822,7 +822,7 @@
     <ClInclude Include="application\skydome\Skydome.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="application\damage\DamageManager.h">
+    <ClInclude Include="application\score\ScoreManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\event\ChangeSceneEvent.h">
