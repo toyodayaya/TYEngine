@@ -158,6 +158,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\bullet\BaseBullet.cpp" />
     <ClCompile Include="application\bullet\Bullet.cpp" />
     <ClCompile Include="application\bullet\BulletManager.cpp" />
+    <ClCompile Include="application\player\ClearSequencePlayer.cpp" />
+    <ClCompile Include="application\player\ClearPlayer.cpp" />
+    <ClCompile Include="application\player\ClearStartPlayer.cpp" />
     <ClCompile Include="application\score\ScoreManager.cpp" />
     <ClCompile Include="application\enemy\BaseEnemyState.cpp" />
     <ClCompile Include="application\event\SelectSceneEvent.cpp" />
@@ -171,7 +174,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\enemy\EnemyManager.cpp" />
     <ClCompile Include="application\collider\CollisionManager.cpp" />
     <ClCompile Include="application\base\GameObject.cpp" />
-    <ClCompile Include="application\event\ChangeSceneEvent.cpp" />
+    <ClCompile Include="application\event\ClearSequenceStartEvent.cpp" />
     <ClCompile Include="application\player\SelectStartPlayer.cpp" />
     <ClCompile Include="application\player\SelectScenePlayer.cpp" />
     <ClCompile Include="application\player\DeadPlayer.cpp" />
@@ -403,6 +406,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\bullet\BaseBullet.h" />
     <ClInclude Include="application\bullet\Bullet.h" />
     <ClInclude Include="application\bullet\BulletManager.h" />
+    <ClInclude Include="application\player\ClearSequencePlayer.h" />
+    <ClInclude Include="application\player\ClearPlayer.h" />
+    <ClInclude Include="application\player\ClearStartPlayer.h" />
     <ClInclude Include="application\score\ScoreManager.h" />
     <ClInclude Include="application\enemy\AbstractEnemyStateFactory.h" />
     <ClInclude Include="application\enemy\BaseEnemyState.h" />
@@ -417,7 +423,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\enemy\EnemyManager.h" />
     <ClInclude Include="application\collider\CollisionManager.h" />
     <ClInclude Include="application\base\GameObject.h" />
-    <ClInclude Include="application\event\ChangeSceneEvent.h" />
+    <ClInclude Include="application\event\ClearSequenceStartEvent.h" />
     <ClInclude Include="application\player\SelectStartPlayer.h" />
     <ClInclude Include="application\player\SelectScenePlayer.h" />
     <ClInclude Include="application\player\DeadPlayer.h" />

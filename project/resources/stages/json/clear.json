@@ -73,15 +73,15 @@
             "name": "PlayerSpawn",
             "transform": {
                 "translation": [
-                    0.0,
-                    0.0,
-                    0.0
+                    -16.916227340698242,
+                    -10.68338394165039,
+                    4.357283592224121
                 ],
                 "rotation": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
+                    -0.09182994812726974,
+                    0.2661779224872589,
+                    -0.7834336161613464,
+                    0.5540291666984558
                 ],
                 "scaling": [
                     1.0,
@@ -90,7 +90,7 @@
                 ]
             },
             "file_name": "player.obj",
-            "player_state": "StandByPlayer"
+            "player_state": "ClearStartPlayer"
         }
     ],
     "rails": []

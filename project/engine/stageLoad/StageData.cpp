@@ -646,9 +646,9 @@ void StageData::CreateEvents(const EventSpawnData& eventData)
 	std::unique_ptr<BaseEvent> event;
 
 	// 登録されたイベント名で分岐
-	if (eventData.eventName == "ChangeScene")
+	if (eventData.eventName == "ClearSequenceStart")
 	{
-		event = std::make_unique<ChangeSceneEvent>();
+		event = std::make_unique<ClearSequenceStartEvent>();
 	}
 	else if (eventData.eventName == "TitleCamera")
 	{
@@ -663,10 +663,11 @@ void StageData::CreateEvents(const EventSpawnData& eventData)
 		event = std::make_unique<ChangePostEffectEvent>();
 	}
 
-	if (eventData.eventName == "ChangeScene")
+	if (eventData.eventName == "ClearSequenceStart")
 	{
-		ChangeSceneEvent* changeScene = dynamic_cast<ChangeSceneEvent*>(event.get());
+		ClearSequenceStartEvent* changeScene = dynamic_cast<ClearSequenceStartEvent*>(event.get());
 		changeScene->SetObjectFilePath(eventData.filePath);
+		changeScene->SetCamera(camera_);
 	}
 	else if (eventData.eventName == "TitleCamera")
 	{

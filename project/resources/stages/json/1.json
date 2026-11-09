@@ -104,7 +104,7 @@
                 ]
             },
             "file_name": "goal.obj",
-            "event_name": "ChangeScene",
+            "event_name": "ClearSequenceStart",
             "collider": {
                 "type": "BOX",
                 "center": [

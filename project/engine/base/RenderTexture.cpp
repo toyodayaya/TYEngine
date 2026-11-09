@@ -494,7 +494,7 @@ void RenderTexture::CreateMaterialRadius()
 
 void RenderTexture::SceneChangeEffect()
 {
-	if (isFadeIn_)
+   	if (isFadeIn_)
 	{
 		if (radiusData_->radius <= maxRadius_)
 		{

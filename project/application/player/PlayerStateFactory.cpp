@@ -5,6 +5,9 @@
 #include "DeadPlayer.h"
 #include "SelectScenePlayer.h"
 #include "SelectStartPlayer.h"
+#include "ClearStartPlayer.h"
+#include "ClearPlayer.h"
+#include "ClearSequencePlayer.h"
 
 std::unique_ptr<BasePlayerState> PlayerStateFactory::CreatePlayerState(const std::string& playerState)
 {
@@ -34,6 +37,18 @@ std::unique_ptr<BasePlayerState> PlayerStateFactory::CreatePlayerState(const std
 	else if (playerState == "SelectStartPlayer")
 	{
 		nextPlayerState = std::make_unique<SelectStartPlayer>();
+	}
+	else if (playerState == "ClearStartPlayer")
+	{
+		nextPlayerState = std::make_unique<ClearStartPlayer>();
+	}
+	else if (playerState == "ClearPlayer")
+	{
+		nextPlayerState = std::make_unique<ClearPlayer>();
+	}
+	else if (playerState == "ClearSequencePlayer")
+	{
+		nextPlayerState = std::make_unique<ClearSequencePlayer>();
 	}
 
 	return nextPlayerState;

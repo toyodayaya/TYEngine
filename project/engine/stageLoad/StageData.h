@@ -7,7 +7,7 @@
 #include "EnemyStateFactory.h"
 #include "Bullet.h"
 #include "ChangePostEffectEvent.h"
-#include "ChangeSceneEvent.h"
+#include "ClearSequenceStartEvent.h"
 #include "TitleCameraEvent.h"
 #include "SelectSceneEvent.h"
 #include "RailCameraController.h"

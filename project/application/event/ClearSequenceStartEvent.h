@@ -9,7 +9,7 @@
 #include "DebugDraw.h"
 #endif // _DEBUG
 
-class ChangeSceneEvent : public BaseEvent
+class ClearSequenceStartEvent : public BaseEvent
 {
 public:
 	// 初期化
@@ -25,6 +25,7 @@ public:
 
 	// setter
 	void SetObjectFilePath(std::string filePath) { objectFilePath_ = filePath; }
+	void SetCamera(Camera* camera) { this->camera_ = camera; }
 
 
 private:
@@ -32,6 +33,9 @@ private:
 	std::unique_ptr<Object3d> object3d_;
 	// ミニオブジェクトのファイルパス
 	std::string objectFilePath_;
+
+	// カメラ
+	Camera* camera_ = nullptr;
 
 
 #ifdef _DEBUG

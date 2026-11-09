@@ -1,4 +1,4 @@
-#include "ChangeSceneEvent.h"
+#include "ClearSequenceStartEvent.h"
 #include "SceneManager.h"
 #include "PlayerManager.h"
 #include "ModelManager.h"
@@ -10,7 +10,7 @@
 #include "MathManager.h"
 using namespace MathManager;
 
-void ChangeSceneEvent::Initialize(const QuaternionTransform& transform)
+void ClearSequenceStartEvent::Initialize(const QuaternionTransform& transform)
 {
 	transform_ = transform;
 	worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
@@ -32,31 +32,17 @@ void ChangeSceneEvent::Initialize(const QuaternionTransform& transform)
 #endif // _DEBUG
 }
 
-void ChangeSceneEvent::Finalize()
+void ClearSequenceStartEvent::Finalize()
 {
 #ifdef _DEBUG
 	debugDraw.reset();
 #endif // _DEBUG
 }
 
-void ChangeSceneEvent::Update()
+void ClearSequenceStartEvent::Update()
 {
 	// 3Dオブジェクトの更新
 	object3d_->Update();
-
-	if (isHit_)
-	{
-		// フェードアウト演出
-		RenderTexture::GetInstance()->SceneChangeEffect();
-
-		if (RenderTexture::GetInstance()->GetRadiusData() <= 0.0f)
-		{
-			// シーンを切り替える
-			SceneManager::GetInstance()->ChangeScene("ResultScene");
-			return;
-		}
-
-	}
 	
 #ifdef _DEBUG
 	// デバッグ描画の更新処理
@@ -64,7 +50,7 @@ void ChangeSceneEvent::Update()
 #endif // _DEBUG
 }
 
-void ChangeSceneEvent::Draw()
+void ClearSequenceStartEvent::Draw()
 {
 	// モデルを描画
 	object3d_->Draw();
@@ -74,7 +60,7 @@ void ChangeSceneEvent::Draw()
 #endif // _DEBUG
 }
 
-void ChangeSceneEvent::OnCollision(std::string hitObjectType)
+void ClearSequenceStartEvent::OnCollision(std::string hitObjectType)
 {
 	if (isHit_)
 	{
@@ -85,10 +71,10 @@ void ChangeSceneEvent::OnCollision(std::string hitObjectType)
 	if (hitObjectType == "PlayerSpawn")
 	{
 		// プレイヤーが接触したら状態遷移
-		PlayerManager::GetInstance()->ChangePlayerState("StandByPlayer");
-		// ヒットフラグを立てる
-		isHit_ = true;
-		// フェードアウトフラグを立てる
-		RenderTexture::GetInstance()->SetIsFadeIn(false);
+		PlayerManager::GetInstance()->ChangePlayerState("ClearSequencePlayer");
+		// カメラの画角を固定
+		//camera_->SetRotate(Quaternion{ 0.0f,0.0f,0.0f,1.0f });
+
+		
 	}
 }

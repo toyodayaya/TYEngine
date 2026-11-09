@@ -60,7 +60,8 @@ void RailCameraController::Initialize(const QuaternionTransform& transform)
 
 void RailCameraController::Update()
 {
-	if (PlayerManager::GetInstance()->GetPlayerState() == "NormalPlayer")
+	if (PlayerManager::GetInstance()->GetPlayerState() == "NormalPlayer" || 
+		PlayerManager::GetInstance()->GetPlayerState() == "ClearSequencePlayer")
 	{
 		// プレイヤーが移動中のみ処理する
 		// カメラを自動で動かす
@@ -158,7 +159,7 @@ void RailCameraController::ManualMove()
 
 			// 移動フラグを立てる
 			isMove_ = true;
-			
+
 			// 次の制御点番号を加算
 			currentRailPointNum_++;
 
