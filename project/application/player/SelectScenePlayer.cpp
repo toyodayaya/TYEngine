@@ -34,23 +34,25 @@ void SelectScenePlayer::Update()
 	case kFront:
 
 		// キー入力があったら
-		if (Input::GetInstance()->TriggerKey(DIK_D))
+		if (Input::GetInstance()->PushKey(DIK_D))
 		{
 			// 目標角度を右に設定
 			startAngle_ = transform_.rotate;
 			targetAngle_ = transform_.rotate;
 			targetAngle_.w = 0.1f;
 			t = 0.0f;
+			increaseT_ = 0.05f;
 			// 状態を回転中に設定
 			direction_ = kTurn;
 		}
-		else if (Input::GetInstance()->TriggerKey(DIK_A))
+		else if (Input::GetInstance()->PushKey(DIK_A))
 		{
 			// 目標角度を左に設定
 			startAngle_ = transform_.rotate;
 			targetAngle_ = transform_.rotate;
 			targetAngle_.w = -0.1f;
 			t = 0.0f;
+			increaseT_ = 0.05f;
 			// 状態を回転中に設定
 			direction_ = kTurn;
 		}
@@ -59,7 +61,7 @@ void SelectScenePlayer::Update()
 
 	case kTurn:
 		// 線形補間用の変数を加算
-		t += 0.055f;
+		t += increaseT_;
 
 		// 向きを補間
 		angle_ = Slerp(startAngle_, targetAngle_, t);
@@ -133,6 +135,8 @@ void SelectScenePlayer::OnCollision(std::string hitObjectType)
 			// 目標角度を正面に設定
 			startAngle_ = transform_.rotate;
 			targetAngle_ = { 0.0f,0.1f,-0.02f,0.0f };
+			increaseT_ = 0.06f;
+			t = 0.0f;
 			// 状態を回転中に変更
 			direction_ = kTurn;
 			break;

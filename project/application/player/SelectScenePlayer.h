@@ -56,6 +56,8 @@ private:
 
 	// 線形補間用の変数
 	float t = 0.0f;
+	// tの増加量
+	float increaseT_ = 0.0f;
 	// 角度
 	Quaternion targetAngle_;
 	Quaternion startAngle_;

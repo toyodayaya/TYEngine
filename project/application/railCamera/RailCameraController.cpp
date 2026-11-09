@@ -148,7 +148,7 @@ void RailCameraController::ManualMove()
 	else
 	{
 		// キー入力があったら
-		if (Input::GetInstance()->TriggerKey(DIK_D))
+		if (Input::GetInstance()->PushKey(DIK_D))
 		{
 			if (currentRailPointNum_ >= railPoints_.size() - 1)
 			{
@@ -167,7 +167,7 @@ void RailCameraController::ManualMove()
 			nowPoint_ = transform_.translate;
 			nextPoint_ = railPoints_[currentRailPointNum_];
 		}
-		else if (Input::GetInstance()->TriggerKey(DIK_A))
+		else if (Input::GetInstance()->PushKey(DIK_A))
 		{
 			if (currentRailPointNum_ <= 0)
 			{
