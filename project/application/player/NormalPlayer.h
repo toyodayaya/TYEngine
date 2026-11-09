@@ -63,6 +63,8 @@ private:
 	bool isHit_ = false;
 	// ヒットタイマー
 	int hitTimer_ = 60;
+	// 弾の発射間隔タイマー
+	int bulletIntervalTimer_ = 10;
 	// ファイル名
 	std::string filePath_ = "cube.obj";
 	std::string spriteFilePath_ = "resources/sprite/circle.png";

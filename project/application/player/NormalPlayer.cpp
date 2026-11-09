@@ -177,6 +177,9 @@ void NormalPlayer::CreateBullet()
 	bullet->Initialize(bulletTransform, filePath_, velocity, false);
 	BulletManager::GetInstance()->SetBullets(std::move(bullet));
 
+	// 発射間隔タイマーをリセット
+	bulletIntervalTimer_ = 10;
+
 }
 
 void NormalPlayer::CreateBeam()
@@ -311,9 +314,19 @@ void NormalPlayer::Attack()
 	else
 	{
 		// キー入力で弾を生成
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE))
+		if (Input::GetInstance()->PushKey(DIK_SPACE))
 		{
-			CreateBullet();
+			if (bulletIntervalTimer_ <= 0)
+			{
+				// 弾の発射間隔タイマーが0になったら発射			
+				CreateBullet();
+			}
+			else
+			{
+				// タイマーを減らす
+				bulletIntervalTimer_--;
+			}
+
 		}
 		else if (Input::GetInstance()->TriggerKey(DIK_RETURN))
 		{
