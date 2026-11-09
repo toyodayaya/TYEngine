@@ -1,6 +1,7 @@
 #include "ChangeSceneEvent.h"
 #include "SceneManager.h"
 #include "PlayerManager.h"
+#include "ModelManager.h"
 #include "RenderTexture.h"
 #ifdef _DEBUG
 #include "DebugDrawCommon.h"
@@ -13,6 +14,14 @@ void ChangeSceneEvent::Initialize(const QuaternionTransform& transform)
 {
 	transform_ = transform;
 	worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
+
+	// ステージのミニオブジェクトを読み込む
+	ModelManager::GetInstance()->LoadModel("resources/goal", objectFilePath_, Model::AnimationType::kNone);
+	// ステージのミニオブジェクトを初期化
+	object3d_ = std::make_unique<Object3d>();
+	object3d_->Initialize();
+	object3d_->SetTransform(transform_);
+	object3d_->SetModel(objectFilePath_);
 
 #ifdef _DEBUG
 	debugDraw = std::make_unique<DebugDraw>();
@@ -32,6 +41,9 @@ void ChangeSceneEvent::Finalize()
 
 void ChangeSceneEvent::Update()
 {
+	// 3Dオブジェクトの更新
+	object3d_->Update();
+
 	if (isHit_)
 	{
 		// フェードアウト演出
@@ -54,6 +66,9 @@ void ChangeSceneEvent::Update()
 
 void ChangeSceneEvent::Draw()
 {
+	// モデルを描画
+	object3d_->Draw();
+
 #ifdef _DEBUG
 	debugDraw->DrawBox();
 #endif // _DEBUG

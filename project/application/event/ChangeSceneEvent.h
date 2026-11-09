@@ -1,6 +1,9 @@
 #pragma once
 #include "BaseEvent.h"
 #include "EventManager.h"
+#include "Object3d.h"
+#include <string>
+#include <memory>
 
 #ifdef _DEBUG
 #include "DebugDraw.h"
@@ -20,7 +23,17 @@ public:
 	// 衝突応答
 	void OnCollision(std::string hitObjectType) override;
 
+	// setter
+	void SetObjectFilePath(std::string filePath) { objectFilePath_ = filePath; }
+
+
 private:
+	// ステージのミニオブジェクト
+	std::unique_ptr<Object3d> object3d_;
+	// ミニオブジェクトのファイルパス
+	std::string objectFilePath_;
+
+
 #ifdef _DEBUG
 	std::unique_ptr<DebugDraw> debugDraw;
 #endif // _DEBUG

@@ -663,8 +663,12 @@ void StageData::CreateEvents(const EventSpawnData& eventData)
 		event = std::make_unique<ChangePostEffectEvent>();
 	}
 
-
-	if (eventData.eventName == "TitleCamera")
+	if (eventData.eventName == "ChangeScene")
+	{
+		ChangeSceneEvent* changeScene = dynamic_cast<ChangeSceneEvent*>(event.get());
+		changeScene->SetObjectFilePath(eventData.filePath);
+	}
+	else if (eventData.eventName == "TitleCamera")
 	{
 		TitleCameraEvent* titleCamera = dynamic_cast<TitleCameraEvent*>(event.get());
 		titleCamera->SetCamera(camera_);
