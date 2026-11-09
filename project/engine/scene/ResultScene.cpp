@@ -4,6 +4,7 @@
 #include "ImguiManager.h"
 #include "RenderTexture.h"
 #include "ScoreManager.h"
+#include "SelectSceneUI.h"
 
 void ResultScene::Initialize()
 {
@@ -29,6 +30,9 @@ void ResultScene::Update()
 
 #endif // USE_IMGUI
 
+	// ステージ選択用のUIを更新する
+	SelectSceneUI::GetInstance()->Update();
+
 	// フェードイン演出
 	RenderTexture::GetInstance()->SceneChangeEffect();
 
@@ -53,4 +57,7 @@ void ResultScene::Draw()
 {
 	// スコアの画像を描画する
 	ScoreManager::GetInstance()->Draw();
+
+	// ステージ選択用のUIを描画する
+	SelectSceneUI::GetInstance()->Draw();
 }

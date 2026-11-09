@@ -18,9 +18,6 @@ void SelectScene::Initialize()
 	ModelManager::GetInstance()->LoadModel("resources/player", "player.obj", Model::AnimationType::kNone);
 	ModelManager::GetInstance()->LoadModel("resources/cube", "cube.obj", Model::AnimationType::kNone);
 
-	// テクスチャデータを読み込む
-	TextureManager::GetInstance()->LoadTexture("resources/sprite/selectUI/cursor.png");
-
 	// カーソル画像を初期化
 	rightCursor_ = std::make_unique<Sprite>();
 	rightCursor_->Initialize("resources/sprite/selectUI/cursor.png");

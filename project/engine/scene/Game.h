@@ -4,6 +4,7 @@
 #pragma warning(disable:4023)
 #include "Framework.h"
 #include "SceneManager.h"
+#include "SelectSceneUI.h"
 #pragma warning(pop)
 
 using namespace MathManager;

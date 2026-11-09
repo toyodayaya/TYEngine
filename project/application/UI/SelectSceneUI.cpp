@@ -24,6 +24,7 @@ void SelectSceneUI::Initialize()
 	TextureManager::GetInstance()->LoadTexture("resources/sprite/selectUI/selectScene.png");
 	TextureManager::GetInstance()->LoadTexture("resources/sprite/selectUI/gameScene.png");
 	TextureManager::GetInstance()->LoadTexture("resources/sprite/selectUI/nextScene.png");
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/selectUI/cursor.png");
 
 	// 各ステージボタンを初期化
 	for (size_t i = 0; i < 4; i++)

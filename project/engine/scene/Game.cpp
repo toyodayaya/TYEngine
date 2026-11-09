@@ -14,6 +14,9 @@ void Game::Initialize()
 	imguiManager = std::make_unique <ImguiManager>();
 	imguiManager->Initialize(winAPIManager.get(), dxBasis.get(), srvManager);
 
+	// ステージ選択用のUIを初期化
+	SelectSceneUI::GetInstance()->Initialize();
+
 	// シーンファクトリーの生成とセット
 	sceneFactory = std::make_unique <SceneFactory>();
 	SceneManager::GetInstance()->SetSceneFactory(std::move(sceneFactory));
@@ -75,6 +78,9 @@ void Game::Draw()
 
 void Game::Finalize()
 {
+	// シーン選択UIの終了処理
+	SelectSceneUI::GetInstance()->Finalize();
+
 	// シーンマネージャーの終了処理
 	SceneManager::GetInstance()->Finalize();
 

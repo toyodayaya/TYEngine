@@ -19,9 +19,6 @@ void GameOverScene::Initialize()
 	gameOver_->Initialize("resources/sprite/gameover/gameover.png");
 	gameOver_->SetPosition(Vector2{ 230.0f,80.0f });
 
-	// ステージ選択用のUIを初期化
-	SelectSceneUI::GetInstance()->Initialize();
-	
 	// ステージを読み込む
 	StageManager::GetInstance()->LoadJsonData("resources/stages/json", "gameover.json");
 	// ステージを設定する
@@ -33,7 +30,6 @@ void GameOverScene::Initialize()
 
 void GameOverScene::Finalize()
 {
-	SelectSceneUI::GetInstance()->Finalize();
 	stageData_->ClearStage();
 	stageData_ = nullptr;
 }
