@@ -112,6 +112,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
                     gParticle[particleIndex].lifeTime = gEmitter.lifeTime;
                     gParticle[particleIndex].currentTime = 0;
                     gParticle[particleIndex].velocity = gEmitter.velocity;
+                    gParticle[particleIndex].type = gEmitter.type;
                 
                     break;
                 
@@ -123,6 +124,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
                     gParticle[particleIndex].lifeTime = generator.Generate1d();
                     gParticle[particleIndex].currentTime = 0;
                     gParticle[particleIndex].velocity = generator.Generate3d();
+                    gParticle[particleIndex].type = gEmitter.type;
                 
                     break;
                 
@@ -135,6 +137,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
                     gParticle[particleIndex].currentTime = 0;
                     gParticle[particleIndex].velocity = gEmitter.velocity;
                     gParticle[particleIndex].id = gEmitter.id;
+                    gParticle[particleIndex].type = gEmitter.type;
                 
                     break;
                 

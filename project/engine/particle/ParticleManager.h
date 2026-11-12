@@ -144,6 +144,7 @@ private:
 		Microsoft::WRL::ComPtr<ID3D12Resource> emitterResource;
 		EmitterSphere* emitterSphere = nullptr;
 		Microsoft::WRL::ComPtr <ID3D12Resource> bulletDataResource;
+		Microsoft::WRL::ComPtr <ID3D12Resource> bulletDataUploadResource;
 		uint32_t bulletDataUavIndex;
 		std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> bulletDataUavHandle;
 		std::vector<BulletData> bulletData;
@@ -322,6 +323,9 @@ public:
 	void CreateFreeListUav(ParticleGroup& group);
 	// EmitterResourceの生成
 	void CreateEmitterResource(ParticleGroup& group);
+
+	// BulletDataの転送処理
+	void UploadBulletData(ParticleGroup& group);
 
 	// vertexBufferViewとモデルデータを設定
 	void SetupParticleData(ShapeType type, ParticleGroup& group);

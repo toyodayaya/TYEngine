@@ -649,6 +649,50 @@ void ParticleManager::CreateEmitterResource(ParticleGroup& group)
 	group.emitterResource->Map(0, nullptr, reinterpret_cast<void**>(&group.emitterSphere));
 }
 
+void ParticleManager::UploadBulletData(ParticleGroup& group)
+{
+	void* mappedData = nullptr;
+	D3D12_RANGE readRange{ 0, 0 };
+
+	group.bulletDataUploadResource->Map(0,&readRange,&mappedData);
+
+	for (uint32_t i = 0; i < kMaxBullets; i++)
+	{
+		if (group.bulletData[i].isAlive)
+		{
+			OutputDebugStringA(
+				("ID: " + std::to_string(i) +
+					" X: " + std::to_string(group.bulletData[i].translate.x) +
+					" Y: " + std::to_string(group.bulletData[i].translate.y) +
+					" Z: " + std::to_string(group.bulletData[i].translate.z) +
+					"\n").c_str()
+			);
+		}
+	}
+
+	std::memcpy(mappedData,group.bulletData.data(),sizeof(BulletData) * kMaxBullets);
+	group.bulletDataUploadResource->Unmap(0, nullptr);
+
+	// GPU側リソースをCOPY_DESTに変更
+	D3D12_RESOURCE_BARRIER barrier{};
+	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	barrier.Transition.pResource = group.bulletDataResource.Get();
+	barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_UNORDERED_ACCESS;
+	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_COPY_DEST;
+
+	dxBasis_->GetCommandList()->ResourceBarrier(1, &barrier);
+	// GPU側へコピー
+	dxBasis_->GetCommandList()->CopyBufferRegion(group.bulletDataResource.Get(),0,group.bulletDataUploadResource.Get(),
+		0,sizeof(BulletData) * kMaxBullets);
+
+	// COPY_DESTからUAVへ変更
+	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COPY_DEST;
+	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_UNORDERED_ACCESS;
+
+	dxBasis_->GetCommandList()->ResourceBarrier(1, &barrier);
+}
+
 void ParticleManager::CreatePerFrameResource()
 {
 	perFrameResource = dxBasis_->CreateBufferResources(sizeof(PerFrame));
@@ -682,6 +726,7 @@ void ParticleManager::CreateBulletDataResource(ParticleGroup& group)
 
 	dxBasis_->GetDevice()->CreateUnorderedAccessView(group.bulletDataResource.Get(),
 		nullptr, &bulletDataUavDesc, group.bulletDataUavHandle.first);
+	group.bulletDataUploadResource = dxBasis_->CreateBufferResources(sizeof(BulletData) * kMaxBullets);
 }
 
 void ParticleManager::LaunchEmitterCS(ParticleGroup& group)
@@ -885,6 +930,9 @@ void ParticleManager::Update()
 	srvManager_->PreDraw();
 	for (auto& [name, group] : particleGroups)
 	{
+		// BulletDataを転送
+		UploadBulletData(group);
+		// UpdateCSを起動
 		LaunchUpdateCS(group);
 		D3D12_RESOURCE_BARRIER barrier{};
 		barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_UAV;

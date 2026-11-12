@@ -184,7 +184,7 @@ void NormalPlayer::CreateBullet()
 	// エフェクトを追加
 	ParticleManager::EmitterSphere emitterSphere;
 	emitterSphere.translate = bulletTransform.translate;
-	emitterSphere.velocity = velocity;
+	emitterSphere.velocity = {0.0f,0.0f,0.0f};
 	emitterSphere.type = ParticleManager::MoveType::kFollow;
 	emitterSphere.scale = { 1.0f,1.0f,1.0f };
 	emitterSphere.radius = { 1.0f };
@@ -198,6 +198,8 @@ void NormalPlayer::CreateBullet()
 	emitter = std::make_unique <ParticleEmitter>("Particle", emitterSphere);
 	// エフェクトを発生させる
 	emitter->Update();
+	// 対応するエフェクトに死亡を通知
+	ParticleManager::GetInstance()->SetBulletIsAlive(true, bullet->GetID(), "Particle");
 
 	BulletManager::GetInstance()->SetBullets(std::move(bullet));
 
@@ -338,7 +340,11 @@ void NormalPlayer::Attack()
 	else
 	{
 		// キー入力で弾を生成
-		if (Input::GetInstance()->PushKey(DIK_SPACE))
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE))
+		{
+			CreateBullet();
+		}
+		else if (Input::GetInstance()->PushKey(DIK_SPACE))
 		{
 			if (bulletIntervalTimer_ <= 0)
 			{

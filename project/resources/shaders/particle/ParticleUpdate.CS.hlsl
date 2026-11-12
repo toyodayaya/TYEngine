@@ -33,79 +33,84 @@ RWStructuredBuffer<uint32_t> gFreeList : register(u2);
 ConstantBuffer<PerFrame> gParFrame : register(b1);
 RWStructuredBuffer<BulletData> gBulletData : register(u3);
 
+
+void ReleaseParticle(uint32_t particleIndex)
+{
+    gParticle[particleIndex].color.a = 0.0f;
+    gParticle[particleIndex].scale = float32_t3(0.0f, 0.0f, 0.0f);
+
+    gParticle[particleIndex].scale = float32_t3(0.0f, 0.0f, 0.0f);
+    gParticle[particleIndex].color.a = 1.0f;
+    int32_t freeListIndex;
+    InterlockedAdd(gFreeListIndex[0], 1, freeListIndex);
+            
+    if ((freeListIndex + 1) < kMaxParticles)
+    {
+        gFreeList[freeListIndex + 1] = particleIndex;
+    }
+    else
+    {
+        InterlockedAdd(gFreeListIndex[0], -1, freeListIndex);
+    }
+}
+
 [numthreads(1024, 1, 1)]
-void main( uint3 DTid : SV_DispatchThreadID )
+void main(uint3 DTid : SV_DispatchThreadID)
 {
     uint32_t particleIndex = DTid.x;
-    if(particleIndex < kMaxParticles)
+    if (particleIndex < kMaxParticles)
     {
-        if(gParticle[particleIndex].color.a == 0)
+        float32_t alpha;
+            
+        switch (gParticle[particleIndex].type)
         {
-            gParticle[particleIndex].scale = float32_t3(0.0f, 0.0f, 0.0f);
-            int32_t freeListIndex;
-            InterlockedAdd(gFreeListIndex[0], 1, freeListIndex);
+            case PARTICLE_NONE:
+                gParticle[particleIndex].translate += gParticle[particleIndex].velocity * gParFrame.deltaTime;
+                gParticle[particleIndex].currentTime += gParFrame.deltaTime;
+                alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifeTime);
+                gParticle[particleIndex].color.a = saturate(alpha);
             
-            if((freeListIndex + 1) < kMaxParticles)
-            {
-                gFreeList[freeListIndex + 1] = particleIndex;
-            }
-            else
-            {
-                InterlockedAdd(gFreeListIndex[0], -1, freeListIndex);
-            }
-        }
-        else
-        {
-            float32_t alpha;
+                if (gParticle[particleIndex].color.a == 0)
+                {
+                    ReleaseParticle(particleIndex);
+                }
+                
+                break;
+                
+            case PARTICLE_DIFFUSION:
+                gParticle[particleIndex].translate += gParticle[particleIndex].velocity * gParFrame.deltaTime;
+                gParticle[particleIndex].currentTime += gParFrame.deltaTime;
+                alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifeTime);
+                gParticle[particleIndex].color.a = saturate(alpha);
             
-            switch (gParticle[particleIndex].type)
-            {
-                case PARTICLE_NONE:
-                    gParticle[particleIndex].translate += gParticle[particleIndex].velocity * gParFrame.deltaTime;
-                    gParticle[particleIndex].currentTime += gParFrame.deltaTime;
-                    alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifeTime);
-                    gParticle[particleIndex].color.a = saturate(alpha);
+                if (gParticle[particleIndex].color.a == 0)
+                {
+                    ReleaseParticle(particleIndex);
+                }
                 
-                    break;
+                break;
                 
-                case PARTICLE_DIFFUSION:
-                    gParticle[particleIndex].translate += gParticle[particleIndex].velocity * gParFrame.deltaTime;
-                    gParticle[particleIndex].currentTime += gParFrame.deltaTime;
-                    alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifeTime);
-                    gParticle[particleIndex].color.a = saturate(alpha);
-                
-                    break;
-                
-                case PARTICLE_FOLLOW:
+            case PARTICLE_FOLLOW:
                 
                 
-                if(gBulletData[gParticle[particleIndex].id].isAlive == 1)
-                    {
-                        gParticle[particleIndex].scale = float32_t3(0.0f, 0.0f, 0.0f);
-                        int32_t freeListIndex;
-                        InterlockedAdd(gFreeListIndex[0], 1, freeListIndex);
-            
-                        if ((freeListIndex + 1) < kMaxParticles)
-                        {
-                            gFreeList[freeListIndex + 1] = particleIndex;
-                        }
-                        else
-                        {
-                            InterlockedAdd(gFreeListIndex[0], -1, freeListIndex);
-                        }
-                    }
+                if (gBulletData[gParticle[particleIndex].id].isAlive == 0)
+                {
+                    ReleaseParticle(particleIndex);
+                }
                 else
+                {
+                    gParticle[particleIndex].translate = gBulletData[gParticle[particleIndex].id].translate;
+                    gParticle[particleIndex].currentTime += gParFrame.deltaTime;
+                    alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifeTime);
+                    gParticle[particleIndex].color.a = saturate(alpha);
+                
+                    if (gParticle[particleIndex].color.a == 0)
                     {
-                        gParticle[particleIndex].translate = gBulletData[gParticle[particleIndex].id].translate;
-                        gParticle[particleIndex].currentTime += gParFrame.deltaTime;
-                        alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifeTime);
-                        gParticle[particleIndex].color.a = saturate(alpha);
+                        ReleaseParticle(particleIndex);
                     }
+                }
                 
-                    break;
-                
-            }
-           
-        }
+                break;
+        }        
     }
 }
