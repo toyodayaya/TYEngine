@@ -30,6 +30,10 @@ private:
 
 	// 登録済みの敵を記録する配列
 	std::vector<std::unique_ptr<BaseBullet>> bullets_;
+	// 各弾に割り当てるID
+	uint32_t nextId_ = 0;
+	// IDの最大値
+	const uint32_t kMaxId = 64;
 
 public:
 	// 更新
@@ -42,6 +46,7 @@ public:
 
 	// setter
 	void SetBullets(std::unique_ptr<BaseBullet> bullet) { bullets_.push_back(std::move(bullet)); }
+	void SetBulletID(BaseBullet* bullet);
 
 	// インスタンス
 	static BulletManager* GetInstance();

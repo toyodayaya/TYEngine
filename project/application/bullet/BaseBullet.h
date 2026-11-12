@@ -11,7 +11,10 @@ class BaseBullet : public GameObject
 public:
 	// 初期化
 	virtual void Initialize(const QuaternionTransform& transform, const std::string& filePath,const Vector3& velocity, bool isRailCamera) = 0;
-	
+	// getter
+ 	uint32_t GetID() const { return id_; }
+	// setter
+	void SetID(uint32_t id) { id_ = id; }
 
 protected:
 	// 当たり判定用のAABB
@@ -21,6 +24,8 @@ protected:
 	// 生存時間
 	float currentTime_ = 0;
 	const float kLifeTime_ = 1;
+	// エフェクト対応用のID
+	uint32_t id_;
 
 	// 3dオブジェクト
 	std::unique_ptr<Object3d> object3d_;

@@ -7,7 +7,7 @@
 
 class ParticleEmitter
 {
-private:
+public:
 	// インスタンス
 	friend std::default_delete<ParticleEmitter>;
 	static std::unique_ptr<ParticleEmitter> instance;

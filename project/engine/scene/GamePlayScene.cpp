@@ -5,6 +5,7 @@
 #include "StageData.h"
 #include "ScoreManager.h"
 #include "RenderTexture.h"
+#include "ParticleManager.h"
 
 void GamePlayScene::Initialize()
 {
@@ -18,6 +19,10 @@ void GamePlayScene::Initialize()
 	ModelManager::GetInstance()->LoadModel("resources/skydome", "skydome.obj", Model::AnimationType::kNone);
 	// テクスチャの読み込み
 	TextureManager::GetInstance()->LoadTexture("resources/model/rostock_laage_airport_4k.dds");
+
+	// パーティクルグループの作成
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/grass.png");
+	ParticleManager::GetInstance()->CreateParticleGroup("Particle", "resources/sprite/grass.png", ParticleManager::ShapeType::kNormal);
 
 	// スコアをリセット
 	ScoreManager::GetInstance()->SetScore(0);
@@ -49,6 +54,9 @@ void GamePlayScene::Update()
 
 	// フェードイン演出
 	RenderTexture::GetInstance()->SceneChangeEffect();
+
+	// パーティクルの更新
+	ParticleManager::GetInstance()->Update();
 }
 
 void GamePlayScene::Draw()
@@ -58,4 +66,7 @@ void GamePlayScene::Draw()
 
 	// スコアUIを描画
 	ScoreManager::GetInstance()->Draw();
+
+	// パーティクルの描画
+	ParticleManager::GetInstance()->Draw();
 }

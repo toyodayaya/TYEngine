@@ -15,6 +15,8 @@ public:
 	// 衝突応答
 	void OnCollision(std::string hitObjectType) override;
 
+
+
 private:
 	
 };

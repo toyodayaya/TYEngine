@@ -46,6 +46,7 @@ public:
 	LockOn* GetLockOn() { return lockOn_.get(); }
 	const int GetMaxHP() const { return kMaxHp; }
 	int GetHP() { return hp_; }
+	//ParticleEmitter* GetEmitter() { return emitter.get(); }
 
 private:
 
@@ -77,6 +78,7 @@ private:
 
 	// ロックオンのポインタ
 	std::unique_ptr<LockOn> lockOn_;
+
 	
 #ifdef _DEBUG
 	std::unique_ptr<DebugDraw> debugDraw;

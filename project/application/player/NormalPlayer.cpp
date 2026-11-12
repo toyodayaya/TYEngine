@@ -8,6 +8,7 @@
 #include "BulletManager.h"
 #include "SceneManager.h"
 #include "PlayerManager.h"
+#include "ParticleManager.h"
 #include <cmath>
 
 #ifdef _DEBUG
@@ -22,6 +23,7 @@ void NormalPlayer::Initialize(Player* player)
 	player_ = player;
 	camera_ = player_->GetCamera();
 	hp_ = player_->GetHP();
+	//emitter_ = player_->GetEmitter();
 
 	// オブジェクトの初期化
 	object3d_ = player_->GetObject3d();
@@ -47,6 +49,7 @@ void NormalPlayer::Initialize(Player* player)
 	inGameUI_->SetMaxBeamPointSize(kMaxBeamPoint);
 	inGameUI_->SetCurrentBeamPoint(currentBeamPoint_);
 	inGameUI_->SetBeamPointSize(currentBeamPoint_);
+
 }
 
 void NormalPlayer::Update()
@@ -73,6 +76,7 @@ void NormalPlayer::Update()
 	// スプライトの更新
 	inGameUI_->Update();
 
+	
 #ifdef USE_IMGUI
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("pos", &transform_.translate.x);
@@ -175,6 +179,26 @@ void NormalPlayer::CreateBullet()
 	// 生成と初期化
 	std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
 	bullet->Initialize(bulletTransform, filePath_, velocity, false);
+	BulletManager::GetInstance()->SetBulletID(bullet.get());
+
+	// エフェクトを追加
+	ParticleManager::EmitterSphere emitterSphere;
+	emitterSphere.translate = bulletTransform.translate;
+	emitterSphere.velocity = velocity;
+	emitterSphere.type = ParticleManager::MoveType::kFollow;
+	emitterSphere.scale = { 1.0f,1.0f,1.0f };
+	emitterSphere.radius = { 1.0f };
+	emitterSphere.lifeTime = 3.0f;
+	emitterSphere.frequency = 0.0f;
+	emitterSphere.frequencyTime = 0.0f;
+	emitterSphere.currentTime = 0;
+	emitterSphere.count = 1;
+	emitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
+	emitterSphere.id = bullet->GetID();
+	emitter = std::make_unique <ParticleEmitter>("Particle", emitterSphere);
+	// エフェクトを発生させる
+	emitter->Update();
+
 	BulletManager::GetInstance()->SetBullets(std::move(bullet));
 
 	// 発射間隔タイマーをリセット

@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Player.h"
 #include "InGameUI.h"
+#include "ParticleEmitter.h"
 
 class NormalPlayer : public BasePlayerState
 {
@@ -117,4 +118,8 @@ private:
 
 	// UIのポインタ
 	InGameUI* inGameUI_ = nullptr;
+
+	// パーティクルエミッターのポインタ
+	std::unique_ptr <ParticleEmitter> emitter;
+
 };

@@ -4,6 +4,7 @@
 #include "ImGuiManager.h"
 #include "BasePlayerState.h"
 #include "Object3d.h"
+#include "ParticleManager.h"
 #ifdef _DEBUG
 #include "DebugDraw.h"
 #include "DebugDrawCommon.h"
@@ -40,6 +41,8 @@ void Player::Initialize(const QuaternionTransform& transform, const std::string&
 	// UIを初期化
 	inGameUI_ = std::make_unique<InGameUI>();
 	inGameUI_->Initialize(this);
+
+	
 
 #ifdef _DEBUG
 	// デバッグ描画用の箱を初期化、生成

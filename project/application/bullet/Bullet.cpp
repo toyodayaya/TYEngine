@@ -4,6 +4,8 @@
 #include "Object3dCommon.h"
 #include "ImGuiManager.h"
 #include "ScoreManager.h"
+#include "ParticleManager.h"
+
 #ifdef _DEBUG
 #include "DebugDraw.h"
 #include "DebugDrawCommon.h"
@@ -21,7 +23,6 @@ void Bullet::Initialize(const QuaternionTransform& transform, const std::string&
 	velocity_ = velocity;
 	transform_ = transform;
 	worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
-	// コライダーを生成
 
 #ifdef _DEBUG
 // デバッグ描画用の箱を初期化、生成
@@ -32,6 +33,8 @@ void Bullet::Initialize(const QuaternionTransform& transform, const std::string&
 	debugDraw->SetRotate(transform.rotate);
 
 #endif // _DEBUG
+
+	// コライダーを生成
 	StageData::ColliderSpawnData colliders;
 	colliders.center = Vector3{ 0.0f,0.0f,0.0f };
 	colliders.size = transform.scale;
@@ -56,6 +59,9 @@ void Bullet::Update()
 	if (currentTime_ >= kLifeTime_)
 	{
 		isDead_ = true;
+
+		// 対応するエフェクトに死亡を通知
+		ParticleManager::GetInstance()->SetBulletIsAlive(false, id_,"Particle");
 	}
 
 	// 座標を更新
@@ -67,6 +73,9 @@ void Bullet::Update()
 	object3d_->SetWorldMatrix(worldMatrix);
 	// オブジェクトを更新
 	object3d_->Update();
+
+	// 対応するエフェクトに座標を送信
+	ParticleManager::GetInstance()->SetBulletTranslate(transform_.translate, id_, "Particle");
 
 #ifdef _DEBUG
 	debugDraw->SetBoxTranslate(transform_.translate);
@@ -85,7 +94,7 @@ void Bullet::Update()
 
 void Bullet::Draw()
 {
-	object3d_->Draw();
+	//object3d_->Draw();
 #ifdef _DEBUG
 	debugDraw->DrawBox();
 
@@ -109,5 +118,8 @@ void Bullet::OnCollision(std::string hitObjectType)
 		ScoreManager::GetInstance()->SetNumber();
 		// 弾の死亡フラグを立てる
 		isDead_ = true;
+		// 対応するエフェクトに死亡を通知
+		ParticleManager::GetInstance()->SetBulletIsAlive(false, id_, "Particle");
+
 	}
 }

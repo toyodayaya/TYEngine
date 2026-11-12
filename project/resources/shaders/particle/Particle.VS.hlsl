@@ -8,6 +8,8 @@ struct Particle
     float32_t3 velocity;
     float32_t currentTime;
     float32_t4 color;
+    uint32_t type;
+    uint32_t id;
 };
 
 struct PerView

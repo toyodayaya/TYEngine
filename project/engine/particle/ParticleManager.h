@@ -12,6 +12,18 @@
 
 class ParticleManager
 {
+public:
+	enum MoveType
+	{
+		// 動きなし
+		kNone,
+		// 拡散
+		kDiffusion,
+		// 追従
+		kFollow,
+	};
+
+
 private:
 
 	struct VertexData
@@ -50,6 +62,7 @@ private:
 		Vector4 color;
 		float lifeTime;
 		float currentTime;
+		uint32_t id;
 	};
 
 	struct ParticleForGPU
@@ -72,14 +85,6 @@ public:
 		kCylinder,
 	};
 
-	enum MoveType
-	{
-		// 動きなし
-		kNone,
-		// 拡散
-		kDiffusion,
-	};
-
 	struct EmitterSphere
 	{
 		Vector3 translate;
@@ -96,6 +101,7 @@ public:
 		float frequency;
 		float frequencyTime;
 		MoveType type;
+		uint32_t id;
 	};
 
 
@@ -109,6 +115,14 @@ private:
 		Vector3 velocity;
 		float currentTime;
 		Vector4 color;
+		uint32_t type;
+		uint32_t id;
+	};
+
+	struct BulletData
+	{
+		Vector3 translate;
+		uint32_t isAlive;
 	};
 
 	struct ParticleGroup
@@ -129,6 +143,11 @@ private:
 		ModelData modelData;
 		Microsoft::WRL::ComPtr<ID3D12Resource> emitterResource;
 		EmitterSphere* emitterSphere = nullptr;
+		Microsoft::WRL::ComPtr <ID3D12Resource> bulletDataResource;
+		uint32_t bulletDataUavIndex;
+		std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> bulletDataUavHandle;
+		std::vector<BulletData> bulletData;
+		uint32_t bulletDataSrvIndex;
 	};
 
 	struct AccelerationField
@@ -148,6 +167,7 @@ private:
 		float time;
 		float deltaTime;
 	};
+
 
 	enum BlendMode
 	{
@@ -242,7 +262,7 @@ private:
 	std::mt19937 randomEngine;
 
 	// ビルボードのフラグ
-	bool isBillboard = false;
+	bool isBillboard = true;
 	// ブレンドモード
 	BlendMode blendMode_ = kBlendModeAdd;
 
@@ -259,6 +279,9 @@ private:
 	uint32_t srvIndex;
 	Microsoft::WRL::ComPtr<ID3D12Resource> instancingResource;
 	ParticleCS* particleData = nullptr;
+
+	// BulletData
+	static const uint32_t kMaxBullets = 128;
 
 public:
 	// シングルトンインスタンスの取得
@@ -306,6 +329,8 @@ public:
 	void CreatePerViewResource();
 	// PerFrameResourceの生成
 	void CreatePerFrameResource();
+	// BulletDataResourceの生成
+	void CreateBulletDataResource(ParticleGroup& group);
 	// EmitterCSを起動する
 	void LaunchEmitterCS(ParticleGroup& group);
 	// UpdateCSを起動する
@@ -325,6 +350,10 @@ public:
 	// getter
 	DirectXBasis* GetDxBasis() const { return dxBasis_; }
 	SrvManager* GetSrvManager() const { return srvManager_; }
+
+	// setter
+	void SetBulletTranslate(const Vector3& translate, uint32_t id, const std::string& groupName);
+	void SetBulletIsAlive(uint32_t isAlive, uint32_t id, const std::string& groupName);
 
 	// コンストラクタに渡すための鍵
 	class ConstructorKey

@@ -1,5 +1,6 @@
 static const uint PARTICLE_NONE = 0;
 static const uint PARTICLE_DIFFUSION = 1;
+static const uint PARTICLE_FOLLOW = 2;
 
 struct EmitterSphere
 {
@@ -14,6 +15,7 @@ struct EmitterSphere
     float32_t frequency;
     float32_t frequencyTime;
     uint32_t type;
+    uint32_t id;
 };
 
 struct Particle
@@ -24,12 +26,20 @@ struct Particle
     float32_t3 velocity;
     float32_t currentTime;
     float32_t4 color;
+    uint32_t type;
+    uint32_t id;
 };
 
 struct PerFrame
 {
     float32_t time;
     float32_t deltaTime;
+};
+
+struct BulletData
+{
+    float32_t3 translate;
+    uint32_t isAlive;
 };
 
 float rand3dTo1d(float3 value, float3 dotDir = float3(12.9898, 78.233, 37.719))
@@ -73,6 +83,8 @@ RWStructuredBuffer<int32_t> gFreeListIndex : register(u1);
 RWStructuredBuffer<uint32_t> gFreeList : register(u2);
 ConstantBuffer<EmitterSphere> gEmitter : register(b0);
 ConstantBuffer<PerFrame> gParFrame : register(b1);
+RWStructuredBuffer<BulletData> gBulletData : register(u3);
+
 
 [numthreads(1, 1, 1)]
 void main(uint3 DTid : SV_DispatchThreadID)
@@ -111,6 +123,18 @@ void main(uint3 DTid : SV_DispatchThreadID)
                     gParticle[particleIndex].lifeTime = generator.Generate1d();
                     gParticle[particleIndex].currentTime = 0;
                     gParticle[particleIndex].velocity = generator.Generate3d();
+                
+                    break;
+                
+                case PARTICLE_FOLLOW:
+                    gParticle[particleIndex].scale = gEmitter.scale;
+                    gParticle[particleIndex].translate = gEmitter.translate;
+                    gParticle[particleIndex].color.rgb = gEmitter.color.rgb;
+                    gParticle[particleIndex].color.a = 1.0f;
+                    gParticle[particleIndex].lifeTime = gEmitter.lifeTime;
+                    gParticle[particleIndex].currentTime = 0;
+                    gParticle[particleIndex].velocity = gEmitter.velocity;
+                    gParticle[particleIndex].id = gEmitter.id;
                 
                     break;
                 

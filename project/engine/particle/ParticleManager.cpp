@@ -490,8 +490,16 @@ void ParticleManager::CreateCSRootSignature()
 	descriptorRangeFreeList[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_UAV;
 	descriptorRangeFreeList[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
+	// bulletData用のUAVのDescriptorRange
+	D3D12_DESCRIPTOR_RANGE descriptorRangeBulletData[1] = {};
+	descriptorRangeBulletData[0].BaseShaderRegister = 3;// u3
+	descriptorRangeBulletData[0].NumDescriptors = 1; // 数は1つ
+	descriptorRangeBulletData[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_UAV;
+	descriptorRangeBulletData[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+
 	// RootParameterを作成
-	D3D12_ROOT_PARAMETER rootParameters[5] = {};
+	D3D12_ROOT_PARAMETER rootParameters[6] = {};
 	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
 	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
 	rootParameters[0].DescriptorTable.pDescriptorRanges = descriptorRangeParticle;
@@ -510,6 +518,10 @@ void ParticleManager::CreateCSRootSignature()
 	rootParameters[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
 	rootParameters[4].DescriptorTable.pDescriptorRanges = descriptorRangeFreeList;
 	rootParameters[4].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeFreeList);
+	rootParameters[5].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParameters[5].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+	rootParameters[5].DescriptorTable.pDescriptorRanges = descriptorRangeBulletData;
+	rootParameters[5].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeBulletData);
 
 
 	descriptionRootSignature.pParameters = rootParameters; // ルートパラメータ配列へのポインタ
@@ -643,6 +655,35 @@ void ParticleManager::CreatePerFrameResource()
 	perFrameResource->Map(0, nullptr, reinterpret_cast<void**>(&perFrame));
 }
 
+void ParticleManager::CreateBulletDataResource(ParticleGroup& group)
+{
+	// bulletData用のUAVを生成
+	group.bulletDataUavIndex = srvManager_->Allocate();
+	group.bulletDataUavHandle.first = srvManager_->GetCPUDescriptorHandle(group.bulletDataUavIndex);
+	group.bulletDataUavHandle.second = srvManager_->GetGPUDescriptorHandle(group.bulletDataUavIndex);
+	group.bulletDataResource = dxBasis_->CreateOutputVertexBuffer(UINT(sizeof(BulletData) * kMaxBullets));
+	D3D12_UNORDERED_ACCESS_VIEW_DESC bulletDataUavDesc{};
+	bulletDataUavDesc.Format = DXGI_FORMAT_UNKNOWN;
+	bulletDataUavDesc.ViewDimension = D3D12_UAV_DIMENSION_BUFFER;
+	bulletDataUavDesc.Buffer.FirstElement = 0;
+	bulletDataUavDesc.Buffer.NumElements = kMaxBullets;
+	bulletDataUavDesc.Buffer.CounterOffsetInBytes = 0;
+	bulletDataUavDesc.Buffer.Flags = D3D12_BUFFER_UAV_FLAG_NONE;
+	bulletDataUavDesc.Buffer.StructureByteStride = sizeof(BulletData);
+
+	// BulletDataを初期化
+	group.bulletData.resize(kMaxBullets);
+
+	for (auto& data : group.bulletData)
+	{
+		data.translate = { 0.0f, 0.0f, 0.0f };
+		data.isAlive = false;
+	}
+
+	dxBasis_->GetDevice()->CreateUnorderedAccessView(group.bulletDataResource.Get(),
+		nullptr, &bulletDataUavDesc, group.bulletDataUavHandle.first);
+}
+
 void ParticleManager::LaunchEmitterCS(ParticleGroup& group)
 {
 	// CSにデータを転送
@@ -655,6 +696,8 @@ void ParticleManager::LaunchEmitterCS(ParticleGroup& group)
 	// freeListのDescriptorTableを設定
 	dxBasis_->GetCommandList()->SetComputeRootDescriptorTable(3, group.freeListIndexUavHandle.second);
 	dxBasis_->GetCommandList()->SetComputeRootDescriptorTable(4, group.freeListUavHandle.second);
+	// bulletDataのCBVを設定
+	dxBasis_->GetCommandList()->SetComputeRootDescriptorTable(5, group.bulletDataUavHandle.second);
 	// EmitterのPSOを設定
 	dxBasis_->GetCommandList()->SetPipelineState(computePipelineStateEmit.Get());
 	// CS起動
@@ -672,6 +715,8 @@ void ParticleManager::LaunchUpdateCS(ParticleGroup& group)
 	// freeListのDescriptorTableを設定
 	dxBasis_->GetCommandList()->SetComputeRootDescriptorTable(3, group.freeListIndexUavHandle.second);
 	dxBasis_->GetCommandList()->SetComputeRootDescriptorTable(4, group.freeListUavHandle.second);
+	// bulletDataのCBVを設定
+	dxBasis_->GetCommandList()->SetComputeRootDescriptorTable(5, group.bulletDataUavHandle.second);
 	// CS起動
 	dxBasis_->GetCommandList()->Dispatch(1, 1, 1);
 }
@@ -686,6 +731,8 @@ void ParticleManager::LaunchInitializeParticleCS(ParticleGroup& group)
 	CreateFreeListUav(group);
 	// EmitterSphere用のResourceの生成
 	CreateEmitterResource(group);
+	// BulletResource用のResourceの生成
+	CreateBulletDataResource(group);
 
 	// CS用の設定
 	srvManager_->PreDraw();
@@ -693,6 +740,7 @@ void ParticleManager::LaunchInitializeParticleCS(ParticleGroup& group)
 	dxBasis_->GetCommandList()->SetComputeRootDescriptorTable(0, group.particleUavHandle.second);
 	dxBasis_->GetCommandList()->SetComputeRootDescriptorTable(3, group.freeListIndexUavHandle.second);
 	dxBasis_->GetCommandList()->SetComputeRootDescriptorTable(4, group.freeListUavHandle.second);
+	dxBasis_->GetCommandList()->SetComputeRootDescriptorTable(5, group.bulletDataUavHandle.second);
 
 	D3D12_RESOURCE_BARRIER barrier{};
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
@@ -721,6 +769,20 @@ bool ParticleManager::IsCollision(const AABB& aabb, const Vector3& point) {
 	}
 
 	return false;
+}
+
+void ParticleManager::SetBulletTranslate(const Vector3& translate, uint32_t id, const std::string& groupName)
+{
+	// 弾の位置を記録
+	auto& group = particleGroups.at(groupName);
+	group.bulletData[id].translate = translate;
+}
+
+void ParticleManager::SetBulletIsAlive(uint32_t isAlive, uint32_t id, const std::string& groupName)
+{
+	// 弾の状態を記録
+	auto& group = particleGroups.at(groupName);
+	group.bulletData[id].isAlive = isAlive;
 }
 
 void ParticleManager::CreateParticleGroup(const std::string name, const std::string textureFilePath,ShapeType type)

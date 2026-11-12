@@ -57,3 +57,19 @@ void BulletManager::Finalize()
 	// インスタンスを解放
 	instance.reset();
 }
+
+void BulletManager::SetBulletID(BaseBullet* bullet)
+{
+	// 次のIDを用意
+	nextId_++;
+
+	// IDが上限値を超えていたら
+	if (kMaxId < nextId_)
+	{
+		// リセット
+		nextId_ = 0;
+	}
+
+	// IDをセット
+	bullet->SetID(nextId_);
+}
