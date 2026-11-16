@@ -78,6 +78,23 @@ void NormalEnemy::OnCollision(std::string hitObjectType)
 		// HPが0になったら
 		if (hp_ <= 0)
 		{
+			// パーティクル初期値を初期化
+			emitterSphere.velocity = { 0.0f,0.0f,0.0f };
+			emitterSphere.type = ParticleManager::MoveType::kDiffusion;
+			emitterSphere.scale = { 3.0f,3.0f,3.0f };
+			emitterSphere.lifeTime = 3.0f;
+			emitterSphere.frequency = 0.0f;
+			emitterSphere.frequencyTime = 0.0f;
+			emitterSphere.currentTime = 0;
+			emitterSphere.count = 8;
+			emitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
+			emitterSphere.translate = object3d_->GetWorldTranslate();
+			emitterSphere.id = 0;
+			emitter = std::make_unique <ParticleEmitter>("DeadEnemy", emitterSphere);
+
+			// パーティクル発射
+			emitter->Update();
+
 			// 本体に死亡を通知
 			enemy_->SetIsDead(true);
 		}

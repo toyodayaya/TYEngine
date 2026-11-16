@@ -2,6 +2,8 @@
 #include "Object3d.h"
 #include "BaseEnemyState.h"
 #include "BaseEnemy.h"
+#include "ParticleEmitter.h"
+#include "ParticleManager.h"
 
 class NormalEnemy : public BaseEnemyState
 {
@@ -44,5 +46,10 @@ private:
 
 	// 3dオブジェクト
 	Object3d* object3d_;
+
+	// パーティクルエミッターのポインタ
+	std::unique_ptr <ParticleEmitter> emitter;
+	// エミッター初期値
+	ParticleManager::EmitterSphere emitterSphere;
 
 };

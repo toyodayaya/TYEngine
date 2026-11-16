@@ -54,7 +54,6 @@ void NormalPlayer::Initialize(Player* player)
 	emitterSphere.velocity = { 0.0f,0.0f,0.0f };
 	emitterSphere.type = ParticleManager::MoveType::kFollow;
 	emitterSphere.scale = { 1.0f,1.0f,1.0f };
-	emitterSphere.radius = { 1.0f };
 	emitterSphere.lifeTime = 3.0f;
 	emitterSphere.frequency = 0.0f;
 	emitterSphere.frequencyTime = 0.0f;
@@ -67,7 +66,6 @@ void NormalPlayer::Initialize(Player* player)
 	traceEmitterSphere.velocity = { 0.0f,0.0f,0.0f };
 	traceEmitterSphere.type = ParticleManager::MoveType::kNone;
 	traceEmitterSphere.scale = { 1.0f,1.0f,1.0f };
-	traceEmitterSphere.radius = { 1.0f };
 	traceEmitterSphere.lifeTime = 1.5f;
 	traceEmitterSphere.frequency = 0.1f;
 	traceEmitterSphere.frequencyTime = 0.0f;
@@ -81,7 +79,6 @@ void NormalPlayer::Initialize(Player* player)
 	flashEmitterSphere.velocity = { 0.0f,0.0f,0.0f };
 	flashEmitterSphere.type = ParticleManager::MoveType::kDiffusion;
 	flashEmitterSphere.scale = { 1.0f,1.0f,1.0f };
-	flashEmitterSphere.radius = { 2.0f };
 	flashEmitterSphere.lifeTime = 0.5f;
 	flashEmitterSphere.frequency = 0.2f;
 	flashEmitterSphere.frequencyTime = 0.0f;

@@ -96,7 +96,6 @@ public:
 		Vector4 color;
 		float lifeTime;
 		float currentTime;
-		float radius;
 		uint32_t count;
 		float frequency;
 		float frequencyTime;

@@ -27,6 +27,7 @@ void GamePlayScene::Initialize()
 	ParticleManager::GetInstance()->CreateParticleGroup("Beam", "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
 	ParticleManager::GetInstance()->CreateParticleGroup("Trace", "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
 	ParticleManager::GetInstance()->CreateParticleGroup("Flash", "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
+	ParticleManager::GetInstance()->CreateParticleGroup("DeadEnemy", "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
 
 	// スコアをリセット
 	ScoreManager::GetInstance()->SetScore(0);

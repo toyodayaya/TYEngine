@@ -10,7 +10,6 @@ struct EmitterSphere
     float32_t4 color;
     float32_t lifeTime;
     float32_t currentTime;
-    float32_t radius;
     uint32_t count;
     float32_t frequency;
     float32_t frequencyTime;
