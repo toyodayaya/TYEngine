@@ -20,6 +20,8 @@ public:
 	ParticleEmitter(ParticleEmitter&) = delete;
 	ParticleEmitter& operator=(ParticleEmitter&) = delete;
 
+private:
+
 	// メンバ変数
 	std::string name;
 	ParticleManager::EmitterSphere emitter{};
@@ -31,4 +33,7 @@ public:
 
 	// 更新処理
 	void Update();
+
+	// setter
+	void SetTranslate(const Vector3& pos) { emitter.translate = pos; }
 };

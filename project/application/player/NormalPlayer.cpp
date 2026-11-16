@@ -61,6 +61,20 @@ void NormalPlayer::Initialize(Player* player)
 	emitterSphere.currentTime = 0;
 	emitterSphere.count = 1;
 	emitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
+
+	traceEmitterSphere.translate = GetWorldTranslate();
+	traceEmitterSphere.id = 0;
+	traceEmitterSphere.velocity = { 0.0f,0.0f,0.0f };
+	traceEmitterSphere.type = ParticleManager::MoveType::kNone;
+	traceEmitterSphere.scale = { 1.0f,1.0f,1.0f };
+	traceEmitterSphere.radius = { 1.0f };
+	traceEmitterSphere.lifeTime = 1.5f;
+	traceEmitterSphere.frequency = 0.1f;
+	traceEmitterSphere.frequencyTime = 0.0f;
+	traceEmitterSphere.currentTime = 0;
+	traceEmitterSphere.count = 1;
+	traceEmitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
+	traceEmitter = std::make_unique <ParticleEmitter>("Trace", traceEmitterSphere);
 }
 
 void NormalPlayer::Update()
@@ -87,6 +101,9 @@ void NormalPlayer::Update()
 	// スプライトの更新
 	inGameUI_->Update();
 
+	// エミッターの更新
+	traceEmitter->SetTranslate(GetWorldTranslate());
+	traceEmitter->Update();
 	
 #ifdef USE_IMGUI
 	ImGui::Begin("Player");

@@ -25,6 +25,7 @@ void GamePlayScene::Initialize()
 	TextureManager::GetInstance()->LoadTexture("resources/sprite/circle.png");
 	ParticleManager::GetInstance()->CreateParticleGroup("Bullet", "resources/sprite/grass.png", ParticleManager::ShapeType::kNormal);
 	ParticleManager::GetInstance()->CreateParticleGroup("Beam", "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
+	ParticleManager::GetInstance()->CreateParticleGroup("Trace", "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
 
 	// スコアをリセット
 	ScoreManager::GetInstance()->SetScore(0);
