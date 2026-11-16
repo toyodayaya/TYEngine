@@ -65,8 +65,8 @@ void NormalPlayer::Initialize(Player* player)
 	traceEmitterSphere.id = 0;
 	traceEmitterSphere.velocity = { 0.0f,0.0f,0.0f };
 	traceEmitterSphere.type = ParticleManager::MoveType::kNone;
-	traceEmitterSphere.scale = { 1.0f,1.0f,1.0f };
-	traceEmitterSphere.lifeTime = 1.5f;
+	traceEmitterSphere.scale = { 0.5f,0.5f,0.5f };
+	traceEmitterSphere.lifeTime = 1.0f;
 	traceEmitterSphere.frequency = 0.1f;
 	traceEmitterSphere.frequencyTime = 0.0f;
 	traceEmitterSphere.currentTime = 0;
@@ -78,7 +78,7 @@ void NormalPlayer::Initialize(Player* player)
 	flashEmitterSphere.id = 0;
 	flashEmitterSphere.velocity = { 0.0f,0.0f,0.0f };
 	flashEmitterSphere.type = ParticleManager::MoveType::kDiffusion;
-	flashEmitterSphere.scale = { 1.0f,1.0f,1.0f };
+	flashEmitterSphere.scale = { 0.8f,0.8f,0.8f };
 	flashEmitterSphere.lifeTime = 0.5f;
 	flashEmitterSphere.frequency = 0.2f;
 	flashEmitterSphere.frequencyTime = 0.0f;
@@ -90,7 +90,7 @@ void NormalPlayer::Initialize(Player* player)
 	pointEmitterSphere.velocity = { 0.0f,0.0f,0.0f };
 	pointEmitterSphere.type = ParticleManager::MoveType::kZoomInOut;
 	pointEmitterSphere.scale = { 1.0f,1.0f,1.0f };
-	pointEmitterSphere.lifeTime = 3.0f;
+	pointEmitterSphere.lifeTime = 2.5f;
 	pointEmitterSphere.frequency = 0.0f;
 	pointEmitterSphere.frequencyTime = 0.0f;
 	pointEmitterSphere.currentTime = 0;
@@ -241,6 +241,7 @@ void NormalPlayer::CreateBullet()
 
 	// エフェクトを追加
 	emitterSphere.translate = bulletTransform.translate;
+	emitterSphere.scale = { 1.0f,1.0f,1.0f };
 	emitterSphere.id = bullet->GetID();
 	emitter = std::make_unique <ParticleEmitter>("Bullet", emitterSphere);
 	// エフェクトを発生させる
@@ -288,6 +289,7 @@ void NormalPlayer::CreateBeam()
 
 	// エフェクトを追加
 	emitterSphere.translate = bulletTransform.translate;
+	emitterSphere.scale = { 1.5f,1.5f,1.5f };
 	emitterSphere.id = bullet->GetID();
 	emitter = std::make_unique <ParticleEmitter>("Beam", emitterSphere);
 	// エフェクトを発生させる

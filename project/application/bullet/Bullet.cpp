@@ -96,7 +96,7 @@ void Bullet::Draw()
 {
 	//object3d_->Draw();
 #ifdef _DEBUG
-	debugDraw->DrawBox();
+	//debugDraw->DrawBox();
 
 #endif // _DEBUG
 

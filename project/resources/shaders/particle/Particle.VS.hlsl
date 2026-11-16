@@ -43,5 +43,6 @@ VertexShaderOutput main(VertexShaderInput input,uint32_t instanceId : SV_Instanc
     output.position = mul(input.position, mul(worldMatrix, gPerView.viewProjection));
     output.texcoord = input.texcoord;
     output.color = particle.color;
+    
     return output;
 }

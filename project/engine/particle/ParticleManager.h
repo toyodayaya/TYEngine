@@ -269,7 +269,7 @@ private:
 	// ビルボードのフラグ
 	bool isBillboard = true;
 	// ブレンドモード
-	BlendMode blendMode_ = kBlendModeAdd;
+	BlendMode blendMode_ = kBlendModeNormal;
 
 	// perView
 	Microsoft::WRL::ComPtr<ID3D12Resource> perViewResource;

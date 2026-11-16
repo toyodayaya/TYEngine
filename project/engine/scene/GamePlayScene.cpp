@@ -19,16 +19,21 @@ void GamePlayScene::Initialize()
 	ModelManager::GetInstance()->LoadModel("resources/skydome", "skydome.obj", Model::AnimationType::kNone);
 	// テクスチャの読み込み
 	TextureManager::GetInstance()->LoadTexture("resources/model/rostock_laage_airport_4k.dds");
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/particle/trace.png");
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/particle/flash.png");
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/particle/bullet.png");
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/particle/beam.png");
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/particle/deadEnemy.png");
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/particle/beamPoint.png");
+
 
 	// パーティクルグループの作成
-	TextureManager::GetInstance()->LoadTexture("resources/sprite/grass.png");
-	TextureManager::GetInstance()->LoadTexture("resources/sprite/circle.png");
-	ParticleManager::GetInstance()->CreateParticleGroup("Bullet", "resources/sprite/grass.png", ParticleManager::ShapeType::kNormal);
-	ParticleManager::GetInstance()->CreateParticleGroup("Beam", "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
-	ParticleManager::GetInstance()->CreateParticleGroup("Trace", "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
-	ParticleManager::GetInstance()->CreateParticleGroup("Flash", "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
-	ParticleManager::GetInstance()->CreateParticleGroup("DeadEnemy", "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
-	ParticleManager::GetInstance()->CreateParticleGroup("BeamPoint", "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
+	ParticleManager::GetInstance()->CreateParticleGroup("Bullet", "resources/sprite/particle/bullet.png", ParticleManager::ShapeType::kNormal);
+	ParticleManager::GetInstance()->CreateParticleGroup("Beam", "resources/sprite/particle/beam.png", ParticleManager::ShapeType::kNormal);
+	ParticleManager::GetInstance()->CreateParticleGroup("Trace", "resources/sprite/particle/trace.png", ParticleManager::ShapeType::kNormal);
+	ParticleManager::GetInstance()->CreateParticleGroup("Flash", "resources/sprite/particle/flash.png", ParticleManager::ShapeType::kNormal);
+	ParticleManager::GetInstance()->CreateParticleGroup("DeadEnemy", "resources/sprite/particle/deadEnemy.png", ParticleManager::ShapeType::kNormal);
+	ParticleManager::GetInstance()->CreateParticleGroup("BeamPoint", "resources/sprite/particle/beamPoint.png", ParticleManager::ShapeType::kNormal);
 
 	// スコアをリセット
 	ScoreManager::GetInstance()->SetScore(0);

@@ -72,21 +72,22 @@ void NormalEnemy::OnCollision(std::string hitObjectType)
 		// HPを減らす
 		hp_--;
 
-		// ビームポイントを加算
-		PlayerManager::GetInstance()->SetBeamPoint(5);
 
 		// HPが0になったら
 		if (hp_ <= 0)
-		{
+		{		
+			// ビームポイントを加算
+			PlayerManager::GetInstance()->SetBeamPoint(5);
+
 			// パーティクル初期値を初期化
 			emitterSphere.velocity = { 0.0f,0.0f,0.0f };
-			emitterSphere.type = ParticleManager::MoveType::kDiffusion;
-			emitterSphere.scale = { 3.0f,3.0f,3.0f };
-			emitterSphere.lifeTime = 3.0f;
+			emitterSphere.type = ParticleManager::MoveType::kNone;
+			emitterSphere.scale = { 2.0f,2.0f,2.0f };
+			emitterSphere.lifeTime = 2.0f;
 			emitterSphere.frequency = 0.0f;
 			emitterSphere.frequencyTime = 0.0f;
 			emitterSphere.currentTime = 0;
-			emitterSphere.count = 8;
+			emitterSphere.count = 1;
 			emitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
 			emitterSphere.translate = object3d_->GetWorldTranslate();
 			emitterSphere.id = 0;
