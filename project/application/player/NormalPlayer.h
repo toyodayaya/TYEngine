@@ -122,9 +122,9 @@ private:
 	// パーティクルエミッターのポインタ
 	std::unique_ptr <ParticleEmitter> emitter;
 	std::unique_ptr <ParticleEmitter> traceEmitter;
-	// 弾のエミッター初期値
+	std::unique_ptr <ParticleEmitter> flashEmitter;
+	// エミッター初期値
 	ParticleManager::EmitterSphere emitterSphere;
-	// 軌跡のエミッター初期値
 	ParticleManager::EmitterSphere traceEmitterSphere;
-
+	ParticleManager::EmitterSphere flashEmitterSphere;
 };

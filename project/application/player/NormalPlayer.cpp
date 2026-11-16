@@ -75,6 +75,20 @@ void NormalPlayer::Initialize(Player* player)
 	traceEmitterSphere.count = 1;
 	traceEmitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
 	traceEmitter = std::make_unique <ParticleEmitter>("Trace", traceEmitterSphere);
+
+	flashEmitterSphere.translate = GetWorldTranslate();
+	flashEmitterSphere.id = 0;
+	flashEmitterSphere.velocity = { 0.0f,0.0f,0.0f };
+	flashEmitterSphere.type = ParticleManager::MoveType::kDiffusion;
+	flashEmitterSphere.scale = { 1.0f,1.0f,1.0f };
+	flashEmitterSphere.radius = { 2.0f };
+	flashEmitterSphere.lifeTime = 0.5f;
+	flashEmitterSphere.frequency = 0.2f;
+	flashEmitterSphere.frequencyTime = 0.0f;
+	flashEmitterSphere.currentTime = 0;
+	flashEmitterSphere.count = 8;
+	flashEmitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
+	flashEmitter = std::make_unique <ParticleEmitter>("Flash", flashEmitterSphere);
 }
 
 void NormalPlayer::Update()
@@ -104,6 +118,13 @@ void NormalPlayer::Update()
 	// エミッターの更新
 	traceEmitter->SetTranslate(GetWorldTranslate());
 	traceEmitter->Update();
+
+	if (currentBeamPoint_ >= kCanFireBeamPoint)
+	{
+		// 発射可能エフェクトを更新
+		flashEmitter->SetTranslate(GetWorldTranslate());
+		flashEmitter->Update();
+	}
 	
 #ifdef USE_IMGUI
 	ImGui::Begin("Player");
@@ -369,6 +390,8 @@ void NormalPlayer::Attack()
 		{
 			beamFireInterval_--;
 		}
+
+		
 	}
 	else
 	{
