@@ -802,6 +802,18 @@ bool ParticleManager::IsCollision(const AABB& aabb, const Vector3& point) {
 	return false;
 }
 
+uint32_t ParticleManager::AllocateID()
+{
+	nextId_++;
+
+	if (nextId_ > kMaxId)
+	{
+		nextId_ = 0;
+	}
+
+	return nextId_;
+}
+
 void ParticleManager::SetBulletTranslate(const Vector3& translate, uint32_t id, const std::string& groupName)
 {
 	// 弾の位置を記録

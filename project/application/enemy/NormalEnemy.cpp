@@ -95,6 +95,9 @@ void NormalEnemy::OnCollision(std::string hitObjectType)
 			// パーティクル発射
 			emitter->Update();
 
+			// ビームポイントパーティクルに発生を通知
+			PlayerManager::GetInstance()->SetParticlePoint(object3d_->GetWorldTranslate());
+
 			// 本体に死亡を通知
 			enemy_->SetIsDead(true);
 		}

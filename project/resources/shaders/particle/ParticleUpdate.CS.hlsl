@@ -1,6 +1,9 @@
 static const uint PARTICLE_NONE = 0;
 static const uint PARTICLE_DIFFUSION = 1;
 static const uint PARTICLE_FOLLOW = 2;
+static const uint PARTICLE_ZOOMINOUT = 3;
+
+static const float TARGET_REACHED_FLAG = -9999.0f;
 
 struct Particle
 {
@@ -12,6 +15,7 @@ struct Particle
     float32_t4 color;
     uint32_t type;
     uint32_t id;
+    float32_t3 targetPos;
 };
 
 struct PerFrame
@@ -111,6 +115,44 @@ void main(uint3 DTid : SV_DispatchThreadID)
                 }
                 
                 break;
-        }        
+            
+            case PARTICLE_ZOOMINOUT:
+
+            
+                float followSpeed = 3.0f;
+                float t = 1.0f - exp(-followSpeed * gParFrame.deltaTime);
+            
+                if (gParticle[particleIndex].targetPos.x != TARGET_REACHED_FLAG)
+                {
+                    float distance = length(gParticle[particleIndex].translate - gParticle[particleIndex].targetPos);
+            
+                    if (distance > 0.5f)
+                    {
+                        gParticle[particleIndex].translate = lerp(gParticle[particleIndex].translate, gParticle[particleIndex].targetPos, t);
+
+                    }
+                    else
+                    {
+                        gParticle[particleIndex].targetPos.x = TARGET_REACHED_FLAG;
+                    }
+                }
+                else
+                {
+                    gParticle[particleIndex].translate = lerp(gParticle[particleIndex].translate, gBulletData[gParticle[particleIndex].id].translate, t);
+
+                }
+            
+            
+                gParticle[particleIndex].currentTime += gParFrame.deltaTime;
+                alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifeTime);
+                gParticle[particleIndex].color.a = saturate(alpha);
+                
+                if (gParticle[particleIndex].color.a == 0)
+                {
+                    ReleaseParticle(particleIndex);
+                }
+            
+                break;
+        }
     }
 }

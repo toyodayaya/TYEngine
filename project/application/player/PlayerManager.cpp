@@ -24,6 +24,17 @@ void PlayerManager::SetBeamPoint(int point)
 	}
 }
 
+void PlayerManager::SetParticlePoint(const Vector3& pos)
+{
+	// プレイヤーステートが通常の時のみ
+	if (playerStateName_ == "NormalPlayer")
+	{
+		// 引数で受け取った座標でパーティクルを発生させる
+		NormalPlayer* normalPlayer = dynamic_cast<NormalPlayer*>(player_->GetPlayerState());
+		normalPlayer->EmitPointParticle(pos);
+	}
+}
+
 void PlayerManager::Initialize(const QuaternionTransform& transform, const std::string filePath, Camera* camera)
 {
 	// プレイヤーの初期化

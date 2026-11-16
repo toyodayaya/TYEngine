@@ -8,6 +8,7 @@ struct Particle
     float32_t4 color;
     uint32_t type;
     uint32_t id;
+    float32_t3 targetPos;
 };
 
 struct BulletData

@@ -56,6 +56,7 @@ public:
 	const std::string& GetPlayerState() { return playerStateName_; }
 	// setter
 	void SetBeamPoint(int point);
+	void SetParticlePoint(const Vector3& pos);
 
 private:
 	// プレイヤーの本体ポインタ

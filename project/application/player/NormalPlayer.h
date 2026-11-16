@@ -41,6 +41,9 @@ public:
 
 	// ヒットタイマー更新処理
 	void HitTimerUpdate();
+
+	// ビームポイントエフェクトを発生させる処理
+	void EmitPointParticle(const Vector3& pos);
 	
 	// getter
 	Vector3 GetWorldTranslate() { return { worldMatrix.m[3][0], worldMatrix.m[3][1], worldMatrix.m[3][2] }; }
@@ -123,8 +126,13 @@ private:
 	std::unique_ptr <ParticleEmitter> emitter;
 	std::unique_ptr <ParticleEmitter> traceEmitter;
 	std::unique_ptr <ParticleEmitter> flashEmitter;
+	std::unique_ptr <ParticleEmitter> pointEmitter;
 	// エミッター初期値
 	ParticleManager::EmitterSphere emitterSphere;
 	ParticleManager::EmitterSphere traceEmitterSphere;
 	ParticleManager::EmitterSphere flashEmitterSphere;
+	ParticleManager::EmitterSphere pointEmitterSphere;
+
+	// パーティクル識別ID
+	uint32_t id_;
 };

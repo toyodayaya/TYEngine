@@ -86,6 +86,16 @@ void NormalPlayer::Initialize(Player* player)
 	flashEmitterSphere.count = 8;
 	flashEmitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
 	flashEmitter = std::make_unique <ParticleEmitter>("Flash", flashEmitterSphere);
+
+	pointEmitterSphere.velocity = { 0.0f,0.0f,0.0f };
+	pointEmitterSphere.type = ParticleManager::MoveType::kZoomInOut;
+	pointEmitterSphere.scale = { 1.0f,1.0f,1.0f };
+	pointEmitterSphere.lifeTime = 3.0f;
+	pointEmitterSphere.frequency = 0.0f;
+	pointEmitterSphere.frequencyTime = 0.0f;
+	pointEmitterSphere.currentTime = 0;
+	pointEmitterSphere.count = 8;
+	pointEmitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
 }
 
 void NormalPlayer::Update()
@@ -121,6 +131,8 @@ void NormalPlayer::Update()
 		// 発射可能エフェクトを更新
 		flashEmitter->SetTranslate(GetWorldTranslate());
 		flashEmitter->Update();
+		// ポイントエフェクトを更新
+		ParticleManager::GetInstance()->SetBulletTranslate(GetWorldTranslate(), id_, "BeamPoint");
 	}
 	
 #ifdef USE_IMGUI
@@ -225,7 +237,7 @@ void NormalPlayer::CreateBullet()
 	// 生成と初期化
 	std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
 	bullet->Initialize(bulletTransform, filePath_, velocity, false);
-	BulletManager::GetInstance()->SetBulletID(bullet.get());
+	bullet->SetID(ParticleManager::GetInstance()->AllocateID());
 
 	// エフェクトを追加
 	emitterSphere.translate = bulletTransform.translate;
@@ -272,6 +284,7 @@ void NormalPlayer::CreateBeam()
 	// 生成と初期化
 	std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
 	bullet->Initialize(bulletTransform, filePath_, velocity, false);
+	bullet->SetID(ParticleManager::GetInstance()->AllocateID());
 
 	// エフェクトを追加
 	emitterSphere.translate = bulletTransform.translate;
@@ -442,6 +455,16 @@ void NormalPlayer::HitTimerUpdate()
 		// ヒットタイマーを減らす
 		hitTimer_--;
 	}
+}
+
+void NormalPlayer::EmitPointParticle(const Vector3& pos)
+{
+	// ポイントエフェクトを発生させる
+	pointEmitterSphere.translate = pos;
+	id_ = ParticleManager::GetInstance()->AllocateID();
+	pointEmitterSphere.id = id_;
+	pointEmitter = std::make_unique <ParticleEmitter>("BeamPoint", pointEmitterSphere);
+	pointEmitter->Update();
 }
 
 void NormalPlayer::SetBeamPoint(int point)

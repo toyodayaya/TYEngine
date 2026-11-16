@@ -1,6 +1,7 @@
 static const uint PARTICLE_NONE = 0;
 static const uint PARTICLE_DIFFUSION = 1;
 static const uint PARTICLE_FOLLOW = 2;
+static const uint PARTICLE_ZOOMINOUT = 3;
 
 struct EmitterSphere
 {
@@ -27,6 +28,7 @@ struct Particle
     float32_t4 color;
     uint32_t type;
     uint32_t id;
+    float32_t3 targetPos;
 };
 
 struct PerFrame
@@ -137,6 +139,29 @@ void main(uint3 DTid : SV_DispatchThreadID)
                     gParticle[particleIndex].velocity = gEmitter.velocity;
                     gParticle[particleIndex].id = gEmitter.id;
                     gParticle[particleIndex].type = gEmitter.type;
+                
+                    break;
+                
+                case PARTICLE_ZOOMINOUT:
+                    gParticle[particleIndex].scale = gEmitter.scale;
+                    gParticle[particleIndex].translate = gEmitter.translate;
+                    gParticle[particleIndex].color.rgb = gEmitter.color.rgb;
+                    gParticle[particleIndex].color.a = 1.0f;
+                    gParticle[particleIndex].lifeTime = gEmitter.lifeTime;
+                    gParticle[particleIndex].currentTime = 0;
+                    gParticle[particleIndex].velocity = gEmitter.velocity;
+                    gParticle[particleIndex].id = gEmitter.id;
+                    gParticle[particleIndex].type = gEmitter.type;
+                
+                    RandomGenerator randomTarget;
+                    randomTarget.seed = float3(particleIndex, gParticle[particleIndex].currentTime, gParticle[particleIndex].id);
+                    float angle = randomTarget.Generate1d() * 6.2831853f;
+                    float randomY = randomTarget.Generate1d() * 2.0f - 1.0f;
+                    float radius = 5.0f;
+                    float horizontal = sqrt(1.0f - randomY * randomY);
+                    float3 direction = float3(horizontal * cos(angle), randomY, horizontal * sin(angle));
+                
+                    gParticle[particleIndex].targetPos = gEmitter.translate + direction * radius;
                 
                     break;
                 

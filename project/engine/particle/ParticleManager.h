@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include <random>
 
+
 class ParticleManager
 {
 public:
@@ -21,6 +22,8 @@ public:
 		kDiffusion,
 		// 追従
 		kFollow,
+		// 拡縮
+		kZoomInOut,
 	};
 
 
@@ -63,6 +66,7 @@ private:
 		float lifeTime;
 		float currentTime;
 		uint32_t id;
+		Vector3 targetPos;
 	};
 
 	struct ParticleForGPU
@@ -116,6 +120,7 @@ private:
 		Vector4 color;
 		uint32_t type;
 		uint32_t id;
+		Vector3 targetPos;
 	};
 
 	struct BulletData
@@ -283,6 +288,11 @@ private:
 	// BulletData
 	static const uint32_t kMaxBullets = 128;
 
+	// 各弾に割り当てるID
+	uint32_t nextId_ = 0;
+	// IDの最大値
+	const uint32_t kMaxId = 64;
+
 public:
 	// シングルトンインスタンスの取得
 	static ParticleManager* GetInstance();
@@ -349,6 +359,9 @@ public:
 
 	// 効果範囲の当たり判定
 	bool IsCollision(const AABB& aabb, const Vector3& point);
+
+	//各パーティクルにIDを発行する
+	uint32_t AllocateID();
 
 	// getter
 	DirectXBasis* GetDxBasis() const { return dxBasis_; }
