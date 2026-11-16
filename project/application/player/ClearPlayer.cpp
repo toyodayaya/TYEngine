@@ -1,6 +1,6 @@
+#define _USE_MATH_DEFINES
 #include "ClearPlayer.h"
 #include <cmath>
-#define _USE_MATH_DEFINES
 
 void ClearPlayer::Initialize(Player* player)
 {

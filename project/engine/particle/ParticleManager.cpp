@@ -656,20 +656,6 @@ void ParticleManager::UploadBulletData(ParticleGroup& group)
 
 	group.bulletDataUploadResource->Map(0,&readRange,&mappedData);
 
-	for (uint32_t i = 0; i < kMaxBullets; i++)
-	{
-		if (group.bulletData[i].isAlive)
-		{
-			OutputDebugStringA(
-				("ID: " + std::to_string(i) +
-					" X: " + std::to_string(group.bulletData[i].translate.x) +
-					" Y: " + std::to_string(group.bulletData[i].translate.y) +
-					" Z: " + std::to_string(group.bulletData[i].translate.z) +
-					"\n").c_str()
-			);
-		}
-	}
-
 	std::memcpy(mappedData,group.bulletData.data(),sizeof(BulletData) * kMaxBullets);
 	group.bulletDataUploadResource->Unmap(0, nullptr);
 
@@ -835,7 +821,11 @@ void ParticleManager::CreateParticleGroup(const std::string name, const std::str
 	// 登録済みの名前かチェック
 	const bool alreadyExists =
 		(particleGroups.find(name) != particleGroups.end());
-	assert(!alreadyExists);
+	if (alreadyExists)
+	{
+		// 登録済みだったら登録せずスキップ
+		return;
+	}
 
 	// 新たなパーティクルグループを作成
 	ParticleGroup newGroup{};
