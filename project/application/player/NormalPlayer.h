@@ -121,5 +121,7 @@ private:
 
 	// パーティクルエミッターのポインタ
 	std::unique_ptr <ParticleEmitter> emitter;
+	// エミッター
+	ParticleManager::EmitterSphere emitterSphere;
 
 };

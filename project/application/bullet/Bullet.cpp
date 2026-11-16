@@ -61,7 +61,7 @@ void Bullet::Update()
 		isDead_ = true;
 
 		// 対応するエフェクトに死亡を通知
-		ParticleManager::GetInstance()->SetBulletIsAlive(false, id_,"Particle");
+		ParticleManager::GetInstance()->SetBulletIsAlive(false, id_,particleName_);
 	}
 
 	// 座標を更新
@@ -75,7 +75,7 @@ void Bullet::Update()
 	object3d_->Update();
 
 	// 対応するエフェクトに座標を送信
-	ParticleManager::GetInstance()->SetBulletTranslate(transform_.translate, id_, "Particle");
+	ParticleManager::GetInstance()->SetBulletTranslate(transform_.translate, id_, particleName_);
 
 #ifdef _DEBUG
 	debugDraw->SetBoxTranslate(transform_.translate);
@@ -119,7 +119,7 @@ void Bullet::OnCollision(std::string hitObjectType)
 		// 弾の死亡フラグを立てる
 		isDead_ = true;
 		// 対応するエフェクトに死亡を通知
-		ParticleManager::GetInstance()->SetBulletIsAlive(false, id_, "Particle");
+		ParticleManager::GetInstance()->SetBulletIsAlive(false, id_, particleName_);
 
 	}
 }

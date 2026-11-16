@@ -50,6 +50,17 @@ void NormalPlayer::Initialize(Player* player)
 	inGameUI_->SetCurrentBeamPoint(currentBeamPoint_);
 	inGameUI_->SetBeamPointSize(currentBeamPoint_);
 
+	// パーティクル初期値を初期化
+	emitterSphere.velocity = { 0.0f,0.0f,0.0f };
+	emitterSphere.type = ParticleManager::MoveType::kFollow;
+	emitterSphere.scale = { 1.0f,1.0f,1.0f };
+	emitterSphere.radius = { 1.0f };
+	emitterSphere.lifeTime = 3.0f;
+	emitterSphere.frequency = 0.0f;
+	emitterSphere.frequencyTime = 0.0f;
+	emitterSphere.currentTime = 0;
+	emitterSphere.count = 1;
+	emitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
 }
 
 void NormalPlayer::Update()
@@ -182,25 +193,17 @@ void NormalPlayer::CreateBullet()
 	BulletManager::GetInstance()->SetBulletID(bullet.get());
 
 	// エフェクトを追加
-	ParticleManager::EmitterSphere emitterSphere;
 	emitterSphere.translate = bulletTransform.translate;
-	emitterSphere.velocity = {0.0f,0.0f,0.0f};
-	emitterSphere.type = ParticleManager::MoveType::kFollow;
-	emitterSphere.scale = { 1.0f,1.0f,1.0f };
-	emitterSphere.radius = { 1.0f };
-	emitterSphere.lifeTime = 3.0f;
-	emitterSphere.frequency = 0.0f;
-	emitterSphere.frequencyTime = 0.0f;
-	emitterSphere.currentTime = 0;
-	emitterSphere.count = 1;
-	emitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
 	emitterSphere.id = bullet->GetID();
-	emitter = std::make_unique <ParticleEmitter>("Particle", emitterSphere);
+	emitter = std::make_unique <ParticleEmitter>("Bullet", emitterSphere);
 	// エフェクトを発生させる
 	emitter->Update();
-	// 対応するエフェクトに死亡を通知
-	ParticleManager::GetInstance()->SetBulletIsAlive(true, bullet->GetID(), "Particle");
+	// 対応するエフェクトに生存フラグを通知
+	ParticleManager::GetInstance()->SetBulletIsAlive(true, bullet->GetID(), "Bullet");
+	// パーティクルグループの名前を記録
+	bullet->SetParticleName("Bullet");
 
+	// BulletManagerに追加
 	BulletManager::GetInstance()->SetBullets(std::move(bullet));
 
 	// 発射間隔タイマーをリセット
@@ -234,6 +237,19 @@ void NormalPlayer::CreateBeam()
 	// 生成と初期化
 	std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
 	bullet->Initialize(bulletTransform, filePath_, velocity, false);
+
+	// エフェクトを追加
+	emitterSphere.translate = bulletTransform.translate;
+	emitterSphere.id = bullet->GetID();
+	emitter = std::make_unique <ParticleEmitter>("Beam", emitterSphere);
+	// エフェクトを発生させる
+	emitter->Update();
+	// 対応するエフェクトに生存フラグを通知
+	ParticleManager::GetInstance()->SetBulletIsAlive(true, bullet->GetID(), "Beam");
+	// パーティクルグループの名前を記録
+	bullet->SetParticleName("Beam");
+
+	// BulletManagerに追加
 	BulletManager::GetInstance()->SetBullets(std::move(bullet));
 
 	// 弾数上限に達したら

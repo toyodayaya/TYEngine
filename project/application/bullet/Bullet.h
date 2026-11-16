@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseBullet.h"
+#include <string>
 
 class Bullet : public BaseBullet
 {
@@ -15,9 +16,6 @@ public:
 	// 衝突応答
 	void OnCollision(std::string hitObjectType) override;
 
-
-
 private:
-	
 };
 

@@ -15,6 +15,7 @@ public:
  	uint32_t GetID() const { return id_; }
 	// setter
 	void SetID(uint32_t id) { id_ = id; }
+	void SetParticleName(std::string name) { particleName_ = name; }
 
 protected:
 	// 当たり判定用のAABB
@@ -26,6 +27,8 @@ protected:
 	const float kLifeTime_ = 1;
 	// エフェクト対応用のID
 	uint32_t id_;
+	// パーティクルグループの名前
+	std::string particleName_;
 
 	// 3dオブジェクト
 	std::unique_ptr<Object3d> object3d_;

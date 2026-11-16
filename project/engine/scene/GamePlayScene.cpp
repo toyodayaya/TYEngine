@@ -22,7 +22,9 @@ void GamePlayScene::Initialize()
 
 	// パーティクルグループの作成
 	TextureManager::GetInstance()->LoadTexture("resources/sprite/grass.png");
-	ParticleManager::GetInstance()->CreateParticleGroup("Particle", "resources/sprite/grass.png", ParticleManager::ShapeType::kNormal);
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/circle.png");
+	ParticleManager::GetInstance()->CreateParticleGroup("Bullet", "resources/sprite/grass.png", ParticleManager::ShapeType::kNormal);
+	ParticleManager::GetInstance()->CreateParticleGroup("Beam", "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
 
 	// スコアをリセット
 	ScoreManager::GetInstance()->SetScore(0);
