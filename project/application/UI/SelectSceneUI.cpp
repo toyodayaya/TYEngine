@@ -47,14 +47,7 @@ void SelectSceneUI::Initialize()
 	cursor_->Initialize("resources/sprite/selectUI/cursor.png");
 	cursor_->SetPosition(Vector2{ 600.0f,300.0f });
 
-	// 次のステージ名を設定
-	stageNumber_ = std::stoi(StageManager::GetInstance()->GetStageName());
-	stageNumber_ += 1;
 
-	// 次のステージ番号を文字列に変換してロード
-	stageName_ = std::to_string(stageNumber_);
-	StageManager::GetInstance()->SetStageName(stageName_);
-	stageName_ += ".json";
 }
 
 void SelectSceneUI::Finalize()
@@ -173,4 +166,23 @@ void SelectSceneUI::SceneChange()
 		// フェードアウトフラグを立てる
 		RenderTexture::GetInstance()->SetIsFadeIn(false);
 	}
+}
+
+void SelectSceneUI::SetNextScene()
+{
+	cursorNum_ = 0;
+
+	// 次のステージ名を設定
+	stageNumber_ = std::stoi(StageManager::GetInstance()->GetStageName());
+	stageNumber_ += 1;
+
+	if (stageNumber_ >= 6)
+	{
+		nextScene_[3]->SetAlpha(0.0f);
+	}
+
+	// 次のステージ番号を文字列に変換してロード
+	stageName_ = std::to_string(stageNumber_);
+	StageManager::GetInstance()->SetStageName(stageName_);
+	stageName_ += ".json";
 }

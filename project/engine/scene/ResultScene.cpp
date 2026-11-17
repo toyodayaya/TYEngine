@@ -28,6 +28,9 @@ void ResultScene::Initialize()
 	stageData_ = StageManager::GetInstance()->FindJsonData("clear.json");
 	// ステージを作成する
 	stageData_->CreateStage("clear.json");
+
+	// 次のステージを設定
+	SelectSceneUI::GetInstance()->SetNextScene();
 }
 
 void ResultScene::Finalize()

@@ -35,6 +35,9 @@ public:
 	// シーン切り替え処理
 	void SceneChange();
 
+	// 次のシーン決定処理
+	void SetNextScene();
+
 private:
 	// デストラクタ
 	~SelectSceneUI() = default;
