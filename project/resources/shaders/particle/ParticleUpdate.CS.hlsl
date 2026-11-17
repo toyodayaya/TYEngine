@@ -64,7 +64,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
     uint32_t particleIndex = DTid.x;
     if (particleIndex < kMaxParticles)
     {
-        float32_t alpha;
+        float32_t alpha = 1.0f;
             
         switch (gParticle[particleIndex].type)
         {
@@ -139,12 +139,11 @@ void main(uint3 DTid : SV_DispatchThreadID)
                 else
                 {
                     gParticle[particleIndex].translate = lerp(gParticle[particleIndex].translate, gBulletData[gParticle[particleIndex].id].translate, t);
-
+                    alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifeTime);
                 }
             
             
                 gParticle[particleIndex].currentTime += gParFrame.deltaTime;
-                alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifeTime);
                 gParticle[particleIndex].color.a = saturate(alpha);
                 
                 if (gParticle[particleIndex].color.a == 0)

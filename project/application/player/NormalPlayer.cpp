@@ -90,7 +90,7 @@ void NormalPlayer::Initialize(Player* player)
 	pointEmitterSphere.velocity = { 0.0f,0.0f,0.0f };
 	pointEmitterSphere.type = ParticleManager::MoveType::kZoomInOut;
 	pointEmitterSphere.scale = { 1.0f,1.0f,1.0f };
-	pointEmitterSphere.lifeTime = 2.5f;
+	pointEmitterSphere.lifeTime = 2.0f;
 	pointEmitterSphere.frequency = 0.0f;
 	pointEmitterSphere.frequencyTime = 0.0f;
 	pointEmitterSphere.currentTime = 0;
