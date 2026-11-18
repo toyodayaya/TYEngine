@@ -72,9 +72,5 @@ void ClearSequenceStartEvent::OnCollision(std::string hitObjectType)
 	{
 		// プレイヤーが接触したら状態遷移
 		PlayerManager::GetInstance()->ChangePlayerState("ClearSequencePlayer");
-		// カメラの画角を固定
-		//camera_->SetRotate(Quaternion{ 0.0f,0.0f,0.0f,1.0f });
-
-		
 	}
 }

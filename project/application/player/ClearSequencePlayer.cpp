@@ -12,8 +12,9 @@ void ClearSequencePlayer::Initialize(Player* player)
 	object3d_->SetIsRailCamera(false);
 	transform_ = object3d_->GetTransform();
 	transform_.translate = object3d_->GetWorldTranslate();
+	transform_.rotate = { 0.0f,0.0f,0.0f,1.0f };
 	startPos_ = transform_.translate;
-	startAngle_ = transform_.rotate;
+	startAngle_ = { 0.0f,0.0f,0.0f,1.0f };
 	targetAngle_ = transform_.rotate;
 	targetAngle_.x += -1.0f;
 	targetPos_ = transform_.translate;

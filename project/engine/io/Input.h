@@ -48,6 +48,9 @@ public:
 	// キーのトリガー判定を取得
 	bool TriggerKey(BYTE keyNumber);
 
+	// キーのリリース判定を取得
+	bool ReleaseKey(BYTE keyNumber);
+
 	// インスタンス
 	static Input* GetInstance();
 

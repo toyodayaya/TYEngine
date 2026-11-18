@@ -107,11 +107,9 @@ void NormalPlayer::Update()
 		HitTimerUpdate();
 	}
 
-	// プレイヤーの攻撃処理
-	Attack();
 
-	// プレイヤーの移動処理
-	Move();
+	// プレイヤーの行動処理
+	Action();
 
 	// 3Dレティクルを更新
 	UpdateReticle();
@@ -134,7 +132,7 @@ void NormalPlayer::Update()
 		// ポイントエフェクトを更新
 		ParticleManager::GetInstance()->SetBulletTranslate(GetWorldTranslate(), id_, "BeamPoint");
 	}
-	
+
 #ifdef USE_IMGUI
 	ImGui::Begin("Player");
 	ImGui::DragFloat3("pos", &transform_.translate.x);
@@ -178,7 +176,7 @@ void NormalPlayer::Finalize()
 
 void NormalPlayer::OnCollision(std::string hitObjectType)
 {
-	if (isHit_)
+	if (isHit_ || isAvoid_)
 	{
 		// 既に当たっていたら処理しない
 		return;
@@ -314,6 +312,7 @@ void NormalPlayer::CreateBeam()
 
 void NormalPlayer::UpdateReticle()
 {
+	reticleOffset_ = { 0.0f, 0.0f, 10.0f };
 	// 自機のワールド行列の回転を適用
 	Matrix4x4 world = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
 	reticleOffset_ = TransformNormal(reticleOffset_, world);
@@ -343,36 +342,46 @@ void NormalPlayer::UpdateReticle()
 
 }
 
-void NormalPlayer::Move()
+void NormalPlayer::Action()
 {
-	// キー入力でプレイヤーを移動させる
-	if (Input::GetInstance()->PushKey(DIK_A))
+	if (isAvoid_)
 	{
-		transform_.translate.x -= 0.1f;
+		// プレイヤーの回避処理
+		Avoid();
 	}
-	else if (Input::GetInstance()->PushKey(DIK_D))
+	else
 	{
-		transform_.translate.x += 0.1f;
-	}
-	
-	if (Input::GetInstance()->PushKey(DIK_S))
-	{
-		transform_.translate.y -= 0.1f;
-	}
-	else if (Input::GetInstance()->PushKey(DIK_W))
-	{
-		transform_.translate.y += 0.1f;
-	}
+		// キー入力で回避
+		if (Input::GetInstance()->PushKey(DIK_Q))
+		{
+			// 回避速度を設定
+			avoidSpeed_ = -0.2f;
+			// 回転角を設定
+			rollingZ = 0.2f;
+			// 回避フラグを設定
+			isAvoid_ = true;
+		}
+		else if (Input::GetInstance()->PushKey(DIK_E))
+		{
+			// 回避速度を設定
+			avoidSpeed_ = 0.2f;
+			// 回転角を設定
+			rollingZ = -0.2f;
+			// 回避フラグを設定
+			isAvoid_ = true;
+		}
+		else
+		{
+			// プレイヤーの通常移動処理
+			Move();
+		}
 
-	// 範囲を超えない処理
-	transform_.translate.x = max(transform_.translate.x, -kMoveLimitX_);
-	transform_.translate.x = std::min(transform_.translate.x, +kMoveLimitX_);
-	transform_.translate.y = max(transform_.translate.y, -kMoveLimitY_);
-	transform_.translate.y = std::min(transform_.translate.y, +kMoveLimitY_);
-
+		// プレイヤーの攻撃処理
+		Attack();
+	}
 
 	// 座標を更新
-	object3d_->SetTranslate(transform_.translate);
+	object3d_->SetTransform(transform_);
 
 	// プレイヤーのローカル行列を作成
 	worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
@@ -384,6 +393,75 @@ void NormalPlayer::Move()
 
 	// 3Dオブジェクトを更新
 	object3d_->Update();
+}
+
+void NormalPlayer::Move()
+{
+	// tを加算
+	rotateT_ += 0.1f;
+
+	if (rotateT_ >= 1.0f)
+	{
+		rotateT_ = 0.0f;
+		initRotate_ = transform_.rotate;
+	}
+
+	// プレイヤー傾きをリセット
+	rotate_ = { 0.0f,0.0f,0.0f,1.0f };
+
+	// 入力の最初と最後に数値をリセット
+	if (Input::GetInstance()->TriggerKey(DIK_A) || Input::GetInstance()->TriggerKey(DIK_D) ||
+		Input::GetInstance()->TriggerKey(DIK_W) || Input::GetInstance()->TriggerKey(DIK_S) ||
+		Input::GetInstance()->ReleaseKey(DIK_A) || Input::GetInstance()->ReleaseKey(DIK_D) ||
+		Input::GetInstance()->ReleaseKey(DIK_W) || Input::GetInstance()->ReleaseKey(DIK_S))
+	{
+		rotateT_ = 0.0f;
+		initRotate_ = transform_.rotate;
+	}
+
+	// キー入力でプレイヤーを移動させる
+	if (Input::GetInstance()->PushKey(DIK_A))
+	{
+		// 左に移動
+		transform_.translate.x -= 0.1f;
+		// 左に傾ける
+		rotate_.z = 0.1f;
+
+	}
+	else if (Input::GetInstance()->PushKey(DIK_D))
+	{
+		// 右に移動
+		transform_.translate.x += 0.1f;
+		// 右に傾ける
+		rotate_.z = -0.1f;
+	}
+
+	if (Input::GetInstance()->PushKey(DIK_S))
+	{
+		// 下に移動
+		transform_.translate.y -= 0.1f;
+		// 下に傾ける
+		rotate_.x = 0.1f;
+	}
+	else if (Input::GetInstance()->PushKey(DIK_W))
+	{
+		// 上に移動
+		transform_.translate.y += 0.1f;
+		// 上に傾ける
+		rotate_.x = -0.1f;
+	}
+
+	// 範囲を超えない処理
+	transform_.translate.x = max(transform_.translate.x, -kMoveLimitX_);
+	transform_.translate.x = std::min(transform_.translate.x, +kMoveLimitX_);
+	transform_.translate.y = max(transform_.translate.y, -kMoveLimitY_);
+	transform_.translate.y = std::min(transform_.translate.y, +kMoveLimitY_);
+
+	// 傾きをセット
+	Quaternion rotateX = { sinf(rotate_.x / 2.0f),0.0f,0.0f,cosf(rotate_.x / 2.0f) };
+	Quaternion rotateZ = { 0.0f,0.0f,sinf(rotate_.z / 2.0f),cosf(rotate_.z / 2.0f) };
+	Quaternion targetRotate = QuaternionMultiply(rotateX, rotateZ);
+	transform_.rotate = Slerp(initRotate_, targetRotate, rotateT_);
 }
 
 void NormalPlayer::Attack()
@@ -404,7 +482,7 @@ void NormalPlayer::Attack()
 			beamFireInterval_--;
 		}
 
-		
+
 	}
 	else
 	{
@@ -442,6 +520,35 @@ void NormalPlayer::Attack()
 		}
 	}
 
+}
+
+void NormalPlayer::Avoid()
+{
+	if (avoidTimer_ <= 0.0f)
+	{
+		// タイマーとフラグをリセット
+		avoidTimer_ = 0.5f;
+		rollingZ = 0.0f;
+		isAvoid_ = false;
+		// 回転角をリセット
+		initRotate_ = transform_.rotate;
+	}
+	else
+	{
+		// 入力された方向に移動
+		transform_.translate.x += avoidSpeed_;
+		// プレイヤーを回転させる
+		Quaternion rotation = { 0.0f,0.0f,sinf(rollingZ / 2.0f),cosf(rollingZ / 2.0f) };
+		transform_.rotate = QuaternionMultiply(transform_.rotate, rotation);
+
+
+		// 範囲を超えない処理
+		transform_.translate.x = max(transform_.translate.x, -kMoveLimitX_);
+		transform_.translate.x = std::min(transform_.translate.x, +kMoveLimitX_);
+
+		// タイマーを減らす
+		avoidTimer_ -= kDeltaTime;
+	}
 }
 
 void NormalPlayer::HitTimerUpdate()

@@ -33,11 +33,17 @@ public:
 	// 3Dレティクルの更新処理
 	void UpdateReticle();
 
+	// 操作処理
+	void Action();
+
 	// プレイヤーの移動処理
 	void Move();
 
 	// プレイヤーの攻撃処理
 	void Attack();
+
+	// プレイヤーの回避処理
+	void Avoid();
 
 	// ヒットタイマー更新処理
 	void HitTimerUpdate();
@@ -91,6 +97,12 @@ private:
 	Vector3 reticleOffset_ = { 0.0f,0.0f,10.0f };
 	// ロックオンのポインタ
 	LockOn* lockOn_;
+	// 自機の傾き
+	Quaternion rotate_ = { 0.0f,0.0f,0.0f,1.0f };
+	Quaternion initRotate_ = { 0.0f,0.0f,0.0f,1.0f };
+	float rotateT_ = 0.0f;
+	// 回転角
+	float rollingZ = 0.0f;
 
 	// ビームの弾数
 	const int kBeamBulletNum = 10;
@@ -118,6 +130,13 @@ private:
 
 	// ビーム発射フラグ
 	bool canFireBeam_ = false;
+
+	// 回避中フラグ
+	bool isAvoid_ = false;
+	// 回避タイマー
+	float avoidTimer_ = 0.5f;
+	// 回避速度
+	float avoidSpeed_ = 0.2f;
 
 	// UIのポインタ
 	InGameUI* inGameUI_ = nullptr;

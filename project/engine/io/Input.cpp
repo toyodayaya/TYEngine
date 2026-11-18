@@ -72,6 +72,18 @@ bool Input::TriggerKey(BYTE keyNumber)
 	return false;
 }
 
+bool Input::ReleaseKey(BYTE keyNumber)
+{
+	// 指定キーをリリースしていたらtrueを返す
+	if (preKey[keyNumber] && !key[keyNumber])
+	{
+		return true;
+	}
+
+	// そうでなければfalseを返す
+	return false;
+}
+
 void Input::Finalize()
 {
 	instance.reset();
