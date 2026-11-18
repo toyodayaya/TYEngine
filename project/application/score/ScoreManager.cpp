@@ -72,6 +72,12 @@ void ScoreManager::AddScore(const int& score)
 	score_ += score;
 }
 
+void ScoreManager::ResetScore()
+{
+	score_ = 0;
+	SetNumber();
+}
+
 void ScoreManager::SetNumber()
 {
 	// スコアが桁数を超えていたらカンスト

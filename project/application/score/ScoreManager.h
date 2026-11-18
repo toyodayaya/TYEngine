@@ -52,6 +52,9 @@ public:
 	// スコア加算処理
 	void AddScore(const int& score);
 
+	// スコアリセット処理
+	void ResetScore();
+
 	// setter
 	void SetNumber();
 	void SetScore(int score) { score_ = score; }

@@ -36,7 +36,7 @@ void GamePlayScene::Initialize()
 	ParticleManager::GetInstance()->CreateParticleGroup("BeamPoint", "resources/sprite/particle/beamPoint.png", ParticleManager::ShapeType::kNormal);
 
 	// スコアをリセット
-	ScoreManager::GetInstance()->SetScore(0);
+	ScoreManager::GetInstance()->ResetScore();
 
 	// マネージャーからステージ名を取得
 	stageName_ = StageManager::GetInstance()->GetStageName();
