@@ -26,6 +26,9 @@ void GameOverScene::Initialize()
 	// ステージを作成する
 	stageData_->CreateStage("gameover.json");
 
+	// 次のステージを設定
+	SelectSceneUI::GetInstance()->SetNextScene();
+
 }
 
 void GameOverScene::Finalize()

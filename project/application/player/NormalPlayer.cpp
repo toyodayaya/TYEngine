@@ -354,7 +354,8 @@ void NormalPlayer::Move()
 	{
 		transform_.translate.x += 0.1f;
 	}
-	else if (Input::GetInstance()->PushKey(DIK_S))
+	
+	if (Input::GetInstance()->PushKey(DIK_S))
 	{
 		transform_.translate.y -= 0.1f;
 	}

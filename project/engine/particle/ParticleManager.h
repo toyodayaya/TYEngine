@@ -152,7 +152,6 @@ private:
 		uint32_t bulletDataUavIndex;
 		std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> bulletDataUavHandle;
 		std::vector<BulletData> bulletData;
-		uint32_t bulletDataSrvIndex;
 	};
 
 	struct AccelerationField

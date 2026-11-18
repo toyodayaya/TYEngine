@@ -56,6 +56,8 @@ private:
 	// ステージ番号
 	int stageNumber_ = 0;
 	std::string stageName_;
+	int nowStageNum_;
+	std::string nowStageName_;
 
 };
 

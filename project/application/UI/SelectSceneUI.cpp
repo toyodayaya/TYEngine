@@ -147,11 +147,20 @@ void SelectSceneUI::SceneChange()
 		}
 		else if (cursorNum_ == 2)
 		{
+			// ステージ名を設定
+			StageManager::GetInstance()->SetStageName(nowStageName_);
+			nowStageName_ += ".json";
+			// 次のステージをロード
+			StageManager::GetInstance()->LoadJsonData("resources/stages/json", nowStageName_);
+
 			SceneManager::GetInstance()->ChangeScene("GamePlayScene");
 			return;
 		}
 		else
 		{
+			// ステージ名を設定
+			StageManager::GetInstance()->SetStageName(stageName_);
+			stageName_ += ".json";
 			// 次のステージをロード
 			StageManager::GetInstance()->LoadJsonData("resources/stages/json", stageName_);
 
@@ -173,8 +182,8 @@ void SelectSceneUI::SetNextScene()
 	cursorNum_ = 0;
 
 	// 次のステージ名を設定
-	stageNumber_ = std::stoi(StageManager::GetInstance()->GetStageName());
-	stageNumber_ += 1;
+	nowStageNum_ = std::stoi(StageManager::GetInstance()->GetStageName());
+	stageNumber_ = nowStageNum_ + 1;
 
 	if (stageNumber_ >= 6)
 	{
@@ -183,6 +192,5 @@ void SelectSceneUI::SetNextScene()
 
 	// 次のステージ番号を文字列に変換してロード
 	stageName_ = std::to_string(stageNumber_);
-	StageManager::GetInstance()->SetStageName(stageName_);
-	stageName_ += ".json";
+	nowStageName_ = std::to_string(nowStageNum_);
 }
