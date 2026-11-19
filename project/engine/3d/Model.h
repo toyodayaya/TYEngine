@@ -21,16 +21,7 @@ public:
 		Vector3 normal;
 	};
 
-	struct  Material
-	{
-		Vector4 color;
-		int32_t enableLighting;
-		float padding[3];
-		Matrix4x4 uvTransform;
-		float shininess;
-		float environmentCoefficient;
-		int32_t useEnvironmentMap;
-	};
+	
 
 	struct MaterialData
 	{
@@ -175,8 +166,7 @@ public:
 	static Node ReadNode(aiNode* node);
 	// 頂点データを作成
 	void CreateVertexData3d();
-	// マテリアルデータを作成
-	void CreateMaterialData3d();
+	
 
 	// アニメーションを解析する関数
 	Animation LoadAnimationFile(const std::string& directoryPath, const std::string& filename);
@@ -199,6 +189,7 @@ public:
 	// getter
 	ModelData GetModelData() { return modelData_; }
 	Skeleton GetSkeleton() { return skeleton_; }
+	
 
 private:
 	ModelCommon* modelManager = nullptr;
@@ -218,9 +209,7 @@ private:
 	// 頂点データ
 	VertexData* vertexData_ = nullptr;
 	uint32_t* indexData_ = nullptr;
-	// マテリアルリソース
-	Microsoft::WRL::ComPtr <ID3D12Resource> materialResource_;
-	Material* materialData_ = nullptr;
+	
 
 	// アニメーションの再生時間
 	float animationTime_ = 0.0f;

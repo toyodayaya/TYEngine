@@ -17,6 +17,9 @@ void NormalEnemy::Initialize(BaseEnemy* enemy)
 	transform_.translate = object3d_->GetWorldTranslate();
 	transform_.rotate = { 0.0f,0.0f,0.0f,1.0f };
 	isHit_ = false;
+
+	// オブジェクトの不透明度をセット
+	object3d_->SetAlpha(0.0f);
 }
 
 void NormalEnemy::Update()
@@ -26,6 +29,13 @@ void NormalEnemy::Update()
 	{
 		// ヒットタイマーを更新する
 		HitTimerUpdate();
+	}
+
+	// 接近フラグが立ったら
+	if (enemy_->GetIsApproach())
+	{
+		// 不透明度を変更
+		object3d_->SetAlpha(1.0f);
 	}
 
 	// オブジェクトを更新
@@ -72,6 +82,8 @@ void NormalEnemy::OnCollision(std::string hitObjectType)
 		// HPを減らす
 		hp_--;
 
+		// ヒットフラグを立てる
+		isHit_ = true;
 
 		// HPが0になったら
 		if (hp_ <= 0)
@@ -104,8 +116,7 @@ void NormalEnemy::OnCollision(std::string hitObjectType)
 		}
 	}
 
-	// ヒットフラグを立てる
-	isHit_ = true;
+	
 
 }
 

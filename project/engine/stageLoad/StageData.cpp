@@ -106,7 +106,6 @@ void StageData::CheckAllCollision()
 		translate = Vector3Add(colliders.center, translate);
 		AABB colliderAABB = CollisionManager::GetInstance()->MakeAABB(translate, colliders.size);
 
-
 		for (size_t j = i + 1; j < colliders_.size(); ++j)
 		{
 			auto& collidersHit = colliders_[j];
@@ -584,6 +583,10 @@ void StageData::CreateCollider(const ColliderSpawnData& collider, GameObject* pa
 	ColliderSpawnData colliders = collider;
 	colliders.parent = parent;
 	CollisionManager::GetInstance()->SetColliders(colliders);
+
+	// 親オブジェクトにAABBを登録
+	AABB colliderAABB = CollisionManager::GetInstance()->MakeAABB(parent->GetWorldTranslate(), colliders.size);
+	colliders.parent->SetAABB(colliderAABB);
 }
 
 StageData::EventSpawnData StageData::LoadEvent(nlohmann::json& event)
@@ -658,6 +661,10 @@ void StageData::CreateEvents(const EventSpawnData& eventData)
 	{
 		event = std::make_unique<SelectSceneEvent>();
 	}
+	else if (eventData.eventName == "NotifyApproach")
+	{
+		event = std::make_unique<NotifyApproachEvent>();
+	}
 	else
 	{
 		event = std::make_unique<ChangePostEffectEvent>();
@@ -688,6 +695,12 @@ void StageData::CreateEvents(const EventSpawnData& eventData)
 	if (eventData.collider.hasCollier)
 	{
 		CreateCollider(eventData.collider, event.get());
+	}
+
+	if (eventData.eventName == "NotifyApproach")
+	{
+		NotifyApproachEvent* approachEvent = dynamic_cast<NotifyApproachEvent*>(event.get());
+		approachEvent->RegisterEnemy();
 	}
 
 	EventManager::GetInstance()->SetEvents(std::move(event));

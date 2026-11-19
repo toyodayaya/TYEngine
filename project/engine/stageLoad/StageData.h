@@ -10,6 +10,7 @@
 #include "ClearSequenceStartEvent.h"
 #include "TitleCameraEvent.h"
 #include "SelectSceneEvent.h"
+#include "NotifyApproachEvent.h"
 #include "RailCameraController.h"
 #include <string>
 #include <vector>

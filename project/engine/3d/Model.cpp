@@ -60,8 +60,7 @@ void Model::Initialize(ModelCommon* modelManager, const std::string& directoryPa
 	modelData_.material.textureIndex =
 		TextureManager::GetInstance()->GetTextureIndexByFilePath(modelData_.material.textureFilePath);
 
-	// マテリアルデータ作成
-	CreateMaterialData3d();
+	
 
 #ifdef _DEBUG
 
@@ -300,26 +299,6 @@ void Model::CreateVertexData3d()
 	std::memcpy(vertexData_, modelData_.vertices.data(), sizeof(VertexData) * modelData_.vertices.size());
 	std::memcpy(indexData_, modelData_.indices.data(), sizeof(uint32_t) * modelData_.indices.size());
 
-}
-
-void Model::CreateMaterialData3d()
-{
-	// マテリアルリソースを作る
-	materialResource_ = dxBasis_->CreateBufferResources(sizeof(Material) * modelData_.vertices.size());
-	// マテリアルにデータを書き込む
-	// 書き込むためのアドレスを取得
-	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
-	// 白色に設定
-	materialData_->color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	// Lighting設定
-	materialData_->enableLighting = true;
-	// UVTransform行列を単位行列で初期化
-	materialData_->uvTransform = MakeIdentity4x4();
-	// 光沢度
-	materialData_->shininess = 10.0f;
-	// 映り込み
-	materialData_->environmentCoefficient = 1.0f;
-	materialData_->useEnvironmentMap = false;
 }
 
 Model::Animation Model::LoadAnimationFile(const std::string& directoryPath, const std::string& filename)
@@ -699,8 +678,6 @@ void Model::Draw()
 
 	// IBVを設定
 	dxBasis_->GetCommandList()->IASetIndexBuffer(&indexBufferView_);
-	// マテリアルCBufferの場所を設定
-	dxBasis_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	// SRVのDescriptorTableの先頭を設定
 	dxBasis_->GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetSRVHandleGPU(modelData_.material.textureFilePath));
 	// 描画

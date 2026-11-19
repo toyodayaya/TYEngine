@@ -56,7 +56,7 @@ PixelShaderOutput main(VertexShaderOutput input)
     float specularPow = pow(saturate(NdotH), gMaterial.shininess);
     
     
-    if (textureColor.a <= 0.5)
+    if (textureColor.a <= 0.5 || gMaterial.color.a <= 0.0f)
     {
         discard;
     }

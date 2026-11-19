@@ -18,8 +18,7 @@ public:
 	void SetParticleName(std::string name) { particleName_ = name; }
 
 protected:
-	// 当たり判定用のAABB
-	AABB aabb_;
+	
 	// 移動速度
 	Vector3 velocity_;
 	// 生存時間

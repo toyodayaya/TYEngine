@@ -104,7 +104,7 @@ private:
 	// RasterizerStateの設定
 	D3D12_RASTERIZER_DESC rasterizerDesc{};
 	// ブレンドモード
-	BlendMode blendMode_ = kBlendModeNone;
+	BlendMode blendMode_ = kBlendModeNormal;
 
 	// デフォルトカメラ
 	Camera* defaultCamera_ = nullptr;

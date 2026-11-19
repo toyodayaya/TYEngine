@@ -62,6 +62,17 @@ struct ToyTexture
 	float ambientStrength;
 };
 
+struct  Material
+{
+	Vector4 color;
+	int32_t enableLighting;
+	float padding[3];
+	Matrix4x4 uvTransform;
+	float shininess;
+	float environmentCoefficient;
+	int32_t useEnvironmentMap;
+};
+
 class Object3d
 {
 public:
@@ -84,6 +95,8 @@ public:
 	void CreateCameraResource();
 	// おもちゃ風質感データ作成
 	void CreateToyTexture();
+	// マテリアルデータを作成
+	void CreateMaterialData3d();
 
 	// setter
 	void SetModel(const std::string& filePath);
@@ -96,6 +109,7 @@ public:
 	void SetParent(Object3d* parent) { this->parent = parent; }
 	void SetIsRailCamera(bool isRailCamera) { this->isRailCamera_ = isRailCamera; }
 	void SetWorldMatrix(const Matrix4x4& worldMatrix) { this->worldMatrix = worldMatrix; }
+	void SetAlpha(float alpha) { materialData_->color.w = alpha; }
 
 	// getter
 	const Vector3& GetScale() const { return transform.scale; }
@@ -144,6 +158,10 @@ private:
 	// おもちゃ風質感リソース
 	Microsoft::WRL::ComPtr <ID3D12Resource> toyTextureResource;
 	ToyTexture* toyTextureData = nullptr;
+
+	// マテリアルリソース
+	Microsoft::WRL::ComPtr <ID3D12Resource> materialResource_;
+	Material* materialData_ = nullptr;
 
 	EulerTransform cameraTransform;
 	QuaternionTransform transform;

@@ -357,6 +357,9 @@
     <ClCompile Include="application\player\ClearSequencePlayer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="application\event\NotifyApproachEvent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="resources\shaders\object3d\Object3d.PS.hlsl">
@@ -910,6 +913,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\player\ClearSequencePlayer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="application\event\NotifyApproachEvent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

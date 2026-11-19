@@ -158,6 +158,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\bullet\BaseBullet.cpp" />
     <ClCompile Include="application\bullet\Bullet.cpp" />
     <ClCompile Include="application\bullet\BulletManager.cpp" />
+    <ClCompile Include="application\event\NotifyApproachEvent.cpp" />
     <ClCompile Include="application\player\ClearSequencePlayer.cpp" />
     <ClCompile Include="application\player\ClearPlayer.cpp" />
     <ClCompile Include="application\player\ClearStartPlayer.cpp" />
@@ -406,6 +407,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\bullet\BaseBullet.h" />
     <ClInclude Include="application\bullet\Bullet.h" />
     <ClInclude Include="application\bullet\BulletManager.h" />
+    <ClInclude Include="application\event\NotifyApproachEvent.h" />
     <ClInclude Include="application\player\ClearSequencePlayer.h" />
     <ClInclude Include="application\player\ClearPlayer.h" />
     <ClInclude Include="application\player\ClearStartPlayer.h" />

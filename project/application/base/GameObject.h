@@ -13,7 +13,10 @@ public:
 	bool IsDead() { return isDead_; }
 	bool IsHit() { return isHit_; }
 	Vector3 GetWorldTranslate() { return { worldMatrix.m[3][0], worldMatrix.m[3][1], worldMatrix.m[3][2]}; }
+	AABB GetAABB() { return aabb_; }
 	
+	// setter
+	void SetAABB(const AABB& aabb) { aabb_ = aabb; }
 
 	// 更新
 	virtual void Update() = 0;
@@ -38,6 +41,8 @@ protected:
 	float hitTimer_ = 0.0f;
 	// ワールド行列
 	Matrix4x4 worldMatrix;
+	// 当たり判定用のAABB
+	AABB aabb_;
 
 };
 

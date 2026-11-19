@@ -37,6 +37,9 @@ void Object3d::Initialize()
 	// おもちゃ風質感データ作成
 	CreateToyTexture();
 
+	// マテリアルデータ作成
+	CreateMaterialData3d();
+
 	// Transform変数を作る
 	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
@@ -133,6 +136,27 @@ void Object3d::CreateToyTexture()
 	toyTextureData->contrast = 1.15f;
 }
 
+void Object3d::CreateMaterialData3d()
+{
+	// マテリアルリソースを作る
+	materialResource_ = dxBasis_->CreateBufferResources(sizeof(Material));
+	// マテリアルにデータを書き込む
+	// 書き込むためのアドレスを取得
+	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
+	// 白色に設定
+	materialData_->color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	// Lighting設定
+	materialData_->enableLighting = true;
+	// UVTransform行列を単位行列で初期化
+	materialData_->uvTransform = MakeIdentity4x4();
+	// 光沢度
+	materialData_->shininess = 10.0f;
+	// 映り込み
+	materialData_->environmentCoefficient = 1.0f;
+	materialData_->useEnvironmentMap = false;
+}
+
+
 void Object3d::SetModel(const std::string& filePath)
 {
 	// モデルを検索してセットする
@@ -200,6 +224,8 @@ void Object3d::Draw()
 	// 3dモデルの描画準備
 	Object3dCommon::GetInstance()->DrawSettingCommon();
 
+	// マテリアルCBufferの場所を設定
+	dxBasis_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 	// wvp用のCBufferの場所を設定
 	dxBasis_->GetCommandList()->SetGraphicsRootConstantBufferView(1, transformationResource->GetGPUVirtualAddress());
 

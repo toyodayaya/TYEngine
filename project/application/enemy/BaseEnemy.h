@@ -22,19 +22,22 @@ public:
 	void SetEnemyStateFactory(std::unique_ptr<AbstractEnemyStateFactory> enemyStateFactory) { enemyStateFactory_ = std::move(enemyStateFactory); }
 	// getter
 	Object3d* GetObject3d() { return object3d_.get(); }
+	bool GetIsApproach() { return isPlayerApproach_; }
 	// setter
 	void SetIsDead(bool isDead) { isDead_ = isDead; }
+	void SetIsApproach(bool isApproach) { isPlayerApproach_ = isApproach; }
 
 
 protected:
-	// 当たり判定用のAABB
-	AABB aabb_;
+	
 	// HP
 	int hp_ = 10;
 	// ヒットタイマー
 	int hitTimer_ = 3;
 	// ヒットフラグ
 	bool isHit_ = false;
+	// プレイヤー接近フラグ
+	bool isPlayerApproach_ = false;
 
 	// 3dオブジェクト
 	std::unique_ptr<Object3d> object3d_;
