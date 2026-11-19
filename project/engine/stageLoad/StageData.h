@@ -4,6 +4,7 @@
 #include "Object3d.h"
 #include "PlayerStateFactory.h"
 #include "Enemy.h"
+#include "StandByEnemy.h"
 #include "EnemyStateFactory.h"
 #include "Bullet.h"
 #include "ChangePostEffectEvent.h"
@@ -57,6 +58,7 @@ public:
 	{
 		QuaternionTransform transform;
 		std::string filePath;
+		std::string stateName;
 		ColliderSpawnData collider;
 	};
 

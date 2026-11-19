@@ -23,9 +23,12 @@ public:
 	// getter
 	Object3d* GetObject3d() { return object3d_.get(); }
 	bool GetIsApproach() { return isPlayerApproach_; }
+	std::string GetNextStateName() { return nextStateName_; }
 	// setter
 	void SetIsDead(bool isDead) { isDead_ = isDead; }
 	void SetIsApproach(bool isApproach) { isPlayerApproach_ = isApproach; }
+	void SetNextStateName(const std::string& stateName) { nextStateName_ = stateName; }
+
 
 
 protected:
@@ -52,6 +55,8 @@ protected:
 
 	// 敵の状態
 	std::unique_ptr<BaseEnemyState> state_;
+	// 次のステート名
+	std::string nextStateName_;
 
 
 #ifdef _DEBUG

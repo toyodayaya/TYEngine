@@ -499,6 +499,12 @@ StageData::EnemySpawnData StageData::LoadEnemy(nlohmann::json& enemy)
 		enemySpawnData.filePath = enemy["file_name"].get<std::string>();
 	}
 
+	if (enemy.contains("player_state"))
+	{
+		// ファイル名を登録
+		enemySpawnData.stateName = enemy["player_state"].get<std::string>();
+	}
+
 	// トランスフォームのパラメータ読み込み
 	nlohmann::json& transform = enemy["transform"];
 	// 平行移動データを格納
@@ -539,8 +545,11 @@ void StageData::CreateEnemy(const EnemySpawnData& enemyData)
 	// 敵ステートファクトリーの生成とセット
 	enemyStateFactory = std::make_unique <EnemyStateFactory>();
 	enemy->SetEnemyStateFactory(std::move(enemyStateFactory));
-	// 敵に最初のプレイヤーステートをセット
-	enemy->ChangeEnemyState("NormalEnemy");
+	// 敵に最初のステートをセット
+	enemy->ChangeEnemyState("StandByEnemy");
+	// 次のステートを記録
+	enemy->SetNextStateName(enemyData.stateName);
+	
 
 	// コライダーがあれば生成、配置
 	if (enemyData.collider.hasCollier)

@@ -141,6 +141,7 @@
                 ]
             },
             "file_name": "enemy.obj",
+            "player_state": "RushEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -177,6 +178,7 @@
                 ]
             },
             "file_name": "enemy.obj",
+            "player_state": "RushEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -213,6 +215,7 @@
                 ]
             },
             "file_name": "enemy.obj",
+            "player_state": "RushEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -249,6 +252,7 @@
                 ]
             },
             "file_name": "enemy.obj",
+            "player_state": "RushEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -285,6 +289,7 @@
                 ]
             },
             "file_name": "enemy.obj",
+            "player_state": "RushEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -321,6 +326,7 @@
                 ]
             },
             "file_name": "enemy.obj",
+            "player_state": "RushEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -357,6 +363,7 @@
                 ]
             },
             "file_name": "enemy.obj",
+            "player_state": "RushEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -393,6 +400,7 @@
                 ]
             },
             "file_name": "enemy.obj",
+            "player_state": "RushEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
