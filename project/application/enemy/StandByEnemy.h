@@ -1,6 +1,7 @@
 #pragma once
 #include "Object3d.h"
 #include "BaseEnemyState.h"
+#include "Enemy.h"
 #include "BaseEnemy.h"
 #include "ParticleEmitter.h"
 #include "ParticleManager.h"

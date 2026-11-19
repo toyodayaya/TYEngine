@@ -1,9 +1,8 @@
 #pragma once
 #include "Object3d.h"
 #include "BaseEnemyState.h"
+#include "Enemy.h"
 #include "BaseEnemy.h"
-#include "ParticleEmitter.h"
-#include "ParticleManager.h"
 
 class RushEnemy : public BaseEnemyState
 {
@@ -28,28 +27,15 @@ public:
 
 private:
 	// 敵のポインタ
-	BaseEnemy* enemy_ = nullptr;
+	Enemy* enemy_ = nullptr;
 	// ワールドトランスフォーム
 	QuaternionTransform transform_;
 	// ワールド行列
 	Matrix4x4 worldMatrix;
 
-	// 当たり判定フラグ
-	bool isHit_ = false;
-	// 死亡フラグ
-	bool isDead_ = false;
-	// ヒットタイマー
-	int hitTimer_ = 60;
-	
-	// HP
-	int hp_ = 2;
-
 	// 3dオブジェクト
 	Object3d* object3d_;
 
-	// パーティクルエミッターのポインタ
-	std::unique_ptr <ParticleEmitter> emitter;
-	// エミッター初期値
-	ParticleManager::EmitterSphere emitterSphere;
+	
 
 };

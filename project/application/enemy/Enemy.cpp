@@ -1,5 +1,5 @@
 #include "Enemy.h"
-#include "Object3dCommon.h"
+#include "PlayerManager.h"
 #ifdef _DEBUG
 #include "DebugDraw.h"
 #include "DebugDrawCommon.h"
@@ -51,13 +51,7 @@ void Enemy::Update()
 	// 敵を更新する
 	if (isHit_)
 	{
-		hitTimer_--;
-
-		if (hitTimer_ <= 0)
-		{
-			isHit_ = false;
-		}
-
+		HitTimerUpdate();
 	}
 
 	// ステートを更新する
@@ -83,4 +77,77 @@ void Enemy::OnCollision(std::string hitObjectType)
 {
 	// 衝突応答
 	state_->OnCollision(hitObjectType);
+}
+
+void Enemy::Damage()
+{
+	// HPを減らす
+	hp_--;
+
+	// ヒットフラグを立てる
+	isHit_ = true;
+
+	// HPが0になったら
+	if (hp_ <= 0)
+	{
+		// ビームポイントを加算
+		PlayerManager::GetInstance()->SetBeamPoint(5);
+
+		// パーティクル初期値を初期化
+		emitterSphere.velocity = { 0.0f,0.0f,0.0f };
+		emitterSphere.type = ParticleManager::MoveType::kNone;
+		emitterSphere.scale = { 2.0f,2.0f,2.0f };
+		emitterSphere.lifeTime = 2.0f;
+		emitterSphere.frequency = 0.0f;
+		emitterSphere.frequencyTime = 0.0f;
+		emitterSphere.currentTime = 0;
+		emitterSphere.count = 1;
+		emitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
+		emitterSphere.translate = object3d_->GetWorldTranslate();
+		emitterSphere.id = 0;
+		emitter = std::make_unique <ParticleEmitter>("DeadEnemy", emitterSphere);
+
+		// パーティクル発射
+		emitter->Update();
+
+		// ビームポイントパーティクルに発生を通知
+		PlayerManager::GetInstance()->SetParticlePoint(object3d_->GetWorldTranslate());
+
+		// 本体に死亡を通知
+		isDead_ = true;
+	}
+}
+
+void Enemy::HitTimerUpdate()
+{
+	// ヒットタイマーが0になったら
+	if (hitTimer_ <= 0)
+	{
+		// フラグを元に戻す
+		isHit_ = false;
+		hitTimer_ = 60;
+	}
+	else
+	{
+		// ヒットタイマーを減らす
+		hitTimer_--;
+	}
+}
+
+void Enemy::DamageEffectDraw()
+{
+	// ヒットフラグが立っていたら
+	if (isHit_)
+	{
+		// 点滅させる
+		if (hitTimer_ % 2 == 0.0f)
+		{
+			object3d_->Draw();
+		}
+	}
+	else
+	{
+		// オブジェクトを描画する
+		object3d_->Draw();
+	}
 }

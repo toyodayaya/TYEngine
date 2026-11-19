@@ -1,5 +1,8 @@
 #pragma once
 #include "BaseEnemy.h"
+#include "ParticleEmitter.h"
+#include "ParticleManager.h"
+
 class Enemy : public BaseEnemy
 {
 public:
@@ -14,10 +17,27 @@ public:
 	// 衝突応答
 	void OnCollision(std::string hitObjectType) override;
 
+	// HP処理
+	void Damage();
+	// ヒットタイマー更新処理
+	void HitTimerUpdate();
+	// ダメージ演出
+	void DamageEffectDraw();
+
 	// getter
 	Vector3 GetTranslate() { return transform_.translate; }
 
 private:
 	
+	// ヒットタイマー
+	int hitTimer_ = 60;
+
+	// HP
+	int hp_ = 2;
+
+	// パーティクルエミッターのポインタ
+	std::unique_ptr <ParticleEmitter> emitter;
+	// エミッター初期値
+	ParticleManager::EmitterSphere emitterSphere;
 };
 
