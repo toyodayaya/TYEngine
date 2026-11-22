@@ -10,7 +10,7 @@ class BaseBullet : public GameObject
 {
 public:
 	// 初期化
-	virtual void Initialize(const QuaternionTransform& transform, const std::string& filePath,const Vector3& velocity, bool isRailCamera) = 0;
+	virtual void Initialize(const QuaternionTransform& transform, const std::string& filePath,const Vector3& velocity, bool isRailCamera, const std::string& objectType) = 0;
 	// getter
  	uint32_t GetID() const { return id_; }
 	// setter

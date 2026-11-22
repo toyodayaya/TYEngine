@@ -23,6 +23,8 @@ public:
 	void HitTimerUpdate();
 	// ダメージ演出
 	void DamageEffectDraw();
+	// 回転処理
+	void Rotate();
 
 	// getter
 	Vector3 GetTranslate() { return transform_.translate; }

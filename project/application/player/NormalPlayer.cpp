@@ -183,7 +183,7 @@ void NormalPlayer::OnCollision(std::string hitObjectType)
 	}
 
 	// 当たったオブジェクトのタイプで分岐
-	if (hitObjectType == "BulletSpawn")
+	if (hitObjectType == "PlayerBulletSpawn")
 	{
 		// 自弾だったらスキップ
 		return;
@@ -203,6 +203,10 @@ void NormalPlayer::OnCollision(std::string hitObjectType)
 
 		inGameUI_->SetHpSize(hp_);
 		player_->SetHP(hp_);
+	}
+	else if (hitObjectType == "EnemyBulletSpawn")
+	{
+
 	}
 
 
@@ -234,7 +238,7 @@ void NormalPlayer::CreateBullet()
 
 	// 生成と初期化
 	std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
-	bullet->Initialize(bulletTransform, filePath_, velocity, false);
+	bullet->Initialize(bulletTransform, filePath_, velocity, false,"PlayerBulletSpawn");
 	bullet->SetID(ParticleManager::GetInstance()->AllocateID());
 
 	// エフェクトを追加
@@ -282,7 +286,7 @@ void NormalPlayer::CreateBeam()
 
 	// 生成と初期化
 	std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
-	bullet->Initialize(bulletTransform, filePath_, velocity, false);
+	bullet->Initialize(bulletTransform, filePath_, velocity, false, "PlayerBulletSpawn");
 	bullet->SetID(ParticleManager::GetInstance()->AllocateID());
 
 	// エフェクトを追加

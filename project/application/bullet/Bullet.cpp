@@ -12,7 +12,7 @@
 
 #endif // _DEBUG
 
-void Bullet::Initialize(const QuaternionTransform& transform, const std::string& filePath, const Vector3& velocity, bool isRailCamera)
+void Bullet::Initialize(const QuaternionTransform& transform, const std::string& filePath, const Vector3& velocity, bool isRailCamera, const std::string& objectType)
 {
 	// 3Dオブジェクトを初期化
 	object3d_ = std::make_unique<Object3d>();
@@ -39,7 +39,7 @@ void Bullet::Initialize(const QuaternionTransform& transform, const std::string&
 	colliders.center = Vector3{ 0.0f,0.0f,0.0f };
 	colliders.size = transform.scale;
 	colliders.parent = this;
-	colliders.objectType = "BulletSpawn";
+	colliders.objectType = objectType;
 	CollisionManager::GetInstance()->SetColliders(colliders);
 
 	isDead_ = false;

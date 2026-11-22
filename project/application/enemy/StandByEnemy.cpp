@@ -57,6 +57,7 @@ void StandByEnemy::AddAlphaValue()
 	{
 		// 指定された状態に移行
 		enemy_->ChangeEnemyState(enemy_->GetNextStateName());
+		object3d_->SetAlpha(1.0f);
 	}
 	else
 	{

@@ -54,6 +54,7 @@ public:
 	// getter
 	const std::unique_ptr<Player>& GetPlayer()  { return player_; }
 	const std::string& GetPlayerState() { return playerStateName_; }
+	Vector3 GetPlayerTranslate() { return player_->GetWorldTranslate(); }
 	// setter
 	void SetBeamPoint(int point);
 	void SetParticlePoint(const Vector3& pos);

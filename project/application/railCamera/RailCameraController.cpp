@@ -111,8 +111,8 @@ void RailCameraController::AutoMove()
 	Vector3 forward = Vector3Subtract(target, pos);
 	forward = Normalize(forward);
 	// Y軸周り角度
-	float yaw = std::atan2(forward.x, forward.z);
-	transform_.rotate.y = yaw;
+	transform_.rotate.y = std::atan2(forward.x, forward.z);
+	float yaw = transform_.rotate.y * -1.0f;
 	// Y軸周りの回転行列
 	Matrix4x4 rotate = MakeRotateYMatrix(yaw);
 	Vector3 velocityZ = TransformNormal(forward, rotate);

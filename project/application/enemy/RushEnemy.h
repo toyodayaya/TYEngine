@@ -19,13 +19,25 @@ public:
 	// 衝突応答
 	void OnCollision(std::string hitObjectType) override;
 
-	// ヒットタイマー更新処理
-	void HitTimerUpdate();
+	// 待機状態の更新処理
+	void Wait();
+	// 突進時の更新処理
+	void Rush();
 	
 	// getter
 	Vector3 GetWorldTranslate() { return { worldMatrix.m[3][0], worldMatrix.m[3][1], worldMatrix.m[3][2] }; }
 
 private:
+	// 敵の状態フェーズ
+	enum Phase
+	{
+		kWait,
+		kRush
+	};
+
+	// 初期状態
+	Phase phase_ = kWait;
+
 	// 敵のポインタ
 	Enemy* enemy_ = nullptr;
 	// ワールドトランスフォーム
@@ -36,6 +48,10 @@ private:
 	// 3dオブジェクト
 	Object3d* object3d_;
 
-	
+	// 待機時間
+	float waitTime_ = 0.8f;
 
+	// 移動速度
+	Vector3 velocity_ = { 0.0f,0.0f,0.0f };
+	const float kRushSpeed_ = 0.5f;
 };

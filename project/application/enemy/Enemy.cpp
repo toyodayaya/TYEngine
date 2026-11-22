@@ -151,3 +151,22 @@ void Enemy::DamageEffectDraw()
 		object3d_->Draw();
 	}
 }
+
+void Enemy::Rotate()
+{
+	// プレイヤーの方に向く
+	Vector3 target = PlayerManager::GetInstance()->GetPlayerTranslate();
+	Vector3 forward = Vector3Subtract(target, transform_.translate);
+	forward = FloatMultiply(Normalize(forward), -1.0f);
+	// Y軸周り角度
+	transform_.rotate.y = std::atan2(forward.x, forward.z);
+	float yaw = transform_.rotate.y * -1.0f;
+	// Y軸周りの回転行列
+	Matrix4x4 rotate = MakeRotateYMatrix(yaw);
+	Vector3 velocityZ = TransformNormal(forward, rotate);
+	// X軸周り角度
+	transform_.rotate.x = std::atan2(-velocityZ.y, velocityZ.z);
+
+	// オブジェクトに反映
+	object3d_->SetTransform(transform_);
+}
