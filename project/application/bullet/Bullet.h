@@ -6,7 +6,7 @@ class Bullet : public BaseBullet
 {
 public:
 	// 初期化
-	void Initialize(const QuaternionTransform& transform, const std::string& filePath, const Vector3& velocity, bool isRailCamera, const std::string& objectType) override;
+	void Initialize(const QuaternionTransform& transform, const Vector3& velocity, bool isRailCamera, const std::string& objectType) override;
 	// 終了
 	void Finalize() override;
 	// 更新

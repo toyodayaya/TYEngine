@@ -38,7 +38,6 @@ void Enemy::Finalize()
 
 void Enemy::Update()
 {
-
 	// 敵ステート切り替え
 
 	// 次敵ステートの予約があったら

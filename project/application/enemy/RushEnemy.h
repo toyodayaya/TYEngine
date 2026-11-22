@@ -3,6 +3,7 @@
 #include "BaseEnemyState.h"
 #include "Enemy.h"
 #include "BaseEnemy.h"
+#include "ParticleEmitter.h"
 
 class RushEnemy : public BaseEnemyState
 {
@@ -54,4 +55,9 @@ private:
 	// 移動速度
 	Vector3 velocity_ = { 0.0f,0.0f,0.0f };
 	const float kRushSpeed_ = 0.5f;
+
+	// パーティクルエミッターのポインタ
+	std::unique_ptr <ParticleEmitter> traceEmitter;
+	// エミッター初期値
+	ParticleManager::EmitterSphere traceEmitterSphere;
 };

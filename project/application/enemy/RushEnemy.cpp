@@ -1,6 +1,7 @@
 #include "RushEnemy.h"
 #include "Enemy.h"
 #include "PlayerManager.h"
+#include "ParticleManager.h"
 #ifdef _DEBUG
 #include "DebugDraw.h"
 
@@ -16,6 +17,19 @@ void RushEnemy::Initialize(BaseEnemy* enemy)
 	transform_ = object3d_->GetTransform();
 	transform_.translate = object3d_->GetWorldTranslate();
 	transform_.rotate = { 0.0f,0.0f,0.0f,1.0f };
+
+	traceEmitterSphere.translate = GetWorldTranslate();
+	traceEmitterSphere.id = 0;
+	traceEmitterSphere.velocity = { 0.0f,0.0f,0.0f };
+	traceEmitterSphere.type = ParticleManager::MoveType::kNone;
+	traceEmitterSphere.scale = { 0.5f,0.5f,0.5f };
+	traceEmitterSphere.lifeTime = 1.0f;
+	traceEmitterSphere.frequency = 0.1f;
+	traceEmitterSphere.frequencyTime = 0.0f;
+	traceEmitterSphere.currentTime = 0;
+	traceEmitterSphere.count = 1;
+	traceEmitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
+	traceEmitter = std::make_unique <ParticleEmitter>("EnemyTrace", traceEmitterSphere);
 }
 
 void RushEnemy::Update()
@@ -102,4 +116,8 @@ void RushEnemy::Rush()
 	worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
 	// オブジェクトのワールド座標をセット
 	object3d_->SetWorldMatrix(worldMatrix);
+
+	// エミッターの更新
+	traceEmitter->SetTranslate(GetWorldTranslate());
+	traceEmitter->Update();
 }

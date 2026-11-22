@@ -1,5 +1,4 @@
 #pragma once
-#include "Object3d.h"
 #include "GameObject.h"
 #ifdef _DEBUG
 #include "DebugDraw.h"
@@ -10,7 +9,7 @@ class BaseBullet : public GameObject
 {
 public:
 	// 初期化
-	virtual void Initialize(const QuaternionTransform& transform, const std::string& filePath,const Vector3& velocity, bool isRailCamera, const std::string& objectType) = 0;
+	virtual void Initialize(const QuaternionTransform& transform, const Vector3& velocity, bool isRailCamera, const std::string& objectType) = 0;
 	// getter
  	uint32_t GetID() const { return id_; }
 	// setter
@@ -28,9 +27,8 @@ protected:
 	uint32_t id_;
 	// パーティクルグループの名前
 	std::string particleName_;
-
-	// 3dオブジェクト
-	std::unique_ptr<Object3d> object3d_;
+	// オブジェクトタイプ
+	std::string objectName_;
 	
 #ifdef _DEBUG
 	std::unique_ptr<DebugDraw> debugDraw;

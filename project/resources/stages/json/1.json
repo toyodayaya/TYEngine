@@ -163,7 +163,7 @@
                 "translation": [
                     9.204760551452637,
                     25.719867706298828,
-                    3.774446487426758
+                    4.020112037658691
                 ],
                 "rotation": [
                     0.0,
@@ -178,7 +178,7 @@
                 ]
             },
             "file_name": "enemy.obj",
-            "player_state": "RushEnemy",
+            "player_state": "SnipeEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -237,7 +237,7 @@
                 "translation": [
                     -6.546740531921387,
                     30.81985092163086,
-                    7.207234859466553
+                    4.136562347412109
                 ],
                 "rotation": [
                     0.0,
@@ -252,7 +252,7 @@
                 ]
             },
             "file_name": "enemy.obj",
-            "player_state": "RushEnemy",
+            "player_state": "SnipeEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -907,7 +907,7 @@
                 "size": [
                     18.170000076293945,
                     17.209999084472656,
-                    3.3299999237060547
+                    5.840000152587891
                 ]
             }
         }

@@ -12,20 +12,14 @@
 
 #endif // _DEBUG
 
-void Bullet::Initialize(const QuaternionTransform& transform, const std::string& filePath, const Vector3& velocity, bool isRailCamera, const std::string& objectType)
+void Bullet::Initialize(const QuaternionTransform& transform, const Vector3& velocity, bool isRailCamera, const std::string& objectType)
 {
-	// 3Dオブジェクトを初期化
-	object3d_ = std::make_unique<Object3d>();
-	object3d_->Initialize();
-	object3d_->SetModel(filePath);
-	object3d_->SetEnvironmentMapTextureFilePath("resources/human/white.png");
-	object3d_->SetTransform(transform);
 	velocity_ = velocity;
 	transform_ = transform;
 	worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
 
 #ifdef _DEBUG
-// デバッグ描画用の箱を初期化、生成
+	// デバッグ描画用の箱を初期化、生成
 	debugDraw = std::make_unique<DebugDraw>();
 	debugDraw->Initialize(DebugDrawCommon::GetInstance(), "resources/human/white.png", DebugDraw::DrawState::kBox);
 	debugDraw->SetBoxScale(transform.scale);
@@ -40,6 +34,7 @@ void Bullet::Initialize(const QuaternionTransform& transform, const std::string&
 	colliders.size = transform.scale;
 	colliders.parent = this;
 	colliders.objectType = objectType;
+	objectName_ = objectType;
 	CollisionManager::GetInstance()->SetColliders(colliders);
 
 	isDead_ = false;
@@ -61,18 +56,13 @@ void Bullet::Update()
 		isDead_ = true;
 
 		// 対応するエフェクトに死亡を通知
-		ParticleManager::GetInstance()->SetBulletIsAlive(false, id_,particleName_);
+		ParticleManager::GetInstance()->SetBulletIsAlive(false, id_, particleName_);
 	}
 
 	// 座標を更新
 	transform_.translate = Vector3Add(transform_.translate, velocity_);
-	object3d_->SetTranslate(transform_.translate);
 	// 弾のローカル行列を作成
 	worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
-	// 弾のワールド座標をセット
-	object3d_->SetWorldMatrix(worldMatrix);
-	// オブジェクトを更新
-	object3d_->Update();
 
 	// 対応するエフェクトに座標を送信
 	ParticleManager::GetInstance()->SetBulletTranslate(transform_.translate, id_, particleName_);
@@ -94,9 +84,8 @@ void Bullet::Update()
 
 void Bullet::Draw()
 {
-	//object3d_->Draw();
 #ifdef _DEBUG
-	//debugDraw->DrawBox();
+	debugDraw->DrawBox();
 
 #endif // _DEBUG
 
@@ -105,21 +94,32 @@ void Bullet::Draw()
 
 void Bullet::OnCollision(std::string hitObjectType)
 {
-	// 当たったオブジェクトのタイプで分岐
-	if (hitObjectType == "PlayerSpawn")
+	if (objectName_ == "PlayerBulletSpawn")
 	{
-		// プレイヤーだったらスキップ
-		return;
-	}
-	else if (hitObjectType == "EnemySpawn")
-	{
-		// 敵だったらスコアを加算
-		ScoreManager::GetInstance()->AddScore(10);
-		ScoreManager::GetInstance()->SetNumber();
-		// 弾の死亡フラグを立てる
-		isDead_ = true;
-		// 対応するエフェクトに死亡を通知
-		ParticleManager::GetInstance()->SetBulletIsAlive(false, id_, particleName_);
+		// 当たったオブジェクトのタイプで分岐
+		if (hitObjectType == "EnemySpawn")
+		{
+			// 敵だったらスコアを加算
+			ScoreManager::GetInstance()->AddScore(10);
+			ScoreManager::GetInstance()->SetNumber();
+			// 弾の死亡フラグを立てる
+			isDead_ = true;
+			// 対応するエフェクトに死亡を通知
+			ParticleManager::GetInstance()->SetBulletIsAlive(false, id_, particleName_);
 
+		}
 	}
+	else if (objectName_ == "EnemyBulletSpawn")
+	{
+		// 当たったオブジェクトのタイプで分岐
+		if (hitObjectType == "PlayerSpawn")
+		{
+			// 弾の死亡フラグを立てる
+			isDead_ = true;
+			// 対応するエフェクトに死亡を通知
+			ParticleManager::GetInstance()->SetBulletIsAlive(false, id_, particleName_);
+		}
+	}
+
+
 }

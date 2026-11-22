@@ -2,6 +2,7 @@
 #include "NormalEnemy.h"
 #include "StandByEnemy.h"
 #include "RushEnemy.h"
+#include "SnipeEnemy.h"
 
 std::unique_ptr<BaseEnemyState> EnemyStateFactory::CreateEnemyState(const std::string& enemyState)
 {
@@ -19,6 +20,10 @@ std::unique_ptr<BaseEnemyState> EnemyStateFactory::CreateEnemyState(const std::s
 	else if (enemyState == "RushEnemy")
 	{
 		nextEnemyState = std::make_unique<RushEnemy>();
+	}
+	else if (enemyState == "SnipeEnemy")
+	{
+		nextEnemyState = std::make_unique<SnipeEnemy>();
 	}
 
 

@@ -76,7 +76,6 @@ private:
 	// 弾の発射間隔タイマー
 	int bulletIntervalTimer_ = 10;
 	// ファイル名
-	std::string filePath_ = "cube.obj";
 	std::string spriteFilePath_ = "resources/sprite/circle.png";
 	// 弾の速度
 	const float kBulletSpeed_ = 1.0f;
