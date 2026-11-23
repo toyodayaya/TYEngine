@@ -25,6 +25,9 @@ public:
 	// アルファ値加算処理
 	void AddAlphaValue();
 
+	// パーティクル発生処理
+	void EmitParticle();
+
 	// getter
 	Vector3 GetWorldTranslate() { return { worldMatrix.m[3][0], worldMatrix.m[3][1], worldMatrix.m[3][2] }; }
 	
@@ -47,5 +50,10 @@ private:
 	std::unique_ptr <ParticleEmitter> emitter;
 	// エミッター初期値
 	ParticleManager::EmitterSphere emitterSphere;
+	// パーティクルid
+	uint32_t particleId_;
+	std::string emitterName;
+	// パーティクル発生フラグ
+	bool isEmit_ = false;
 
 };

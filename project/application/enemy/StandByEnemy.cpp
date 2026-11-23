@@ -18,6 +18,9 @@ void StandByEnemy::Initialize(BaseEnemy* enemy)
 
 	// オブジェクトの不透明度をセット
 	object3d_->SetAlpha(0.0f);
+
+	
+
 }
 
 void StandByEnemy::Update()
@@ -25,6 +28,11 @@ void StandByEnemy::Update()
 	// 接近フラグが立ったら
 	if (enemy_->GetIsApproach())
 	{
+		if (!isEmit_)
+		{
+			// エフェクトを発生させる
+			EmitParticle();
+		}
 		// 不透明度を変更
 		AddAlphaValue();
 	}
@@ -64,5 +72,27 @@ void StandByEnemy::AddAlphaValue()
 		// アルファ値を加算
 		object3d_->SetAlpha(alphaTimer_);
 	}
+}
+
+void StandByEnemy::EmitParticle()
+{
+	// パーティクル初期値を初期化
+	emitterSphere.translate = object3d_->GetWorldTranslate();
+	emitterSphere.velocity = { 0.0f,0.0f,0.0f };
+	emitterSphere.type = ParticleManager::MoveType::kNone;
+	emitterSphere.scale = Vector3{ 2.0f,2.0f,2.0f };
+	emitterSphere.lifeTime = 1.0f;
+	emitterSphere.frequency = 0.0f;
+	emitterSphere.frequencyTime = 0.0f;
+	emitterSphere.currentTime = 0;
+	emitterSphere.count = 1;
+	emitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
+	emitterSphere.radius = 1.0f;
+	particleId_ = ParticleManager::GetInstance()->AllocateID();
+	emitterName = "StandByEnemy_" + std::to_string(particleId_);
+	ParticleManager::GetInstance()->CreateParticleGroup(emitterName, "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
+	emitter = std::make_unique <ParticleEmitter>(emitterName, emitterSphere);
+	emitter->Update();
+	isEmit_ = true;
 }
 
