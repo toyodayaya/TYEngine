@@ -363,7 +363,7 @@
                 ]
             },
             "file_name": "enemy.obj",
-            "player_state": "ExplosionEnemy",
+            "player_state": "GasEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [

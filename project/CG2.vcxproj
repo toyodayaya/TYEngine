@@ -159,6 +159,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="application\bullet\BaseBullet.cpp" />
     <ClCompile Include="application\bullet\Bullet.cpp" />
     <ClCompile Include="application\bullet\BulletManager.cpp" />
+    <ClCompile Include="application\enemy\GasEnemy.cpp" />
+    <ClCompile Include="application\enemy\Gas.cpp" />
     <ClCompile Include="application\enemy\ExplosionEnemy.cpp" />
     <ClCompile Include="application\enemy\SnipeEnemy.cpp" />
     <ClCompile Include="application\enemy\RushEnemy.cpp" />
@@ -413,6 +415,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="application\bullet\BaseBullet.h" />
     <ClInclude Include="application\bullet\Bullet.h" />
     <ClInclude Include="application\bullet\BulletManager.h" />
+    <ClInclude Include="application\enemy\GasEnemy.h" />
+    <ClInclude Include="application\enemy\Gas.h" />
     <ClInclude Include="application\enemy\ExplosionEnemy.h" />
     <ClInclude Include="application\enemy\SnipeEnemy.h" />
     <ClInclude Include="application\enemy\RushEnemy.h" />
