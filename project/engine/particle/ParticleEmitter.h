@@ -36,4 +36,5 @@ public:
 
 	// setter
 	void SetTranslate(const Vector3& pos) { emitter.translate = pos; }
+	void SetEmitterSphere(const ParticleManager::EmitterSphere& emitters) { emitter = emitters; }
 };

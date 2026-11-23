@@ -34,8 +34,6 @@ void GamePlayScene::Initialize()
 	ParticleManager::GetInstance()->CreateParticleGroup("Flash", "resources/sprite/particle/flash.png", ParticleManager::ShapeType::kNormal);
 	ParticleManager::GetInstance()->CreateParticleGroup("DeadEnemy", "resources/sprite/particle/deadEnemy.png", ParticleManager::ShapeType::kNormal);
 	ParticleManager::GetInstance()->CreateParticleGroup("BeamPoint", "resources/sprite/particle/beamPoint.png", ParticleManager::ShapeType::kNormal);
-	ParticleManager::GetInstance()->CreateParticleGroup("EnemyBullet", "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
-	ParticleManager::GetInstance()->CreateParticleGroup("EnemyTrace", "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
 
 	// スコアをリセット
 	ScoreManager::GetInstance()->ResetScore();

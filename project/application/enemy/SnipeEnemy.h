@@ -49,4 +49,8 @@ private:
 	std::unique_ptr <ParticleEmitter> emitter;
 	// エミッター初期値
 	ParticleManager::EmitterSphere emitterSphere;
+
+	// パーティクルid
+	uint32_t particleId_;
+	std::string emitterName;
 };

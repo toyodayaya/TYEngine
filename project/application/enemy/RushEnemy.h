@@ -60,4 +60,7 @@ private:
 	std::unique_ptr <ParticleEmitter> traceEmitter;
 	// エミッター初期値
 	ParticleManager::EmitterSphere traceEmitterSphere;
+
+	// パーティクルid
+	uint32_t particleId_;
 };

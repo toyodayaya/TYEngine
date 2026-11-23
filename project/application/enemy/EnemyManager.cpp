@@ -56,3 +56,15 @@ void EnemyManager::Finalize()
 	// インスタンスを解放
 	instance.reset();
 }
+
+uint32_t EnemyManager::AllocateID()
+{
+	particleId_++;
+
+	if (particleId_ > kMaxId)
+	{
+		particleId_ = 0;
+	}
+
+	return particleId_;
+}

@@ -60,6 +60,8 @@ void NormalPlayer::Initialize(Player* player)
 	emitterSphere.currentTime = 0;
 	emitterSphere.count = 1;
 	emitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
+	emitter = std::make_unique <ParticleEmitter>("Bullet", emitterSphere);
+	beamEmitter = std::make_unique <ParticleEmitter>("Beam", emitterSphere);
 
 	traceEmitterSphere.translate = GetWorldTranslate();
 	traceEmitterSphere.id = 0;
@@ -96,6 +98,7 @@ void NormalPlayer::Initialize(Player* player)
 	pointEmitterSphere.currentTime = 0;
 	pointEmitterSphere.count = 8;
 	pointEmitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
+	pointEmitter = std::make_unique <ParticleEmitter>("BeamPoint", pointEmitterSphere);
 }
 
 void NormalPlayer::Update()
@@ -245,7 +248,7 @@ void NormalPlayer::CreateBullet()
 	emitterSphere.translate = bulletTransform.translate;
 	emitterSphere.scale = { 1.0f,1.0f,1.0f };
 	emitterSphere.id = bullet->GetID();
-	emitter = std::make_unique <ParticleEmitter>("Bullet", emitterSphere);
+	emitter->SetEmitterSphere(emitterSphere);
 	// エフェクトを発生させる
 	emitter->Update();
 	// 対応するエフェクトに生存フラグを通知
@@ -293,9 +296,9 @@ void NormalPlayer::CreateBeam()
 	emitterSphere.translate = bulletTransform.translate;
 	emitterSphere.scale = { 1.5f,1.5f,1.5f };
 	emitterSphere.id = bullet->GetID();
-	emitter = std::make_unique <ParticleEmitter>("Beam", emitterSphere);
+	beamEmitter->SetEmitterSphere(emitterSphere);
 	// エフェクトを発生させる
-	emitter->Update();
+	beamEmitter->Update();
 	// 対応するエフェクトに生存フラグを通知
 	ParticleManager::GetInstance()->SetBulletIsAlive(true, bullet->GetID(), "Beam");
 	// パーティクルグループの名前を記録
@@ -577,7 +580,7 @@ void NormalPlayer::EmitPointParticle(const Vector3& pos)
 	pointEmitterSphere.translate = pos;
 	id_ = ParticleManager::GetInstance()->AllocateID();
 	pointEmitterSphere.id = id_;
-	pointEmitter = std::make_unique <ParticleEmitter>("BeamPoint", pointEmitterSphere);
+	pointEmitter->SetEmitterSphere(pointEmitterSphere);
 	pointEmitter->Update();
 }
 

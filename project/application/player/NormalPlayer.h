@@ -142,6 +142,7 @@ private:
 
 	// パーティクルエミッターのポインタ
 	std::unique_ptr <ParticleEmitter> emitter;
+	std::unique_ptr <ParticleEmitter> beamEmitter;
 	std::unique_ptr <ParticleEmitter> traceEmitter;
 	std::unique_ptr <ParticleEmitter> flashEmitter;
 	std::unique_ptr <ParticleEmitter> pointEmitter;

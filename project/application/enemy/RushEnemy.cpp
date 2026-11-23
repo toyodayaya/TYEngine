@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "PlayerManager.h"
 #include "ParticleManager.h"
+#include "EnemyManager.h"
 #ifdef _DEBUG
 #include "DebugDraw.h"
 
@@ -29,7 +30,12 @@ void RushEnemy::Initialize(BaseEnemy* enemy)
 	traceEmitterSphere.currentTime = 0;
 	traceEmitterSphere.count = 1;
 	traceEmitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
-	traceEmitter = std::make_unique <ParticleEmitter>("EnemyTrace", traceEmitterSphere);
+
+	// グループ名登録用のIDを取得
+	particleId_ = ParticleManager::GetInstance()->AllocateID();
+	std::string emitterName = "EnemyTrace_" + std::to_string(particleId_);
+	ParticleManager::GetInstance()->CreateParticleGroup(emitterName, "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
+	traceEmitter = std::make_unique <ParticleEmitter>(emitterName, traceEmitterSphere);
 }
 
 void RushEnemy::Update()

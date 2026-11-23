@@ -29,6 +29,10 @@ void SnipeEnemy::Initialize(BaseEnemy* enemy)
 	emitterSphere.currentTime = 0;
 	emitterSphere.count = 1;
 	emitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
+	particleId_ = ParticleManager::GetInstance()->AllocateID();
+	emitterName = "EnemyBullet_" + std::to_string(particleId_);
+	ParticleManager::GetInstance()->CreateParticleGroup(emitterName, "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
+	emitter = std::make_unique <ParticleEmitter>(emitterName, emitterSphere);
 }
 
 void SnipeEnemy::Update()
@@ -94,13 +98,13 @@ void SnipeEnemy::CreateBullet()
 	emitterSphere.translate = transform_.translate;
 	emitterSphere.scale = { 1.0f,1.0f,1.0f };
 	emitterSphere.id = bullet->GetID();
-	emitter = std::make_unique <ParticleEmitter>("EnemyBullet", emitterSphere);
+	emitter->SetEmitterSphere(emitterSphere);
 	// エフェクトを発生させる
 	emitter->Update();
 	// 対応するエフェクトに生存フラグを通知
-	ParticleManager::GetInstance()->SetBulletIsAlive(true, bullet->GetID(), "EnemyBullet");
+	ParticleManager::GetInstance()->SetBulletIsAlive(true, bullet->GetID(), emitterName);
 	// パーティクルグループの名前を記録
-	bullet->SetParticleName("EnemyBullet");
+	bullet->SetParticleName(emitterName);
 
 	// BulletManagerに追加
 	BulletManager::GetInstance()->SetBullets(std::move(bullet));
