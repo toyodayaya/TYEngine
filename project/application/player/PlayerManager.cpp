@@ -35,6 +35,13 @@ void PlayerManager::SetParticlePoint(const Vector3& pos)
 	}
 }
 
+void PlayerManager::SetPlayerHP(int damage)
+{
+	int HP = player_->GetHP();
+	HP -= damage;
+	player_->SetHP(HP);
+}
+
 void PlayerManager::Initialize(const QuaternionTransform& transform, const std::string filePath, Camera* camera)
 {
 	// プレイヤーの初期化

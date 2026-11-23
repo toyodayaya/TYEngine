@@ -16,6 +16,7 @@ struct EmitterSphere
     float32_t frequencyTime;
     uint32_t type;
     uint32_t id;
+    float32_t radius;
 };
 
 struct Particle
@@ -124,7 +125,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
                     gParticle[particleIndex].color.a = 1.0f;
                     gParticle[particleIndex].lifeTime = generator.Generate1d();
                     gParticle[particleIndex].currentTime = 0;
-                    gParticle[particleIndex].velocity = generator.Generate3d();
+                    gParticle[particleIndex].velocity = generator.Generate3d() * gEmitter.radius;
                     gParticle[particleIndex].type = gEmitter.type;
                 
                     break;

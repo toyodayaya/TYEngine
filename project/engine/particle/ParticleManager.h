@@ -105,6 +105,7 @@ public:
 		float frequencyTime;
 		MoveType type;
 		uint32_t id;
+		float radius;
 	};
 
 

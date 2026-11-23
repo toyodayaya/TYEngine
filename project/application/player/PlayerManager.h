@@ -58,6 +58,8 @@ public:
 	// setter
 	void SetBeamPoint(int point);
 	void SetParticlePoint(const Vector3& pos);
+	void SetPlayerHP(int damage);
+	void SetIsHit(bool isHit) { player_->SetIsHit(isHit); }
 
 private:
 	// プレイヤーの本体ポインタ

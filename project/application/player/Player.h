@@ -36,6 +36,7 @@ public:
 	void SetCamera(Camera* camera) { this->camera_ = camera; }
 	void SetWorldMatrix(const Matrix4x4& matrix) { worldMatrix = matrix; }
 	void SetHP(int hp) { hp_ = hp; }
+	void SetIsHit(bool isHit) { isHit_ = isHit; }
 
 	// getter
 	Object3d* GetObject3d() { return object3d_.get(); }
@@ -46,7 +47,6 @@ public:
 	LockOn* GetLockOn() { return lockOn_.get(); }
 	const int GetMaxHP() const { return kMaxHp; }
 	int GetHP() { return hp_; }
-	//ParticleEmitter* GetEmitter() { return emitter.get(); }
 
 private:
 

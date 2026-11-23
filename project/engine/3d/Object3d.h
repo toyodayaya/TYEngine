@@ -110,6 +110,7 @@ public:
 	void SetIsRailCamera(bool isRailCamera) { this->isRailCamera_ = isRailCamera; }
 	void SetWorldMatrix(const Matrix4x4& worldMatrix) { this->worldMatrix = worldMatrix; }
 	void SetAlpha(float alpha) { materialData_->color.w = alpha; }
+	void SetColor(const Vector4& color) { materialData_->color = color; }
 
 	// getter
 	const Vector3& GetScale() const { return transform.scale; }

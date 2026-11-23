@@ -104,7 +104,7 @@ void NormalPlayer::Initialize(Player* player)
 void NormalPlayer::Update()
 {
 	// ヒットフラグが立っていたら
-	if (isHit_)
+	if (player_->IsHit())
 	{
 		// ヒットタイマーを更新する
 		HitTimerUpdate();
@@ -153,7 +153,7 @@ void NormalPlayer::Update()
 void NormalPlayer::Draw()
 {
 	// ヒットフラグが立っていたら
-	if (isHit_)
+	if (player_->IsHit())
 	{
 		// 点滅させる
 		if (hitTimer_ % 2 == 0.0f)
@@ -206,15 +206,14 @@ void NormalPlayer::OnCollision(std::string hitObjectType)
 
 		inGameUI_->SetHpSize(hp_);
 		player_->SetHP(hp_);
+		// ヒットフラグを立てる
+		isHit_ = true;
 	}
 	else if (hitObjectType == "EnemyBulletSpawn")
 	{
 
 	}
 
-
-	// ヒットフラグを立てる
-	isHit_ = true;
 
 }
 
@@ -564,7 +563,7 @@ void NormalPlayer::HitTimerUpdate()
 	if (hitTimer_ <= 0)
 	{
 		// フラグを元に戻す
-		isHit_ = false;
+		player_->SetIsHit(false);
 		hitTimer_ = 60;
 	}
 	else
