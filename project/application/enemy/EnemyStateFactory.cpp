@@ -5,6 +5,7 @@
 #include "SnipeEnemy.h"
 #include "ExplosionEnemy.h"
 #include "GasEnemy.h"
+#include "LaserEnemy.h"
 
 std::unique_ptr<BaseEnemyState> EnemyStateFactory::CreateEnemyState(const std::string& enemyState)
 {
@@ -34,6 +35,10 @@ std::unique_ptr<BaseEnemyState> EnemyStateFactory::CreateEnemyState(const std::s
 	else if (enemyState == "GasEnemy")
 	{
 		nextEnemyState = std::make_unique<GasEnemy>();
+	}
+	else if (enemyState == "LaserEnemy")
+	{
+		nextEnemyState = std::make_unique<LaserEnemy>();
 	}
 
 

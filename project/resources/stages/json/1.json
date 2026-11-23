@@ -346,7 +346,7 @@
             "name": "EnemySpawn.006",
             "transform": {
                 "translation": [
-                    1.5100727081298828,
+                    12.530683517456055,
                     26.22597885131836,
                     1.4544956684112549
                 ],
@@ -363,7 +363,7 @@
                 ]
             },
             "file_name": "enemy.obj",
-            "player_state": "GasEnemy",
+            "player_state": "LaserEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
