@@ -124,8 +124,8 @@
             "name": "EnemySpawn",
             "transform": {
                 "translation": [
-                    8.817103385925293,
-                    48.1755485534668,
+                    -5.067111015319824,
+                    41.63431167602539,
                     3.937185764312744
                 ],
                 "rotation": [
@@ -141,7 +141,7 @@
                 ]
             },
             "file_name": "enemy.obj",
-            "player_state": "RushEnemy",
+            "player_state": "ExplosionEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -161,9 +161,9 @@
             "name": "EnemySpawn.001",
             "transform": {
                 "translation": [
-                    9.204760551452637,
-                    53.92510986328125,
-                    4.7204060554504395
+                    7.146180629730225,
+                    53.82890319824219,
+                    2.0179901123046875
                 ],
                 "rotation": [
                     0.0,
@@ -178,7 +178,7 @@
                 ]
             },
             "file_name": "enemy.obj",
-            "player_state": "SnipeEnemy",
+            "player_state": "LaserEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -198,8 +198,8 @@
             "name": "EnemySpawn.002",
             "transform": {
                 "translation": [
-                    9.53543472290039,
-                    46.35554504394531,
+                    1.4119949340820312,
+                    40.88893127441406,
                     0.7324948310852051
                 ],
                 "rotation": [
@@ -215,7 +215,7 @@
                 ]
             },
             "file_name": "enemy.obj",
-            "player_state": "RushEnemy",
+            "player_state": "ExplosionEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -236,7 +236,7 @@
             "transform": {
                 "translation": [
                     -6.546740531921387,
-                    53.87200164794922,
+                    84.79750061035156,
                     4.136562347412109
                 ],
                 "rotation": [
@@ -272,9 +272,9 @@
             "name": "EnemySpawn.004",
             "transform": {
                 "translation": [
-                    9.815879821777344,
-                    46.0452880859375,
-                    -3.5981521606445312
+                    -6.316856384277344,
+                    24.072887420654297,
+                    -2.406930685043335
                 ],
                 "rotation": [
                     0.0,
@@ -310,7 +310,7 @@
             "transform": {
                 "translation": [
                     7.569002151489258,
-                    50.074092864990234,
+                    87.42636108398438,
                     0.0
                 ],
                 "rotation": [
@@ -326,7 +326,7 @@
                 ]
             },
             "file_name": "enemy.obj",
-            "player_state": "RushEnemy",
+            "player_state": "SnipeEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -346,7 +346,7 @@
             "name": "EnemySpawn.006",
             "transform": {
                 "translation": [
-                    12.530683517456055,
+                    8.444815635681152,
                     26.22597885131836,
                     1.4544956684112549
                 ],
@@ -363,7 +363,7 @@
                 ]
             },
             "file_name": "enemy.obj",
-            "player_state": "LaserEnemy",
+            "player_state": "RushEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -383,9 +383,9 @@
             "name": "EnemySpawn.007",
             "transform": {
                 "translation": [
-                    -5.523659706115723,
+                    -2.8809168338775635,
                     72.57051086425781,
-                    10.31321907043457
+                    1.1052350997924805
                 ],
                 "rotation": [
                     0.0,
@@ -400,7 +400,7 @@
                 ]
             },
             "file_name": "enemy.obj",
-            "player_state": "RushEnemy",
+            "player_state": "GasEnemy",
             "collider": {
                 "type": "BOX",
                 "center": [
@@ -906,7 +906,151 @@
                 ],
                 "size": [
                     18.170000076293945,
-                    17.209999084472656,
+                    7.339999198913574,
+                    5.840000152587891
+                ]
+            }
+        },
+        {
+            "type": "EventSpawn",
+            "name": "EventSpawn.002",
+            "transform": {
+                "translation": [
+                    0.0,
+                    40.99354934692383,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "event_name": "NotifyApproach",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    18.170000076293945,
+                    7.339999198913574,
+                    5.840000152587891
+                ]
+            }
+        },
+        {
+            "type": "EventSpawn",
+            "name": "EventSpawn.003",
+            "transform": {
+                "translation": [
+                    0.0,
+                    57.84909439086914,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "event_name": "NotifyApproach",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    18.170000076293945,
+                    7.339999198913574,
+                    5.840000152587891
+                ]
+            }
+        },
+        {
+            "type": "EventSpawn",
+            "name": "EventSpawn.004",
+            "transform": {
+                "translation": [
+                    0.0,
+                    89.9908447265625,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "event_name": "NotifyApproach",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    18.170000076293945,
+                    7.339999198913574,
+                    5.840000152587891
+                ]
+            }
+        },
+        {
+            "type": "EventSpawn",
+            "name": "EventSpawn.005",
+            "transform": {
+                "translation": [
+                    0.0,
+                    73.709228515625,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "event_name": "NotifyApproach",
+            "collider": {
+                "type": "BOX",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    18.170000076293945,
+                    7.339999198913574,
                     5.840000152587891
                 ]
             }

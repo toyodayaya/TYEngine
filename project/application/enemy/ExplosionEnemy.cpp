@@ -20,21 +20,6 @@ void ExplosionEnemy::Initialize(BaseEnemy* enemy)
 	transform_.translate = object3d_->GetWorldTranslate();
 	transform_.rotate = { 0.0f,0.0f,0.0f,1.0f };
 
-	// パーティクル初期値を初期化
-	emitterSphere.velocity = { 0.0f,0.0f,0.0f };
-	emitterSphere.type = ParticleManager::MoveType::kFollow;
-	emitterSphere.scale = { 1.0f,1.0f,1.0f };
-	emitterSphere.lifeTime = 3.0f;
-	emitterSphere.frequency = 0.0f;
-	emitterSphere.frequencyTime = 0.0f;
-	emitterSphere.currentTime = 0;
-	emitterSphere.count = 1;
-	emitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
-	particleId_ = ParticleManager::GetInstance()->AllocateID();
-	emitterName = "EnemyExplosion_" + std::to_string(particleId_);
-	ParticleManager::GetInstance()->CreateParticleGroup(emitterName, "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
-	emitter = std::make_unique <ParticleEmitter>(emitterName, emitterSphere);
-
 	// 爆発準備
 	CreateExplosion();
 }

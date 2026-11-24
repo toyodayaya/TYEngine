@@ -54,7 +54,7 @@ void Explosion::Initialize(const QuaternionTransform& transform, const Vector3& 
 	emitterSphere.radius = 10.0f;
 	id_ = ParticleManager::GetInstance()->AllocateID();
 	std::string emitterName = "Explosion_" + std::to_string(id_);
-	ParticleManager::GetInstance()->CreateParticleGroup(emitterName, "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
+	ParticleManager::GetInstance()->CreateParticleGroup(emitterName, "resources/sprite/particle/explosion.png", ParticleManager::ShapeType::kNormal);
 	emitter = std::make_unique <ParticleEmitter>(emitterName, emitterSphere);
 }
 

@@ -25,7 +25,12 @@ void GamePlayScene::Initialize()
 	TextureManager::GetInstance()->LoadTexture("resources/sprite/particle/beam.png");
 	TextureManager::GetInstance()->LoadTexture("resources/sprite/particle/deadEnemy.png");
 	TextureManager::GetInstance()->LoadTexture("resources/sprite/particle/beamPoint.png");
-	TextureManager::GetInstance()->LoadTexture("resources/sprite/circle.png");
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/particle/appear.png");
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/particle/traceEnemy.png");
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/particle/bulletEnemy.png");
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/particle/explosion.png");
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/particle/gas.png");
+	TextureManager::GetInstance()->LoadTexture("resources/sprite/particle/laser.png");
 
 	// パーティクルグループの作成
 	ParticleManager::GetInstance()->CreateParticleGroup("Bullet", "resources/sprite/particle/bullet.png", ParticleManager::ShapeType::kNormal);

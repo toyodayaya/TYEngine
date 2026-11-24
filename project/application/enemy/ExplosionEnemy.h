@@ -49,15 +49,6 @@ private:
 	Vector3 velocity_ = { 0.0f,0.0f,0.0f };
 	const float kBulletSpeed_ = 0.5f;
 
-	// パーティクルエミッターのポインタ
-	std::unique_ptr <ParticleEmitter> emitter;
-	// エミッター初期値
-	ParticleManager::EmitterSphere emitterSphere;
-
-	// パーティクルid
-	uint32_t particleId_;
-	std::string emitterName;
-	
 	// 爆発
 	std::unique_ptr<Explosion> explosion;
 };

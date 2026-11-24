@@ -34,7 +34,7 @@ void GasEnemy::Initialize(BaseEnemy* enemy)
 	emitterSphere.radius = 30.0f;
 	particleId_ = ParticleManager::GetInstance()->AllocateID();
 	emitterName = "EnemyGas_" + std::to_string(particleId_);
-	ParticleManager::GetInstance()->CreateParticleGroup(emitterName, "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
+	ParticleManager::GetInstance()->CreateParticleGroup(emitterName, "resources/sprite/particle/gas.png", ParticleManager::ShapeType::kNormal);
 	emitter = std::make_unique <ParticleEmitter>(emitterName, emitterSphere);
 
 	// ガス準備

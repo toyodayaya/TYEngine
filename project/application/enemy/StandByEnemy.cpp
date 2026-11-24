@@ -90,7 +90,7 @@ void StandByEnemy::EmitParticle()
 	emitterSphere.radius = 1.0f;
 	particleId_ = ParticleManager::GetInstance()->AllocateID();
 	emitterName = "StandByEnemy_" + std::to_string(particleId_);
-	ParticleManager::GetInstance()->CreateParticleGroup(emitterName, "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
+	ParticleManager::GetInstance()->CreateParticleGroup(emitterName, "resources/sprite/particle/appear.png", ParticleManager::ShapeType::kNormal);
 	emitter = std::make_unique <ParticleEmitter>(emitterName, emitterSphere);
 	emitter->Update();
 	isEmit_ = true;

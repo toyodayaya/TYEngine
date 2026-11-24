@@ -31,7 +31,7 @@ void SnipeEnemy::Initialize(BaseEnemy* enemy)
 	emitterSphere.color = { 1.0f,1.0f,1.0f,1.0f };
 	particleId_ = ParticleManager::GetInstance()->AllocateID();
 	emitterName = "EnemyBullet_" + std::to_string(particleId_);
-	ParticleManager::GetInstance()->CreateParticleGroup(emitterName, "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
+	ParticleManager::GetInstance()->CreateParticleGroup(emitterName, "resources/sprite/particle/bulletEnemy.png", ParticleManager::ShapeType::kNormal);
 	emitter = std::make_unique <ParticleEmitter>(emitterName, emitterSphere);
 }
 

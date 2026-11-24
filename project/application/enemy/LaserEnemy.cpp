@@ -26,7 +26,7 @@ void LaserEnemy::Initialize(BaseEnemy* enemy)
 	emitterSphere.velocity = { 0.0f,0.0f,0.0f };
 	emitterSphere.type = ParticleManager::MoveType::kNone;
 	emitterSphere.scale = laserSize;
-	emitterSphere.lifeTime = 50.0f;
+	emitterSphere.lifeTime = 10.0f;
 	emitterSphere.frequency = 0.0f;
 	emitterSphere.frequencyTime = 0.5f;
 	emitterSphere.currentTime = 0;
@@ -35,7 +35,7 @@ void LaserEnemy::Initialize(BaseEnemy* enemy)
 	emitterSphere.radius = 0.0f;
 	particleId_ = ParticleManager::GetInstance()->AllocateID();
 	emitterName = "EnemyLaser_" + std::to_string(particleId_);
-	ParticleManager::GetInstance()->CreateParticleGroup(emitterName, "resources/sprite/circle.png", ParticleManager::ShapeType::kNormal);
+	ParticleManager::GetInstance()->CreateParticleGroup(emitterName, "resources/sprite/particle/laser.png", ParticleManager::ShapeType::kNormal);
 	emitter = std::make_unique <ParticleEmitter>(emitterName, emitterSphere);
 
 	// エフェクトを発生させる
