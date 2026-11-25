@@ -69,26 +69,8 @@ public:
 	// 各シェーダー用の設定
 	void GeneratePostEffect();
 	// シェーダーの生成
-	// Grayscaleの生成
-	void GenerateGrayScale();
-	// Sepiaの生成
-	void GenerateSepia();
-	// Vignettingの生成
-	void GenerateVignetting();
-	// DoubleVignettingの生成
-	void GenerateDoubleVignetting();
-	// BoxFilterの生成
-	void GenerateBoxFilter();
-	// GaussianFilterの生成
-	void GenerateGaussianFilter();
-	// Outlineの生成
-	void GenerateOutline();
-	// RadialBlurの生成
-	void GenerateRadialBlur();
-	// Dissolveの生成
-	void GenerateDissolve();
-	// Randomの生成
-	void GenerateRandom();
+	void GeneratePS(D3D12_GRAPHICS_PIPELINE_STATE_DESC& gpsd, Microsoft::WRL::ComPtr <ID3D12PipelineState>& gps, 
+		const std::wstring& shaderPath);
 
 	// 共通描画設定
 	void DrawSettingCommon();

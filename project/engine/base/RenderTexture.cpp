@@ -2,8 +2,10 @@
 #include "Logger.h"
 #include "MathManager.h"
 #include "TextureManager.h"
+#include "StringUtility.h"
 
 using namespace MathManager;
+using namespace StringUtility;
 
 std::unique_ptr<RenderTexture> RenderTexture::instance = nullptr;
 
@@ -208,252 +210,65 @@ void RenderTexture::GeneratePostEffect()
 	// 各シェーダーをコンパイル
 
 	// GrayScale
-	GenerateGrayScale();
+	std::string grayScale = "resources/shaders/postEffect/GrayScale.PS.hlsl";
+	GeneratePS(grayscaleGPSD_, grayscaleGPS_, ConvertString(grayScale));
 
 	// SepiaScale
-	GenerateSepia();
+	std::string sepiaScale = "resources/shaders/postEffect/SepiaScale.PS.hlsl";
+	GeneratePS(sepiascaleGPSD_, sepiascaleGPS_, ConvertString(sepiaScale));
 
 	// Vignetting
-	GenerateVignetting();
+	std::string vignetting = "resources/shaders/postEffect/Vignette.PS.hlsl";
+	GeneratePS(vignettingGPSD_, vignettingGPS_, ConvertString(vignetting));
 
 	// DoubleVignetting
-	GenerateDoubleVignetting();
+	std::string doubleVignetting= "resources/shaders/postEffect/DoubleVignette.PS.hlsl";
+	GeneratePS(doubleVignettingGPSD_, doubleVignettingGPS_, ConvertString(doubleVignetting));
 
 	// BoxFilter
-	GenerateBoxFilter();
+	std::string boxFilter = "resources/shaders/postEffect/BoxFilter5x5.PS.hlsl";
+	GeneratePS(boxFilterGPSD_, boxFilterGPS_, ConvertString(boxFilter));
 
 	// GaussianFilter
-	GenerateGaussianFilter();
+	std::string gausianFilter = "resources/shaders/postEffect/GaussianFilter.PS.hlsl";
+	GeneratePS(gaussianFilterGPSD_, gaussianFilterGPS_, ConvertString(gausianFilter));
 
 	// OutLine
-	GenerateOutline();
+	std::string outLine = "resources/shaders/postEffect/DepthBasedoutline.PS.hlsl";
+	GeneratePS(outlineGPSD_, outlineGPS_, ConvertString(outLine));
 
 	// radialBlur
-	GenerateRadialBlur();
+	std::string radialBlur = "resources/shaders/postEffect/RadialBlur.PS.hlsl";
+	GeneratePS(radialBlurGPSD_, radialBlurGPS_, ConvertString(radialBlur));
 
 	// Dissolve
-	GenerateDissolve();
+	std::string dissolve = "resources/shaders/postEffect/Dissolve.PS.hlsl";
+	GeneratePS(dissolveGPSD_, dissolveGPS_, ConvertString(dissolve));
 
 	// Random
-	GenerateRandom();
+	std::string random = "resources/shaders/postEffect/Random.PS.hlsl";
+	GeneratePS(randomGPSD_, randomGPS_, ConvertString(random));
 
 }
 
-void RenderTexture::GenerateGrayScale()
+void RenderTexture::GeneratePS(D3D12_GRAPHICS_PIPELINE_STATE_DESC& gpsd, Microsoft::WRL::ComPtr <ID3D12PipelineState>& gps,
+	const std::wstring& shaderPath)
 {
 	// 設定をコピー
-	grayscaleGPSD_ = graphicPipelineStateDesc;
+	gpsd = graphicPipelineStateDesc;
 
 	// PSをコンパイル
-	Microsoft::WRL::ComPtr <IDxcBlob> pixelShaderBlobGrayscale;
-	pixelShaderBlobGrayscale = dxBasis_->CompileShader(L"resources/shaders/postEffect/GrayScale.PS.hlsl",
-		L"ps_6_0");
-	assert(pixelShaderBlobGrayscale != nullptr);
-	grayscaleGPSD_.PS =
+	Microsoft::WRL::ComPtr <IDxcBlob> pixelShaderBlob;
+	pixelShaderBlob = dxBasis_->CompileShader(shaderPath, L"ps_6_0");
+	assert(pixelShaderBlob != nullptr);
+	gpsd.PS =
 	{
-		pixelShaderBlobGrayscale->GetBufferPointer(),
-		pixelShaderBlobGrayscale->GetBufferSize()
+		pixelShaderBlob->GetBufferPointer(),
+		pixelShaderBlob->GetBufferSize()
 	};
 	// 生成
-	HRESULT hr = dxBasis_->GetDevice()->CreateGraphicsPipelineState(&grayscaleGPSD_,
-		IID_PPV_ARGS(&grayscaleGPS_));
-	assert(SUCCEEDED(hr));
-
-}
-
-void RenderTexture::GenerateSepia()
-{
-	// 設定をコピー
-	sepiascaleGPSD_ = graphicPipelineStateDesc;
-
-	// PSをコンパイル
-	Microsoft::WRL::ComPtr <IDxcBlob> pixelShaderBlobSepia;
-	pixelShaderBlobSepia = dxBasis_->CompileShader(L"resources/shaders/postEffect/SepiaScale.PS.hlsl",
-		L"ps_6_0");
-	assert(pixelShaderBlobSepia != nullptr);
-	sepiascaleGPSD_.PS =
-	{
-		pixelShaderBlobSepia->GetBufferPointer(),
-		pixelShaderBlobSepia->GetBufferSize()
-	};
-	// 生成
-	HRESULT hr = dxBasis_->GetDevice()->CreateGraphicsPipelineState(&sepiascaleGPSD_,
-		IID_PPV_ARGS(&sepiascaleGPS_));
-	assert(SUCCEEDED(hr));
-}
-
-void RenderTexture::GenerateVignetting()
-{
-	// 設定をコピー
-	vignettingGPSD_ = graphicPipelineStateDesc;
-
-	// PSをコンパイル
-	Microsoft::WRL::ComPtr <IDxcBlob> pixelShaderBlobVignetting;
-	pixelShaderBlobVignetting = dxBasis_->CompileShader(L"resources/shaders/postEffect/Vignette.PS.hlsl",
-		L"ps_6_0");
-	assert(pixelShaderBlobVignetting != nullptr);
-	vignettingGPSD_.PS =
-	{
-		pixelShaderBlobVignetting->GetBufferPointer(),
-		pixelShaderBlobVignetting->GetBufferSize()
-	};
-	// 生成
-	HRESULT hr = dxBasis_->GetDevice()->CreateGraphicsPipelineState(&vignettingGPSD_,
-		IID_PPV_ARGS(&vignettingGPS_));
-	assert(SUCCEEDED(hr));
-
-
-}
-
-void RenderTexture::GenerateDoubleVignetting()
-{
-	// 設定をコピー
-	doubleVignettingGPSD_ = graphicPipelineStateDesc;
-
-	// PSをコンパイル
-	Microsoft::WRL::ComPtr <IDxcBlob> pixelShaderBlobDoubleVignetting;
-	pixelShaderBlobDoubleVignetting = dxBasis_->CompileShader(L"resources/shaders/postEffect/DoubleVignette.PS.hlsl",
-		L"ps_6_0");
-	assert(pixelShaderBlobDoubleVignetting != nullptr);
-	doubleVignettingGPSD_.PS =
-	{
-		pixelShaderBlobDoubleVignetting->GetBufferPointer(),
-		pixelShaderBlobDoubleVignetting->GetBufferSize()
-	};
-	// 生成
-	HRESULT hr = dxBasis_->GetDevice()->CreateGraphicsPipelineState(&doubleVignettingGPSD_,
-		IID_PPV_ARGS(&doubleVignettingGPS_));
-	assert(SUCCEEDED(hr));
-
-
-}
-
-void RenderTexture::GenerateBoxFilter()
-{
-	// 設定をコピー
-	boxFilterGPSD_ = graphicPipelineStateDesc;
-
-	// PSをコンパイル
-	Microsoft::WRL::ComPtr <IDxcBlob> pixelShaderBlobBoxFilter;
-	pixelShaderBlobBoxFilter = dxBasis_->CompileShader(L"resources/shaders/postEffect/BoxFilter5x5.PS.hlsl",
-		L"ps_6_0");
-	assert(pixelShaderBlobBoxFilter != nullptr);
-	boxFilterGPSD_.PS =
-	{
-		pixelShaderBlobBoxFilter->GetBufferPointer(),
-		pixelShaderBlobBoxFilter->GetBufferSize()
-	};
-	// 生成
-	HRESULT hr = dxBasis_->GetDevice()->CreateGraphicsPipelineState(&boxFilterGPSD_,
-		IID_PPV_ARGS(&boxFilterGPS_));
-	assert(SUCCEEDED(hr));
-
-}
-
-void RenderTexture::GenerateGaussianFilter()
-{
-	// 設定をコピー
-	gaussianFilterGPSD_ = graphicPipelineStateDesc;
-
-	// PSをコンパイル
-	Microsoft::WRL::ComPtr <IDxcBlob> pixelShaderBlobGaussianFilter;
-	pixelShaderBlobGaussianFilter = dxBasis_->CompileShader(L"resources/shaders/postEffect/GaussianFilter.PS.hlsl",
-		L"ps_6_0");
-	assert(pixelShaderBlobGaussianFilter != nullptr);
-	gaussianFilterGPSD_.PS =
-	{
-		pixelShaderBlobGaussianFilter->GetBufferPointer(),
-		pixelShaderBlobGaussianFilter->GetBufferSize()
-	};
-	// 生成
-	HRESULT hr = dxBasis_->GetDevice()->CreateGraphicsPipelineState(&gaussianFilterGPSD_,
-		IID_PPV_ARGS(&gaussianFilterGPS_));
-	assert(SUCCEEDED(hr));
-}
-
-void RenderTexture::GenerateOutline()
-{
-	// 設定をコピー
-	outlineGPSD_ = graphicPipelineStateDesc;
-
-	// PSをコンパイル
-	Microsoft::WRL::ComPtr <IDxcBlob> pixelShaderBlobOutLine;
-	pixelShaderBlobOutLine = dxBasis_->CompileShader(L"resources/shaders/postEffect/DepthBasedoutline.PS.hlsl",
-		L"ps_6_0");
-	assert(pixelShaderBlobOutLine != nullptr);
-	outlineGPSD_.PS =
-	{
-		pixelShaderBlobOutLine->GetBufferPointer(),
-		pixelShaderBlobOutLine->GetBufferSize()
-	};
-	// 生成
-	HRESULT hr = dxBasis_->GetDevice()->CreateGraphicsPipelineState(&outlineGPSD_,
-		IID_PPV_ARGS(&outlineGPS_));
-	assert(SUCCEEDED(hr));
-
-}
-
-void RenderTexture::GenerateRadialBlur()
-{
-	// 設定をコピー
-	radialBlurGPSD_ = graphicPipelineStateDesc;
-
-	// PSをコンパイル
-	Microsoft::WRL::ComPtr <IDxcBlob> pixelShaderBlobRadialBlur;
-	pixelShaderBlobRadialBlur = dxBasis_->CompileShader(L"resources/shaders/postEffect/RadialBlur.PS.hlsl",
-		L"ps_6_0");
-	assert(pixelShaderBlobRadialBlur != nullptr);
-	radialBlurGPSD_.PS =
-	{
-		pixelShaderBlobRadialBlur->GetBufferPointer(),
-		pixelShaderBlobRadialBlur->GetBufferSize()
-	};
-	// 生成
-	HRESULT hr = dxBasis_->GetDevice()->CreateGraphicsPipelineState(&radialBlurGPSD_,
-		IID_PPV_ARGS(&radialBlurGPS_));
-	assert(SUCCEEDED(hr));
-}
-
-void RenderTexture::GenerateDissolve()
-{
-	// 設定をコピー
-	dissolveGPSD_ = graphicPipelineStateDesc;
-
-	// PSをコンパイル
-	Microsoft::WRL::ComPtr <IDxcBlob> pixelShaderBlobDissolve;
-	pixelShaderBlobDissolve = dxBasis_->CompileShader(L"resources/shaders/postEffect/Dissolve.PS.hlsl",
-		L"ps_6_0");
-	assert(pixelShaderBlobDissolve != nullptr);
-	dissolveGPSD_.PS =
-	{
-		pixelShaderBlobDissolve->GetBufferPointer(),
-		pixelShaderBlobDissolve->GetBufferSize()
-	};
-	// 生成
-	HRESULT hr = dxBasis_->GetDevice()->CreateGraphicsPipelineState(&dissolveGPSD_,
-		IID_PPV_ARGS(&dissolveGPS_));
-	assert(SUCCEEDED(hr));
-
-}
-
-void RenderTexture::GenerateRandom()
-{
-	// 設定をコピー
-	randomGPSD_ = graphicPipelineStateDesc;
-
-	// PSをコンパイル
-	Microsoft::WRL::ComPtr <IDxcBlob> pixelShaderBlobRandom;
-	pixelShaderBlobRandom = dxBasis_->CompileShader(L"resources/shaders/postEffect/Random.PS.hlsl",
-		L"ps_6_0");
-	assert(pixelShaderBlobRandom != nullptr);
-	randomGPSD_.PS =
-	{
-		pixelShaderBlobRandom->GetBufferPointer(),
-		pixelShaderBlobRandom->GetBufferSize()
-	};
-	// 生成
-	HRESULT hr = dxBasis_->GetDevice()->CreateGraphicsPipelineState(&randomGPSD_,
-		IID_PPV_ARGS(&randomGPS_));
+	HRESULT hr = dxBasis_->GetDevice()->CreateGraphicsPipelineState(&gpsd,
+		IID_PPV_ARGS(&gps));
 	assert(SUCCEEDED(hr));
 }
 
