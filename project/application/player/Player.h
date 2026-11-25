@@ -32,6 +32,12 @@ public:
 	// プレイヤーステートを変更する
 	void ChangePlayerState(std::unique_ptr<BasePlayerState> nextState);
 
+	// トランスフォーム初期化処理
+	void InitTransform(QuaternionTransform& transform, Vector3& startPos, Quaternion& startAngle);
+	// 線形補間処理
+	void LinearInterpolation(QuaternionTransform& transform, Vector3& startPos, Quaternion& startAngle,
+		Vector3& targetPos, Quaternion& targetAngle, const std::string& stateName,float& t);
+
 	// setter
 	void SetCamera(Camera* camera) { this->camera_ = camera; }
 	void SetWorldMatrix(const Matrix4x4& matrix) { worldMatrix = matrix; }

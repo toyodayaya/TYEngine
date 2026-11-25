@@ -5,6 +5,7 @@
 #include "BasePlayerState.h"
 #include "Object3d.h"
 #include "ParticleManager.h"
+#include "PlayerManager.h"
 #ifdef _DEBUG
 #include "DebugDraw.h"
 #include "DebugDrawCommon.h"
@@ -102,4 +103,29 @@ void Player::ChangePlayerState(std::unique_ptr<BasePlayerState> nextState)
 
 	// 次プレイヤーステートを初期化する
 	state_->Initialize(this);
+}
+
+void Player::InitTransform(QuaternionTransform& transform, Vector3& startPos, Quaternion& startAngle)
+{
+	// オブジェクトの初期化
+	transform = object3d_->GetTransform();
+	startPos = transform.translate;
+	startAngle = transform.rotate;
+}
+
+void Player::LinearInterpolation(QuaternionTransform& transform, Vector3& startPos, Quaternion& startAngle,
+	Vector3& targetPos, Quaternion& targetAngle, const std::string& stateName,float& t)
+{
+	// 目標地点めがけてイージング
+	if (t <= 1.0f)
+	{
+		t += 0.0075f;
+		transform.translate = Lerp(startPos, targetPos, t);
+		transform.rotate = Slerp(startAngle, targetAngle, t);
+	}
+	else
+	{
+		// スタート演出が終わったらステートを変更する
+		PlayerManager::GetInstance()->ChangePlayerState(stateName);
+	}
 }
