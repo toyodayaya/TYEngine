@@ -124,6 +124,9 @@ public:
 	// Jsonファイルからオブジェクトを配置する関数
 	void CreateStage(const std::string& fileName);
 
+	// トランスフォームデータ読み込むの関数
+	QuaternionTransform LoadTransform(nlohmann::json& transform);
+
 	// オブジェクト読み込みの再帰関数
 	ObjectData LoadObject(nlohmann::json& object);
 	// オブジェクト生成の再帰関数

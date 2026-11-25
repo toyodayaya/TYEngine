@@ -323,6 +323,29 @@ void StageData::CreateStage(const std::string& fileName)
 	}
 }
 
+QuaternionTransform StageData::LoadTransform(nlohmann::json& transform)
+{
+	QuaternionTransform ret;
+
+	// 座標データを格納
+	ret.translate.x = (float)transform["translation"][0];
+	ret.translate.y = (float)transform["translation"][2];
+	ret.translate.z = (float)transform["translation"][1];
+
+	// 回転角データを格納
+	ret.rotate.x = -(float)transform["rotation"][0];
+	ret.rotate.y = -(float)transform["rotation"][2];
+	ret.rotate.z = -(float)transform["rotation"][1];
+	ret.rotate.w = (float)transform["rotation"][3];
+
+	// スケーリングデータを格納
+	ret.scale.x = (float)transform["scaling"][0];
+	ret.scale.y = (float)transform["scaling"][2];
+	ret.scale.z = (float)transform["scaling"][1];
+	
+	return ret;
+}
+
 StageData::ObjectData StageData::LoadObject(nlohmann::json& object)
 {
 	// データ格納用の変数を宣言
@@ -336,19 +359,7 @@ StageData::ObjectData StageData::LoadObject(nlohmann::json& object)
 
 	// トランスフォームのパラメータ読み込み
 	nlohmann::json& transform = object["transform"];
-	// 平行移動データを格納
-	objectData.transform.translate.x = (float)transform["translation"][0];
-	objectData.transform.translate.y = (float)transform["translation"][2];
-	objectData.transform.translate.z = (float)transform["translation"][1];
-	// 回転角データを格納
-	objectData.transform.rotate.x = -(float)transform["rotation"][0];
-	objectData.transform.rotate.y = -(float)transform["rotation"][2];
-	objectData.transform.rotate.z = -(float)transform["rotation"][1];
-	objectData.transform.rotate.w = (float)transform["rotation"][3];
-	// スケーリングデータを格納
-	objectData.transform.scale.x = (float)transform["scaling"][0];
-	objectData.transform.scale.y = (float)transform["scaling"][2];
-	objectData.transform.scale.z = (float)transform["scaling"][1];
+	objectData.transform = LoadTransform(transform);
 
 	// コライダーのパラメータ読み込み
 	if (object.contains("collider"))
@@ -435,19 +446,8 @@ StageData::PlayerSpawnData StageData::LoadPlayer(nlohmann::json& player)
 
 	// トランスフォームのパラメータ読み込み
 	nlohmann::json& transform = player["transform"];
-	// 平行移動データを格納
-	playerSpawnData.transform.translate.x = (float)transform["translation"][0];
-	playerSpawnData.transform.translate.y = (float)transform["translation"][2];
-	playerSpawnData.transform.translate.z = (float)transform["translation"][1];
-	// 回転角データを格納
-	playerSpawnData.transform.rotate.x = -(float)transform["rotation"][0];
-	playerSpawnData.transform.rotate.y = -(float)transform["rotation"][2];
-	playerSpawnData.transform.rotate.z = -(float)transform["rotation"][1];
-	playerSpawnData.transform.rotate.w = (float)transform["rotation"][3];
-	// スケーリングデータを格納
-	playerSpawnData.transform.scale.x = (float)transform["scaling"][0];
-	playerSpawnData.transform.scale.y = (float)transform["scaling"][2];
-	playerSpawnData.transform.scale.z = (float)transform["scaling"][1];
+	playerSpawnData.transform = LoadTransform(transform);
+
 
 	// コライダーのパラメータ読み込み
 	if (player.contains("collider"))
@@ -507,19 +507,8 @@ StageData::EnemySpawnData StageData::LoadEnemy(nlohmann::json& enemy)
 
 	// トランスフォームのパラメータ読み込み
 	nlohmann::json& transform = enemy["transform"];
-	// 平行移動データを格納
-	enemySpawnData.transform.translate.x = (float)transform["translation"][0];
-	enemySpawnData.transform.translate.y = (float)transform["translation"][2];
-	enemySpawnData.transform.translate.z = (float)transform["translation"][1];
-	// 回転角データを格納
-	enemySpawnData.transform.rotate.x = -(float)transform["rotation"][0];
-	enemySpawnData.transform.rotate.y = -(float)transform["rotation"][2];
-	enemySpawnData.transform.rotate.z = -(float)transform["rotation"][1];
-	enemySpawnData.transform.rotate.w = (float)transform["rotation"][3];
-	// スケーリングデータを格納
-	enemySpawnData.transform.scale.x = (float)transform["scaling"][0];
-	enemySpawnData.transform.scale.y = (float)transform["scaling"][2];
-	enemySpawnData.transform.scale.z = (float)transform["scaling"][1];
+	enemySpawnData.transform = LoadTransform(transform);
+
 
 	// コライダーのパラメータ読み込み
 	if (enemy.contains("collider"))
@@ -549,7 +538,7 @@ void StageData::CreateEnemy(const EnemySpawnData& enemyData)
 	enemy->ChangeEnemyState("StandByEnemy");
 	// 次のステートを記録
 	enemy->SetNextStateName(enemyData.stateName);
-	
+
 
 	// コライダーがあれば生成、配置
 	if (enemyData.collider.hasCollier)
@@ -624,19 +613,8 @@ StageData::EventSpawnData StageData::LoadEvent(nlohmann::json& event)
 
 	// トランスフォームのパラメータ読み込み
 	nlohmann::json& transform = event["transform"];
-	// 平行移動データを格納
-	eventSpawnData.transform.translate.x = (float)transform["translation"][0];
-	eventSpawnData.transform.translate.y = (float)transform["translation"][2];
-	eventSpawnData.transform.translate.z = (float)transform["translation"][1];
-	// 回転角データを格納
-	eventSpawnData.transform.rotate.x = -(float)transform["rotation"][0];
-	eventSpawnData.transform.rotate.y = -(float)transform["rotation"][2];
-	eventSpawnData.transform.rotate.z = -(float)transform["rotation"][1];
-	eventSpawnData.transform.rotate.w = (float)transform["rotation"][3];
-	// スケーリングデータを格納
-	eventSpawnData.transform.scale.x = (float)transform["scaling"][0];
-	eventSpawnData.transform.scale.y = (float)transform["scaling"][2];
-	eventSpawnData.transform.scale.z = (float)transform["scaling"][1];
+	eventSpawnData.transform = LoadTransform(transform);
+
 
 	// コライダーのパラメータ読み込み
 	if (event.contains("collider"))
@@ -722,19 +700,14 @@ StageData::CameraData StageData::LoadCameraData(nlohmann::json& camera)
 
 	// トランスフォームのパラメータ読み込み
 	nlohmann::json& transform = camera["transform"];
-	// 平行移動データを格納
-	cameraData.transform.translate.x = (float)transform["translation"][0];
-	cameraData.transform.translate.y = (float)transform["translation"][2];
-	cameraData.transform.translate.z = (float)transform["translation"][1];
+	cameraData.transform = LoadTransform(transform);
+
 	// 回転角データを格納
 	cameraData.transform.rotate.x = (float)transform["rotation"][0];
 	cameraData.transform.rotate.y = (float)transform["rotation"][2];
 	cameraData.transform.rotate.z = (float)transform["rotation"][1];
 	cameraData.transform.rotate.w = (float)transform["rotation"][3];
-	// スケーリングデータを格納
-	cameraData.transform.scale.x = (float)transform["scaling"][0];
-	cameraData.transform.scale.y = (float)transform["scaling"][2];
-	cameraData.transform.scale.z = (float)transform["scaling"][1];
+
 
 	return cameraData;
 }
