@@ -9,9 +9,10 @@ class BaseBullet : public GameObject
 {
 public:
 	// 初期化
-	virtual void Initialize(const QuaternionTransform& transform, const Vector3& velocity, bool isRailCamera, const std::string& objectType) = 0;
+	virtual void Initialize(GameObject* parent, const QuaternionTransform& transform, const Vector3& velocity, bool isRailCamera, const std::string& objectType) = 0;
 	// getter
  	uint32_t GetID() const { return id_; }
+	bool IsParentDead() { return parent_->IsDead(); }
 	// setter
 	void SetID(uint32_t id) { id_ = id; }
 	void SetParticleName(std::string name) { particleName_ = name; }
@@ -29,6 +30,9 @@ protected:
 	std::string particleName_;
 	// オブジェクトタイプ
 	std::string objectName_;
+
+	// 親オブジェクト
+	GameObject* parent_ = nullptr;
 	
 #ifdef _DEBUG
 	std::unique_ptr<DebugDraw> debugDraw;

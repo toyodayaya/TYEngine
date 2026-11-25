@@ -13,8 +13,9 @@
 
 #endif // _DEBUG
 
-void Gas::Initialize(const QuaternionTransform& transform, const Vector3& velocity, bool isRailCamera, const std::string& objectType)
+void Gas::Initialize(GameObject* parent, const QuaternionTransform& transform, const Vector3& velocity, bool isRailCamera, const std::string& objectType)
 {
+	parent_ = parent;
 	transform_ = transform;
 	worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
 

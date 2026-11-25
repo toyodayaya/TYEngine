@@ -267,7 +267,7 @@ void NormalPlayer::CreateAttack(float speed, const Vector3& scale,const std::str
 
 	// 生成と初期化
 	std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
-	bullet->Initialize(bulletTransform, velocity, false, "PlayerBulletSpawn");
+	bullet->Initialize(player_, bulletTransform, velocity, false, "PlayerBulletSpawn");
 	bullet->SetID(ParticleManager::GetInstance()->AllocateID());
 
 	// エフェクトを追加

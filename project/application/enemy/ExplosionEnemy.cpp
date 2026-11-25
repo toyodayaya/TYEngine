@@ -54,12 +54,6 @@ void ExplosionEnemy::OnCollision(const std::string& hitObjectType)
 	else if (hitObjectType == "PlayerBulletSpawn")
 	{
 		enemy_->Damage();
-
-		if (enemy_->IsDead())
-		{
-			// 所持する攻撃に死亡を通知する
-			exp_->SetIsDead(true);
-		}
 	}
 }
 
@@ -67,10 +61,9 @@ void ExplosionEnemy::CreateExplosion()
 {
 	// 爆発を用意
 	explosion = std::make_unique<Explosion>();
-	explosion->Initialize(transform_, Vector3{ 0.0f,0.0f,0.0f }, false, "EnemyBulletSpawn");
+	explosion->Initialize(enemy_, transform_, Vector3{ 0.0f,0.0f,0.0f }, false, "EnemyBulletSpawn");
 	explosion->SetID(ParticleManager::GetInstance()->AllocateID());
 	explosion->SetEnemy(this);
-	exp_ = explosion.get();
 
 	// BulletManagerに追加
 	BulletManager::GetInstance()->SetBullets(std::move(explosion));

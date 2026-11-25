@@ -20,7 +20,7 @@ void BulletManager::Update()
 	bullets_.erase(std::remove_if(bullets_.begin(), bullets_.end(), []
 	(const std::unique_ptr<BaseBullet>& bullet)
 		{
-			if (bullet->IsDead())
+			if (bullet->IsDead() || bullet->IsParentDead())
 			{
 				CollisionManager::GetInstance()->RemoveCollider(bullet.get());
 				return true;

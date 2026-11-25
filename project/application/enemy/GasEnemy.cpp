@@ -81,7 +81,7 @@ void GasEnemy::CreateGas()
 {
 	// 爆発を用意
 	gas = std::make_unique<Gas>();
-	gas->Initialize(transform_, Vector3{ 0.0f,0.0f,0.0f }, false, "EnemyBulletSpawn");
+	gas->Initialize(enemy_, transform_, Vector3{ 0.0f,0.0f,0.0f }, false, "EnemyBulletSpawn");
 	gas->SetID(ParticleManager::GetInstance()->AllocateID());
 
 	// BulletManagerに追加

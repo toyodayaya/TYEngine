@@ -82,7 +82,7 @@ void LaserEnemy::CreateLaser()
 {
 	// レーザーを用意
 	laser = std::make_unique<Laser>();
-	laser->Initialize(transform_, Vector3{ 0.0f,0.0f,0.0f }, false, "EnemyBulletSpawn");
+	laser->Initialize(enemy_, transform_, Vector3{ 0.0f,0.0f,0.0f }, false, "EnemyBulletSpawn");
 	laser->SetID(ParticleManager::GetInstance()->AllocateID());
 
 	// BulletManagerに追加

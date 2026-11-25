@@ -91,7 +91,7 @@ void SnipeEnemy::CreateBullet()
 
 	// 弾を発射
 	std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
-	bullet->Initialize(transform_, velocity_, false, "EnemyBulletSpawn");
+	bullet->Initialize(enemy_, transform_, velocity_, false, "EnemyBulletSpawn");
 	bullet->SetID(ParticleManager::GetInstance()->AllocateID());
 
 	// エフェクトを追加

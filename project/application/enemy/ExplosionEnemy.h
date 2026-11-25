@@ -35,7 +35,6 @@ private:
 
 	// 敵のポインタ
 	Enemy* enemy_ = nullptr;
-	Explosion* exp_ = nullptr;
 	// ワールドトランスフォーム
 	QuaternionTransform transform_;
 	// ワールド行列

@@ -9,7 +9,7 @@ class Explosion : public BaseBullet
 {
 public:
 	// 初期化
-	void Initialize(const QuaternionTransform& transform, const Vector3& velocity, bool isRailCamera, const std::string& objectType) override;
+	void Initialize(GameObject* parent, const QuaternionTransform& transform, const Vector3& velocity, bool isRailCamera, const std::string& objectType) override;
 	// 終了
 	void Finalize() override;
 	// 更新

@@ -12,8 +12,9 @@
 
 #endif // _DEBUG
 
-void Bullet::Initialize(const QuaternionTransform& transform, const Vector3& velocity, bool isRailCamera, const std::string& objectType)
+void Bullet::Initialize(GameObject* parent, const QuaternionTransform& transform, const Vector3& velocity, bool isRailCamera, const std::string& objectType)
 {
+	parent_ = parent;
 	velocity_ = velocity;
 	transform_ = transform;
 	worldMatrix = MakeAffineMatrixQuat(transform_.scale, transform_.rotate, transform_.translate);
