@@ -219,44 +219,8 @@ void NormalPlayer::OnCollision(std::string hitObjectType)
 
 void NormalPlayer::CreateBullet()
 {
-
-	if (lockOn_->GetTarget())
-	{
-		targetPosition = lockOn_->GetTarget()->GetWorldTranslate();
-	}
-	else
-	{
-		targetPosition = GetReticleWorldTranslate();
-	}
-
-	// 弾の初期座標を設定
-	QuaternionTransform bulletTransform = transform_;
-	bulletTransform.translate = GetWorldTranslate();
-
-	// 速度を算出
-	velocity = Vector3Subtract(targetPosition, bulletTransform.translate);
-	velocity = Normalize(velocity);
-	velocity = FloatMultiply(velocity, kBeamSpeed_);
-
-	// 生成と初期化
-	std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
-	bullet->Initialize(bulletTransform, velocity, false,"PlayerBulletSpawn");
-	bullet->SetID(ParticleManager::GetInstance()->AllocateID());
-
-	// エフェクトを追加
-	emitterSphere.translate = bulletTransform.translate;
-	emitterSphere.scale = { 1.0f,1.0f,1.0f };
-	emitterSphere.id = bullet->GetID();
-	emitter->SetEmitterSphere(emitterSphere);
-	// エフェクトを発生させる
-	emitter->Update();
-	// 対応するエフェクトに生存フラグを通知
-	ParticleManager::GetInstance()->SetBulletIsAlive(true, bullet->GetID(), "Bullet");
-	// パーティクルグループの名前を記録
-	bullet->SetParticleName("Bullet");
-
-	// BulletManagerに追加
-	BulletManager::GetInstance()->SetBullets(std::move(bullet));
+	// 弾を生成
+	CreateAttack(kBulletSpeed_, Vector3{ 1.0f,1.0f,1.0f }, "Bullet",emitter.get());
 
 	// 発射間隔タイマーをリセット
 	bulletIntervalTimer_ = 10;
@@ -268,43 +232,8 @@ void NormalPlayer::CreateBeam()
 	// ビーム弾数をカウント
 	currentBeamBulletNum++;
 
-	if (lockOn_->GetTarget())
-	{
-		targetPosition = lockOn_->GetTarget()->GetWorldTranslate();
-	}
-	else
-	{
-		targetPosition = GetReticleWorldTranslate();
-	}
-
-	// ビームの初期座標を設定
-	QuaternionTransform bulletTransform = transform_;
-	bulletTransform.translate = GetWorldTranslate();
-
-	// 速度を算出
-	velocity = Vector3Subtract(targetPosition, bulletTransform.translate);
-	velocity = Normalize(velocity);
-	velocity = FloatMultiply(velocity, kBulletSpeed_);
-
-	// 生成と初期化
-	std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
-	bullet->Initialize(bulletTransform, velocity, false, "PlayerBulletSpawn");
-	bullet->SetID(ParticleManager::GetInstance()->AllocateID());
-
-	// エフェクトを追加
-	emitterSphere.translate = bulletTransform.translate;
-	emitterSphere.scale = { 1.5f,1.5f,1.5f };
-	emitterSphere.id = bullet->GetID();
-	beamEmitter->SetEmitterSphere(emitterSphere);
-	// エフェクトを発生させる
-	beamEmitter->Update();
-	// 対応するエフェクトに生存フラグを通知
-	ParticleManager::GetInstance()->SetBulletIsAlive(true, bullet->GetID(), "Beam");
-	// パーティクルグループの名前を記録
-	bullet->SetParticleName("Beam");
-
-	// BulletManagerに追加
-	BulletManager::GetInstance()->SetBullets(std::move(bullet));
+	// ビームを生成
+	CreateAttack(kBeamSpeed_, Vector3{ 1.5f,1.5f,1.5f }, "Beam",beamEmitter.get());
 
 	// 弾数上限に達したら
 	if (currentBeamBulletNum >= kBeamBulletNum)
@@ -314,6 +243,47 @@ void NormalPlayer::CreateBeam()
 		// 弾数カウントをリセット
 		currentBeamBulletNum = 0;
 	}
+}
+
+void NormalPlayer::CreateAttack(float speed, const Vector3& scale,const std::string& particleName,ParticleEmitter* emitter)
+{
+	if (lockOn_->GetTarget())
+	{
+		targetPosition = lockOn_->GetTarget()->GetWorldTranslate();
+	}
+	else
+	{
+		targetPosition = GetReticleWorldTranslate();
+	}
+
+	// 攻撃の初期座標を設定
+	QuaternionTransform bulletTransform = transform_;
+	bulletTransform.translate = GetWorldTranslate();
+
+	// 速度を算出
+	velocity = Vector3Subtract(targetPosition, bulletTransform.translate);
+	velocity = Normalize(velocity);
+	velocity = FloatMultiply(velocity, speed);
+
+	// 生成と初期化
+	std::unique_ptr<Bullet> bullet = std::make_unique<Bullet>();
+	bullet->Initialize(bulletTransform, velocity, false, "PlayerBulletSpawn");
+	bullet->SetID(ParticleManager::GetInstance()->AllocateID());
+
+	// エフェクトを追加
+	emitterSphere.translate = bulletTransform.translate;
+	emitterSphere.scale = scale;
+	emitterSphere.id = bullet->GetID();
+	emitter->SetEmitterSphere(emitterSphere);
+	// エフェクトを発生させる
+	emitter->Update();
+	// 対応するエフェクトに生存フラグを通知
+	ParticleManager::GetInstance()->SetBulletIsAlive(true, bullet->GetID(), particleName);
+	// パーティクルグループの名前を記録
+	bullet->SetParticleName(particleName);
+
+	// BulletManagerに追加
+	BulletManager::GetInstance()->SetBullets(std::move(bullet));
 }
 
 void NormalPlayer::UpdateReticle()

@@ -29,6 +29,8 @@ public:
 	void CreateBullet();
 	// ビームの生成処理
 	void CreateBeam();
+	// 攻撃の生成処理
+	void CreateAttack(float speed, const Vector3& scale, const std::string& particleName,ParticleEmitter* emitter);
 
 	// 3Dレティクルの更新処理
 	void UpdateReticle();
