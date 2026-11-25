@@ -35,7 +35,7 @@ private:
 
 public:
 	// 初期化
-	void Initialize(const QuaternionTransform& transform, const std::string filePath, Camera* camera);
+	void Initialize(const QuaternionTransform& transform, const std::string& filePath, Camera* camera);
 	// 次状態予約
 	void ChangePlayerState(const std::string& playerState);
 	// 更新

@@ -67,7 +67,7 @@ void ScoreManager::Finalize()
 	instance.reset();
 }
 
-void ScoreManager::AddScore(const int& score)
+void ScoreManager::AddScore(int score)
 {
 	score_ += score;
 }

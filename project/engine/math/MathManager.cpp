@@ -399,7 +399,7 @@ namespace MathManager
 		return result;
 	}
 
-	float FloatLerp(const float& start, const float& end, float t)
+	float MathManager::FloatLerp(float start, float end, float t)
 	{
 		float ret;
 		ret = start + (end - start) * t;

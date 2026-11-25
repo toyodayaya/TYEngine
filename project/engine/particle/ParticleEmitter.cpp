@@ -4,7 +4,7 @@
 #include "Logger.h"
 using namespace Logger;
 
-ParticleEmitter::ParticleEmitter(const std::string name,const ParticleManager::EmitterSphere& emitterSphere)
+ParticleEmitter::ParticleEmitter(const std::string& name, const ParticleManager::EmitterSphere& emitterSphere)
 
 	// 引数で受け取ってメンバ変数として記録する
 	: name(name)

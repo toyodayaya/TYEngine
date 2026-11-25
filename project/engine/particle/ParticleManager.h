@@ -352,7 +352,7 @@ public:
 	void LaunchInitializeParticleCS(ParticleGroup& group);
 
 	// パーティクルグループの生成
-	void CreateParticleGroup(const std::string name, const std::string textureFilePath, ShapeType type);
+	void CreateParticleGroup(const std::string& name, const std::string& textureFilePath, ShapeType type);
 
 	// パーティクルの発生
 	void Emit(const std::string name, const EmitterSphere& emitterSphere);

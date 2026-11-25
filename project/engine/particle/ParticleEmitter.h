@@ -13,7 +13,7 @@ public:
 	static std::unique_ptr<ParticleEmitter> instance;
 
 	// コンストラクタ
-	ParticleEmitter(const std::string name,const ParticleManager::EmitterSphere& emitterSphere);
+	ParticleEmitter(const std::string& name, const ParticleManager::EmitterSphere& emitterSphere);
 	// デストラクタ
 	~ParticleEmitter() = default;
 	// コピーコンストラクタとコピー代入演算子を削除

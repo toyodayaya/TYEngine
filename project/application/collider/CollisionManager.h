@@ -41,7 +41,7 @@ public:
 	AABB MakeAABB(const Vector3& translate,const Vector3& size);
 	const std::vector<StageData::ColliderSpawnData>& GetColliders() const { return colliders_; }
 	// setter
-	void SetColliders(StageData::ColliderSpawnData collider) { colliders_.push_back(collider); }
+	void SetColliders(const StageData::ColliderSpawnData& collider) { colliders_.push_back(collider); }
 	// インスタンス
 	static CollisionManager* GetInstance();
 	// 終了

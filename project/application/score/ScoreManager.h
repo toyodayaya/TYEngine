@@ -50,7 +50,7 @@ public:
 	void Finalize();
 
 	// スコア加算処理
-	void AddScore(const int& score);
+	void AddScore(int score);
 
 	// スコアリセット処理
 	void ResetScore();

@@ -93,7 +93,7 @@ public:
 	void SetPostEffect(PostEffect type) { this->type_ = type; }
 	void SetDissolveTexture(std::string filePath) { dissolveFilePath_ = filePath; }
 	void SetIsFadeIn(bool isFadeIn) { isFadeIn_ = isFadeIn; }
-	void SetMaxRadius(const float& maxRadius) { maxRadius_ = maxRadius; }
+	void SetMaxRadius(float maxRadius) { maxRadius_ = maxRadius; }
 
 	// シーン遷移用更新
 	void SceneChangeEffect();

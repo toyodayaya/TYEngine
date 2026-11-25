@@ -828,7 +828,7 @@ void ParticleManager::SetBulletIsAlive(uint32_t isAlive, uint32_t id, const std:
 	group.bulletData[id].isAlive = isAlive;
 }
 
-void ParticleManager::CreateParticleGroup(const std::string name, const std::string textureFilePath,ShapeType type)
+void ParticleManager::CreateParticleGroup(const std::string& name, const std::string& textureFilePath, ShapeType type)
 {
 	// 登録済みの名前かチェック
 	const bool alreadyExists =

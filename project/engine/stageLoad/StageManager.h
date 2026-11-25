@@ -53,5 +53,5 @@ public:
 	std::string GetStageName() { return stageName_; }
 	// setter
 	void SetDefaultCamera(Camera* camera) { this->defaultCamera_ = camera; }
-	void SetStageName(std::string& name) { stageName_ = name + ".json"; }
+	void SetStageName(const std::string& name) { stageName_ = name + ".json"; }
 };

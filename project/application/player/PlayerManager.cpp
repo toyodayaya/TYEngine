@@ -42,7 +42,7 @@ void PlayerManager::SetPlayerHP(int damage)
 	player_->SetHP(HP);
 }
 
-void PlayerManager::Initialize(const QuaternionTransform& transform, const std::string filePath, Camera* camera)
+void PlayerManager::Initialize(const QuaternionTransform& transform, const std::string& filePath, Camera* camera)
 {
 	// プレイヤーの初期化
 	player_ = std::make_unique<Player>();
