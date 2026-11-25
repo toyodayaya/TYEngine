@@ -77,7 +77,7 @@ void Laser::Draw()
 
 }
 
-void Laser::OnCollision(std::string hitObjectType)
+void Laser::OnCollision(const std::string& hitObjectType)
 {
 	if (isHit_)
 	{

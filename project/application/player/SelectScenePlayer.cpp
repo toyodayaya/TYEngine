@@ -123,7 +123,7 @@ void SelectScenePlayer::Draw()
 void SelectScenePlayer::Finalize()
 {}
 
-void SelectScenePlayer::OnCollision(std::string hitObjectType)
+void SelectScenePlayer::OnCollision(const std::string& hitObjectType)
 {
 	// 当たったオブジェクトのタイプで分岐
 	if (hitObjectType == "EventSpawn")

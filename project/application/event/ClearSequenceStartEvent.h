@@ -21,7 +21,7 @@ public:
 	// 描画
 	void Draw() override;
 	// 衝突応答
-	void OnCollision(std::string hitObjectType) override;
+	void OnCollision(const std::string& hitObjectType) override;
 
 	// setter
 	void SetObjectFilePath(std::string filePath) { objectFilePath_ = filePath; }

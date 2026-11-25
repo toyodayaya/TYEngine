@@ -31,5 +31,5 @@ void StartSequencePlayer::Draw()
 void StartSequencePlayer::Finalize()
 {}
 
-void StartSequencePlayer::OnCollision(std::string hitObjectType)
+void StartSequencePlayer::OnCollision(const std::string& hitObjectType)
 {}

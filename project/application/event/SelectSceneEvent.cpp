@@ -120,7 +120,7 @@ void SelectSceneEvent::Draw()
 #endif // _DEBUG
 }
 
-void SelectSceneEvent::OnCollision(std::string hitObjectType)
+void SelectSceneEvent::OnCollision(const std::string& hitObjectType)
 {
 	if (isChangeScene_)
 	{

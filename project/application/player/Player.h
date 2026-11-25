@@ -27,7 +27,7 @@ public:
 	void Finalize() override;
 
 	// 衝突応答
-	void OnCollision(std::string hitObjectType) override;
+	void OnCollision(const std::string& hitObjectType) override;
 
 	// プレイヤーステートを変更する
 	void ChangePlayerState(std::unique_ptr<BasePlayerState> nextState);

@@ -31,5 +31,5 @@ void SelectStartPlayer::Draw()
 void SelectStartPlayer::Finalize()
 {}
 
-void SelectStartPlayer::OnCollision(std::string hitObjectType)
+void SelectStartPlayer::OnCollision(const std::string& hitObjectType)
 {}

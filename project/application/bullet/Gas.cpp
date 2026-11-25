@@ -81,7 +81,7 @@ void Gas::Draw()
 
 }
 
-void Gas::OnCollision(std::string hitObjectType)
+void Gas::OnCollision(const std::string& hitObjectType)
 {
 	if (objectName_ == "PlayerBulletSpawn")
 	{

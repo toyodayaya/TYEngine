@@ -59,7 +59,7 @@ void LaserEnemy::Draw()
 void LaserEnemy::Finalize()
 {}
 
-void LaserEnemy::OnCollision(std::string hitObjectType)
+void LaserEnemy::OnCollision(const std::string& hitObjectType)
 {
 	if (enemy_->IsHit())
 	{

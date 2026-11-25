@@ -20,7 +20,7 @@ public:
 	void Finalize() override;
 
 	// 衝突応答
-	void OnCollision(std::string hitObjectType) override;
+	void OnCollision(const std::string& hitObjectType) override;
 
 	// アルファ値加算処理
 	void AddAlphaValue();

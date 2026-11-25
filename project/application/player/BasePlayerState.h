@@ -16,7 +16,7 @@ public:
 	// 終了
 	virtual void Finalize() = 0;
 	// 当たり判定
-	virtual void OnCollision(std::string hitObjectType) = 0;
+	virtual void OnCollision(const std::string& hitObjectType) = 0;
 
 	// 仮想デストラクタ
 	virtual ~BasePlayerState() = default;

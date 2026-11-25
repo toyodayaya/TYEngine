@@ -17,10 +17,11 @@ public:
 	// 描画
 	void Draw() override;
 	// 衝突応答
-	void OnCollision(std::string hitObjectType) override;
+	void OnCollision(const std::string& hitObjectType) override;
 
 	// setter
 	void SetEnemy(ExplosionEnemy* enemy) { enemy_ = enemy; }
+	void SetIsDead(bool isDead) { isDead_ = isDead; }
 
 private:
 	// パーティクルエミッターのポインタ

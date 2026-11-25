@@ -18,7 +18,7 @@ public:
 	void Finalize() override;
 
 	// 衝突応答
-	void OnCollision(std::string hitObjectType) override;
+	void OnCollision(const std::string& hitObjectType) override;
 	// getter
 	Vector3 GetWorldTranslate() { return { worldMatrix.m[3][0], worldMatrix.m[3][1], worldMatrix.m[3][2] }; }
 

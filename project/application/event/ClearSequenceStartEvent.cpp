@@ -60,7 +60,7 @@ void ClearSequenceStartEvent::Draw()
 #endif // _DEBUG
 }
 
-void ClearSequenceStartEvent::OnCollision(std::string hitObjectType)
+void ClearSequenceStartEvent::OnCollision(const std::string& hitObjectType)
 {
 	if (isHit_)
 	{

@@ -45,7 +45,7 @@ void NotifyApproachEvent::Draw()
 #endif // _DEBUG
 }
 
-void NotifyApproachEvent::OnCollision(std::string hitObjectType)
+void NotifyApproachEvent::OnCollision(const std::string& hitObjectType)
 {
 	// 接触していたら処理しない
 	if (isHit_)

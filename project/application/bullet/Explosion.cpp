@@ -123,7 +123,7 @@ void Explosion::Draw()
 
 }
 
-void Explosion::OnCollision(std::string hitObjectType)
+void Explosion::OnCollision(const std::string& hitObjectType)
 {
 	if (isHit_)
 	{

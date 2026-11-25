@@ -62,7 +62,7 @@ void SnipeEnemy::Draw()
 void SnipeEnemy::Finalize()
 {}
 
-void SnipeEnemy::OnCollision(std::string hitObjectType)
+void SnipeEnemy::OnCollision(const std::string& hitObjectType)
 {
 	if (enemy_->IsHit())
 	{

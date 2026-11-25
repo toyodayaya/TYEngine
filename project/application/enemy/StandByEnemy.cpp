@@ -50,7 +50,7 @@ void StandByEnemy::Draw()
 void StandByEnemy::Finalize()
 {}
 
-void StandByEnemy::OnCollision(std::string hitObjectType)
+void StandByEnemy::OnCollision(const std::string& hitObjectType)
 {
 
 }

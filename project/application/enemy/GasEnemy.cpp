@@ -58,7 +58,7 @@ void GasEnemy::Draw()
 void GasEnemy::Finalize()
 {}
 
-void GasEnemy::OnCollision(std::string hitObjectType)
+void GasEnemy::OnCollision(const std::string& hitObjectType)
 {
 	if (enemy_->IsHit())
 	{

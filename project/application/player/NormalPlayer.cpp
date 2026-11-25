@@ -177,7 +177,7 @@ void NormalPlayer::Draw()
 void NormalPlayer::Finalize()
 {}
 
-void NormalPlayer::OnCollision(std::string hitObjectType)
+void NormalPlayer::OnCollision(const std::string& hitObjectType)
 {
 	if (isHit_ || isAvoid_)
 	{

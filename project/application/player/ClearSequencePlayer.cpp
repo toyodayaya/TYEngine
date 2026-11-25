@@ -57,5 +57,5 @@ void ClearSequencePlayer::Draw()
 void ClearSequencePlayer::Finalize()
 {}
 
-void ClearSequencePlayer::OnCollision(std::string hitObjectType)
+void ClearSequencePlayer::OnCollision(const std::string& hitObjectType)
 {}

@@ -22,7 +22,7 @@ public:
 	// 描画
 	void Draw() override;
 	// 衝突応答
-	void OnCollision(std::string hitObjectType) override;
+	void OnCollision(const std::string& hitObjectType) override;
 
 	// setter
 	void SetStageName(std::string stageName) { stageName_ = stageName; }

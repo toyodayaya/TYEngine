@@ -70,7 +70,7 @@ void RushEnemy::Draw()
 void RushEnemy::Finalize()
 {}
 
-void RushEnemy::OnCollision(std::string hitObjectType)
+void RushEnemy::OnCollision(const std::string& hitObjectType)
 {
 	if (enemy_->IsHit())
 	{

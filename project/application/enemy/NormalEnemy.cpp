@@ -43,7 +43,7 @@ void NormalEnemy::Draw()
 void NormalEnemy::Finalize()
 {}
 
-void NormalEnemy::OnCollision(std::string hitObjectType)
+void NormalEnemy::OnCollision(const std::string& hitObjectType)
 {
 	if (enemy_->IsHit())
 	{

@@ -92,7 +92,7 @@ void Bullet::Draw()
 
 }
 
-void Bullet::OnCollision(std::string hitObjectType)
+void Bullet::OnCollision(const std::string& hitObjectType)
 {
 	if (objectName_ == "PlayerBulletSpawn")
 	{

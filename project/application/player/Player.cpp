@@ -83,7 +83,7 @@ void Player::Draw()
 void Player::Finalize()
 {}
 
-void Player::OnCollision(std::string hitObjectType)
+void Player::OnCollision(const std::string& hitObjectType)
 {
 	// 衝突応答
 	state_->OnCollision(hitObjectType);

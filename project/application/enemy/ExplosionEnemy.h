@@ -19,7 +19,7 @@ public:
 	void Finalize() override;
 
 	// 衝突応答
-	void OnCollision(std::string hitObjectType) override;
+	void OnCollision(const std::string& hitObjectType) override;
 
 	// 爆発準備処理
 	void CreateExplosion();
@@ -27,6 +27,7 @@ public:
 	// getter
 	Vector3 GetWorldTranslate() { return { worldMatrix.m[3][0], worldMatrix.m[3][1], worldMatrix.m[3][2] }; }
 	Object3d* GetObject3d() { return object3d_; }
+	bool IsDead() { return enemy_->IsDead(); }
 	// setter
 	void SetIsDead(bool isDead) { enemy_->SetIsDead(isDead); }
 
@@ -34,6 +35,7 @@ private:
 
 	// 敵のポインタ
 	Enemy* enemy_ = nullptr;
+	Explosion* exp_ = nullptr;
 	// ワールドトランスフォーム
 	QuaternionTransform transform_;
 	// ワールド行列

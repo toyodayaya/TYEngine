@@ -142,5 +142,5 @@ void DeadPlayer::Draw()
 void DeadPlayer::Finalize()
 {}
 
-void DeadPlayer::OnCollision(std::string hitObjectType)
+void DeadPlayer::OnCollision(const std::string& hitObjectType)
 {}

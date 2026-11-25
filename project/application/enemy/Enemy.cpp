@@ -72,7 +72,7 @@ void Enemy::Draw()
 #endif // _DEBUG
 }
 
-void Enemy::OnCollision(std::string hitObjectType)
+void Enemy::OnCollision(const std::string& hitObjectType)
 {
 	// 衝突応答
 	state_->OnCollision(hitObjectType);

@@ -31,5 +31,5 @@ void ClearStartPlayer::Draw()
 void ClearStartPlayer::Finalize()
 {}
 
-void ClearStartPlayer::OnCollision(std::string hitObjectType)
+void ClearStartPlayer::OnCollision(const std::string& hitObjectType)
 {}
