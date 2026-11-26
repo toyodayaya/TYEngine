@@ -59,7 +59,7 @@ public:
 
 
 	// 初期化
-	void Initialize(DebugDrawCommon* debugDrawCommon, std::string textureFilePath,DrawState state);
+	void Initialize(const std::string& textureFilePath, DrawState state);
 
 	// 座標変換行列データ作成
 	void CreateTransformMatrixData3d();

@@ -91,7 +91,7 @@ public:
 	// setter
 	void SetDefaultCamera(Camera* camera) { this->defaultCamera_ = camera; }
 	void SetPostEffect(PostEffect type) { this->type_ = type; }
-	void SetDissolveTexture(std::string filePath) { dissolveFilePath_ = filePath; }
+	void SetDissolveTexture(const std::string& filePath) { dissolveFilePath_ = filePath; }
 	void SetIsFadeIn(bool isFadeIn) { isFadeIn_ = isFadeIn; }
 	void SetMaxRadius(float maxRadius) { maxRadius_ = maxRadius; }
 

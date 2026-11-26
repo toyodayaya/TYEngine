@@ -22,7 +22,7 @@ void Laser::Initialize(GameObject* parent, const QuaternionTransform& transform,
 #ifdef _DEBUG
 	// デバッグ描画用の箱を初期化、生成
 	debugDraw = std::make_unique<DebugDraw>();
-	debugDraw->Initialize(DebugDrawCommon::GetInstance(), "resources/human/white.png", DebugDraw::DrawState::kBox);
+	debugDraw->Initialize("resources/human/white.png", DebugDraw::DrawState::kBox);
 	Vector3 size = Vector3{ 30.0f,3.0f,3.0f };
 	debugDraw->SetBoxScale(size);
 	debugDraw->SetBoxTranslate(transform.translate);

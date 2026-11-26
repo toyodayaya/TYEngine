@@ -155,7 +155,7 @@ public:
 	// 初期化
 	void Initialize(ModelCommon* modelManager, const std::string& directoryPath, const std::string& filePath,AnimationType);
 	// 更新
-	void Update(Matrix4x4 transform);
+	void Update(const Matrix4x4& transform);
 	// 描画
 	void Draw();
 	// mtlファイルを読む関数

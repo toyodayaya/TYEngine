@@ -6,10 +6,10 @@
 #include "GameObject.h"
 using namespace MathManager;
 
-void DebugDraw::Initialize(DebugDrawCommon* debugDrawCommon, std::string textureFilePath, DrawState state)
+void DebugDraw::Initialize(const std::string& textureFilePath, DrawState state)
 {
 	// 引数で受け取ってメンバ変数に記録する
-	this->debugDraw_ = debugDrawCommon;
+	this->debugDraw_ = DebugDrawCommon::GetInstance();
 	dxBasis_ = debugDraw_->GetDxBasis();
 	filePath = textureFilePath;
 

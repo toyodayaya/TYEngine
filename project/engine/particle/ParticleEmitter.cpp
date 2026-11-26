@@ -14,7 +14,7 @@ ParticleEmitter::ParticleEmitter(const std::string& name, const ParticleManager:
 
 void ParticleEmitter::Emit()
 {
-	ParticleManager::GetInstance()->Emit(name,emitter);
+	ParticleManager::GetInstance()->Emit(name, emitter);
 }
 
 void ParticleEmitter::Update()

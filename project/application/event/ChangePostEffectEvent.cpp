@@ -15,7 +15,7 @@ void ChangePostEffectEvent::Initialize(const QuaternionTransform& transform)
 
 #ifdef _DEBUG
 	debugDraw = std::make_unique<DebugDraw>();
-	debugDraw->Initialize(DebugDrawCommon::GetInstance(), "resources/human/white.png", DebugDraw::DrawState::kBox);
+	debugDraw->Initialize("resources/human/white.png", DebugDraw::DrawState::kBox);
 	debugDraw->SetBoxScale(transform.scale);
 	debugDraw->SetBoxRotate(transform.rotate);
 	debugDraw->SetBoxTranslate(transform.translate);

@@ -55,7 +55,7 @@ private:
 
 public:
 	// 初期化
-	void Initialize(SkyboxCommon* skyboxCommon, std::string textureFilePath);
+	void Initialize(const std::string& textureFilePath);
 
 	// 頂点データ作成
 	void CreateVertexData();

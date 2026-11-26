@@ -8,7 +8,7 @@ class Skydome
 {
 public:
 	// 初期化
-	void Initialize(const QuaternionTransform& transform, std::string textureFilePath);
+	void Initialize(const QuaternionTransform& transform, const std::string& textureFilePath);
 	// 更新
 	void Update();
 	// 描画

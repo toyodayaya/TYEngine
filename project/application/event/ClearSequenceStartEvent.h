@@ -24,7 +24,7 @@ public:
 	void OnCollision(const std::string& hitObjectType) override;
 
 	// setter
-	void SetObjectFilePath(std::string filePath) { objectFilePath_ = filePath; }
+	void SetObjectFilePath(const std::string& filePath) { objectFilePath_ = filePath; }
 	void SetCamera(Camera* camera) { this->camera_ = camera; }
 
 

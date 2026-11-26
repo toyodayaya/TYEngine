@@ -355,7 +355,7 @@ public:
 	void CreateParticleGroup(const std::string& name, const std::string& textureFilePath, ShapeType type);
 
 	// パーティクルの発生
-	void Emit(const std::string name, const EmitterSphere& emitterSphere);
+	void Emit(const std::string& name, const EmitterSphere& emitterSphere);
 
 	// 効果範囲の当たり判定
 	bool IsCollision(const AABB& aabb, const Vector3& point);

@@ -4,7 +4,7 @@
 #include "ImGuiManager.h"
 using namespace MathManager;
 
-void Sprite::Initialize(std::string textureFilePath)
+void Sprite::Initialize(const std::string& textureFilePath)
 {
 	// 引数で受け取ってメンバ変数に記録する
 	this->spriteManager_ = SpriteCommon::GetInstance();

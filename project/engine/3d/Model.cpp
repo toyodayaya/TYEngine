@@ -68,14 +68,14 @@ void Model::Initialize(ModelCommon* modelManager, const std::string& directoryPa
 	for (uint32_t i = 0; i < skeleton_.joints.size(); ++i)
 	{
 		std::unique_ptr<DebugDraw> debugDraw = std::make_unique<DebugDraw>();
-		debugDraw->Initialize(DebugDrawCommon::GetInstance(), "resources/human/white.png", DebugDraw::DrawState::kSphere);
+		debugDraw->Initialize("resources/human/white.png", DebugDraw::DrawState::kSphere);
 		debugDraw->SetScale(Vector3{ 0.01f,0.01f,0.01f });
 		debugDraw->SetTranslate(skeleton_.joints[i].transform.translate);
 		debugSpheres_.push_back(std::move(debugDraw));
 	}
 
 	debugLines_ = std::make_unique<DebugDraw>();
-	debugLines_->Initialize(DebugDrawCommon::GetInstance(), "resources/human/white.png", DebugDraw::DrawState::kLine);
+	debugLines_->Initialize("resources/human/white.png", DebugDraw::DrawState::kLine);
 	debugLines_->SetScale(Vector3{ 0.1f,0.1f,0.1f });
 	debugLines_->SetTranslate(Vector3{ 0.0f, 0.0f, 0.0f });
 
@@ -84,7 +84,7 @@ void Model::Initialize(ModelCommon* modelManager, const std::string& directoryPa
 
 }
 
-void Model::Update(Matrix4x4 transform)
+void Model::Update(const Matrix4x4& transform)
 {
 	// アニメーションを再生
 	animationTime_ += 1.0f / 60.0f;

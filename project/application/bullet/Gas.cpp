@@ -22,7 +22,7 @@ void Gas::Initialize(GameObject* parent, const QuaternionTransform& transform, c
 #ifdef _DEBUG
 	// デバッグ描画用の箱を初期化、生成
 	debugDraw = std::make_unique<DebugDraw>();
-	debugDraw->Initialize(DebugDrawCommon::GetInstance(), "resources/human/white.png", DebugDraw::DrawState::kBox);
+	debugDraw->Initialize("resources/human/white.png", DebugDraw::DrawState::kBox);
 	Vector3 size = transform.scale;
 	size.x *= 10.0f;
 	size.y *= 10.0f;

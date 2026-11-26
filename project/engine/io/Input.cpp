@@ -335,6 +335,8 @@ bool Input::GetRStickRight()
 			return true;
 		}
 	}
+
+	return false;
 }
 
 bool Input::GetRStickLeft()
@@ -355,6 +357,8 @@ bool Input::GetRStickLeft()
 			return true;
 		}
 	}
+
+	return false;
 }
 
 bool Input::GetRStickUp()
@@ -375,6 +379,8 @@ bool Input::GetRStickUp()
 			return true;
 		}
 	}
+
+	return false;
 }
 
 bool Input::GetRStickDown()
@@ -395,6 +401,8 @@ bool Input::GetRStickDown()
 			return true;
 		}
 	}
+
+	return false;
 }
 
 bool Input::GetStickRight()

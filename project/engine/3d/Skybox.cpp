@@ -6,11 +6,11 @@
 using namespace MathManager;
 using namespace StringUtility;
 
-void Skybox::Initialize(SkyboxCommon* skyboxCommon, std::string textureFilePath)
+void Skybox::Initialize(const std::string& textureFilePath)
 {
 	// 引数で受け取ってメンバ変数に記録する
-	this->skyboxManager_ = skyboxCommon;
-	dxBasis_ = skyboxCommon->GetDxBasis();
+	this->skyboxManager_ = SkyboxCommon::GetInstance();
+	dxBasis_ = skyboxManager_->GetDxBasis();
 	filePath = textureFilePath;
 
 	// デフォルトカメラをセット

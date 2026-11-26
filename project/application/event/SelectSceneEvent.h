@@ -25,8 +25,8 @@ public:
 	void OnCollision(const std::string& hitObjectType) override;
 
 	// setter
-	void SetStageName(std::string stageName) { stageName_ = stageName; }
-	void SetStageFilePath(std::string filePath) { objectFilePath_ = filePath; }
+	void SetStageName(const std::string& stageName) { stageName_ = stageName; }
+	void SetStageFilePath(const std::string& filePath) { objectFilePath_ = filePath; }
 
 private:
 	

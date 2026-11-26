@@ -15,7 +15,7 @@ public:
 	bool IsParentDead() { return parent_->IsDead(); }
 	// setter
 	void SetID(uint32_t id) { id_ = id; }
-	void SetParticleName(std::string name) { particleName_ = name; }
+	void SetParticleName(const std::string& name) { particleName_ = name; }
 
 protected:
 	

@@ -2,7 +2,7 @@
 #include "ModelManager.h"
 #include "Object3dCommon.h"
 
-void Skydome::Initialize(const QuaternionTransform& transform, std::string textureFilePath)
+void Skydome::Initialize(const QuaternionTransform& transform, const std::string& textureFilePath)
 {
 	// 3Dオブジェクトの生成と初期化
 	object3d_ = std::make_unique<Object3d>();

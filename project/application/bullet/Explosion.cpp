@@ -23,7 +23,7 @@ void Explosion::Initialize(GameObject* parent, const QuaternionTransform& transf
 #ifdef _DEBUG
 	// デバッグ描画用の箱を初期化、生成
 	debugDraw = std::make_unique<DebugDraw>();
-	debugDraw->Initialize(DebugDrawCommon::GetInstance(), "resources/human/white.png", DebugDraw::DrawState::kBox);
+	debugDraw->Initialize("resources/human/white.png", DebugDraw::DrawState::kBox);
 	debugDraw->SetBoxScale(FloatMultiply(transform.scale, 5.0f));
 	debugDraw->SetBoxTranslate(transform.translate);
 	debugDraw->SetRotate(transform.rotate);

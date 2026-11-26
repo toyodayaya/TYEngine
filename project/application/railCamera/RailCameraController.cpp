@@ -20,13 +20,13 @@ void RailCameraController::Initialize(const QuaternionTransform& transform)
 #ifdef _DEBUG
 	// デバッグ描画を初期化
 	debugLine_ = std::make_unique<DebugDraw>();
-	debugLine_->Initialize(DebugDrawCommon::GetInstance(), "resources/human/white.png", DebugDraw::DrawState::kLine);
+	debugLine_->Initialize("resources/human/white.png", DebugDraw::DrawState::kLine);
 
 	// デバッグ描画の初期化
 	for (uint32_t i = 0; i < railPoints_.size(); ++i)
 	{
 		std::unique_ptr<DebugDraw> debugDraw = std::make_unique<DebugDraw>();
-		debugDraw->Initialize(DebugDrawCommon::GetInstance(), "resources/human/white.png", DebugDraw::DrawState::kSphere);
+		debugDraw->Initialize("resources/human/white.png", DebugDraw::DrawState::kSphere);
 		debugDraw->SetScale(Vector3{ 0.01f,0.01f,0.01f });
 		debugDraw->SetTranslate(railPoints_[i]);
 		debugPoint_.push_back(std::move(debugDraw));

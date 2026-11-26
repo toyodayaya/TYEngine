@@ -971,7 +971,7 @@ void ParticleManager::Draw()
 	}
 }
 
-void ParticleManager::Emit(const std::string name, const EmitterSphere& emitterSphere)
+void ParticleManager::Emit(const std::string& name, const EmitterSphere& emitterSphere)
 {
 	// 登録済みかチェック
 	auto it = particleGroups.find(name);
